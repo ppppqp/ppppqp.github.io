@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "First Post"
+title:  "HTML5新增特性"
 date:   2021-03-09 20:29:23 +0800
 categories: jekyll update
 ---
@@ -75,6 +75,4 @@ categories: jekyll update
   |`placeholder = "see?"`|填写默认展示的字符|
   |`autofocus = "autofocus"`| 自动获得焦点|
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+
