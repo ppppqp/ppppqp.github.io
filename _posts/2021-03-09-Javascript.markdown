@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HTML5新增特性"
-date:   2021-03-09 20:29:23 +0800
-categories: jekyll update
+title:  "Javascript笔记"
+date:   2021-03-09 22:29:23 +0800
+categories: Front-end Note
 ---
 #JS
 ## 1. 数据类型
