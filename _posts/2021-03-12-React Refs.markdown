@@ -1,10 +1,11 @@
 ---
 layout: post
-title:  "React Life Cycle"
-date:   2021-03-11 20:29:23 +0800
+title:  "React Refs"
+date:   2021-03-12 20:29:23 +0800
 categories: Front-end Note
 ---
 
+<link rel="stylesheet" type="text/css" media="all" href="{{site.url}}/style/index.css" />
 <div class="TOC">
 <!-- TOC -->
 
