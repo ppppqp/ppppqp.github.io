@@ -1,0 +1,40 @@
+---
+layout: post
+title:  "React DOM"
+date:   2021-03-11 22:29:23 +0800
+categories: Front-end Note
+---
+
+# React DOM
+[React API](https://reactjs.org/docs/react-dom.html)
+If you load React from a `<script>` tag, these top-level APIs are available on the ReactDOM global.
+# Overview
+The react-dom package provides DOM-specific methods that can be used **at the top level of your app** and as an escape hatch to get outside of the React model if you need to. Most of your components should not need to use this module.
+
+# 1 `render()`
+Render a React element into the DOM in the supplied container and return a reference to the component (or returns null for stateless components).
+If the React element was previously rendered into container, this will perform an update on it and only **mutate the DOM as necessary** to reflect the latest React element.
+```js
+ReactDOM.render(element, container[, callback])
+```
+callback will be executed after rendered or updated
+
+# 2 `hydrate()`
+```js
+ReactDOM.hydrate(element, container[, callback])
+```
+
+Same as render(), but is used to hydrate a container whose HTML contents were rendered by ReactDOMServer. React will attempt to attach event listeners to the existing markup.
+
+# 3 `findDOMNode()`
+findDOMNode is an escape hatch used to access the underlying DOM node. 
+If this component has been mounted into the DOM, this returns the corresponding native browser DOM element.
+**In most cases, use of this escape hatch is discouraged because it pierces the component abstraction. you can attach a ref to the DOM node and avoid using findDOMNode at all.**
+```js
+ReactDOM.findDOMNode(component)
+```
+
+# 4 `createPortal()`
+```js
+ReactDOM.createPortal(child, container)
+```

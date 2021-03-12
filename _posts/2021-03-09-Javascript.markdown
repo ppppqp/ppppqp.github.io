@@ -434,7 +434,7 @@ btn.removeEventListenr("click", fn)//不能是匿名函数
 
 ```
 ##### 3. DOM事件流：
- ![](images/event.jpg)
+ ![]({{site.url}}/images/030902/event.jpg)
 onclick等等只能得到冒泡阶段。
 第三个参数为true，为捕获阶段,从document从上往下开始查看是否有监听函数
 第三个参数是flase或省略，是冒泡阶段
@@ -740,7 +740,7 @@ Web workder标准，允许js创建多个任务
 
 
 #### 6.1 事件对象
-![](images/eventloop.png)
+![]({{site.url}}/images/030902/eventloop.png)
 
 
 #### 6.2 异步
