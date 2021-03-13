@@ -1,50 +1,12 @@
 ---
-layout: post
+
 title:  "Frontend Interview Problem Set 2"
 date:   2021-03-13 15:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note Intern
+toc: true
 ---
 
-<!-- TOC -->
 
-- [1. http & https](#1-http--https)
-- [2.tcp三次握手](#2tcp三次握手)
-- [3. TCP UDP区别](#3-tcp-udp区别)
-- [4. Websocket](#4-websocket)
-- [5. Http请求方式](#5-http请求方式)
-- [6.  几个很实用的BOM属性对象方法?](#6--几个很实用的bom属性对象方法)
-- [7. http2.0](#7-http20)
-- [8. Cookie、sessionStorage、localStorage的区别](#8-cookiesessionstoragelocalstorage的区别)
-- [9.  Doctype作用?严格模式与混杂模式如何区分？它们有何意义?](#9--doctype作用严格模式与混杂模式如何区分它们有何意义)
-- [10. 讲讲viewport和移动端布局](#10-讲讲viewport和移动端布局)
-- [11. Cookie, Session区别](#11-cookie-session区别)
-- [12.浏览器缓存](#12浏览器缓存)
-- [13. 输入一个url，到这个页面呈现出来，中间发生了什么](#13-输入一个url到这个页面呈现出来中间发生了什么)
-- [14. HTTP2.0 的特性](#14-http20-的特性)
-- [15. 浏览器在生成页面的时候，会生成那两颗树？](#15-浏览器在生成页面的时候会生成那两颗树)
-- [1.  BFC（块级格式化上下文，用于清楚浮动，防止margin重叠等）](#1--bfc块级格式化上下文用于清楚浮动防止margin重叠等)
-- [2.visibility=hidden, opacity=0，display:none](#2visibilityhidden-opacity0displaynone)
-- [3. 水平居中，垂直居中](#3-水平居中垂直居中)
-- [1. JS类的创建和继承](#1-js类的创建和继承)
-- [2. 事件流](#2-事件流)
-- [3. 异步加载js的方法](#3-异步加载js的方法)
-- [4. Ajax解决浏览器缓存问题](#4-ajax解决浏览器缓存问题)
-- [5.  代码的执行顺序](#5--代码的执行顺序)
-- [6.  js判断类型](#6--js判断类型)
-- [7. 闭包 有什么用](#7-闭包-有什么用)
-- [8. 能来讲讲JS的语言特性吗](#8-能来讲讲js的语言特性吗)
-- [9. this的指向](#9-this的指向)
-- [10.说一下什么是virtual dom](#10说一下什么是virtual-dom)
-- [11. 介绍一下promise，及其底层如何实现](#11-介绍一下promise及其底层如何实现)
-- [12. js原型链，原型链的顶端是什么？Object的原型是什么？Object的原型的原型是什么？在数组原型链上实现删除数组重复数据的方法](#12-js原型链原型链的顶端是什么object的原型是什么object的原型的原型是什么在数组原型链上实现删除数组重复数据的方法)
-- [13.  let const var的区别](#13--let-const-var的区别)
-- [14.  ES6箭头函数的特性](#14--es6箭头函数的特性)
-- [15. call和apply是用来做什么？](#15-call和apply是用来做什么)
-- [16. ajax返回的状态](#16-ajax返回的状态)
-- [17.  如何实现一个ajax请求？如果我想发出两个有顺序的ajax需要怎么做？](#17--如何实现一个ajax请求如果我想发出两个有顺序的ajax需要怎么做)
-- [18.react的生命周期函数](#18react的生命周期函数)
-
-<!-- /TOC -->
 ## 1. http & https
 https加密
 

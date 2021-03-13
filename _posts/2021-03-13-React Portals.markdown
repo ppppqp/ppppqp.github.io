@@ -1,16 +1,12 @@
 ---
-layout: post
+
 title:  "React Portals"
 date:   2021-03-13 10:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Portals](#portals)
-- [Usage](#usage)
-
-<!-- /TOC -->
 # Portals
 *Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.*
 

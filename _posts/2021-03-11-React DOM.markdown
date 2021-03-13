@@ -1,8 +1,9 @@
 ---
-layout: post
+
 title:  "React DOM"
 date:   2021-03-11 22:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
 # React DOM

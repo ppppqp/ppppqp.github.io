@@ -1,26 +1,12 @@
 ---
-layout: post
+
 title:  "CSS-Flex"
 date:   2021-03-13 12:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note CSS
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Flex 布局](#flex-布局)
-  - [1. flex布局原理](#1-flex布局原理)
-  - [2. flex布局父项常见属性](#2-flex布局父项常见属性)
-    - [1. 主轴和侧轴方向：`flex-direction`](#1-主轴和侧轴方向flex-direction)
-    - [2. 这只主轴上子元素的排列方式：`justify-content`](#2-这只主轴上子元素的排列方式justify-content)
-    - [3. 通过`flex-wrap`设置是否换行](#3-通过flex-wrap设置是否换行)
-    - [4. 通过`align-items`设置侧轴上元素的排列方式(使用与单行)](#4-通过align-items设置侧轴上元素的排列方式使用与单行)
-    - [5. 通过`align-content`设置侧轴上元素的排列方式（适用于多行）](#5-通过align-content设置侧轴上元素的排列方式适用于多行)
-  - [flex 布局子项常见属性](#flex-布局子项常见属性)
-    - [1. flex子项占的份数`flex`](#1-flex子项占的份数flex)
-    - [2. align-self: 控制子项在**侧轴**的排列方式（单个项目）](#2-align-self-控制子项在侧轴的排列方式单个项目)
-    - [3. order控制项目的排列顺序](#3-order控制项目的排列顺序)
-
-<!-- /TOC -->
 # Flex 布局
 
 |传统布局| flex|

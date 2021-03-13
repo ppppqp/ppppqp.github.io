@@ -1,8 +1,9 @@
 ---
-layout: post
+
 title:  "React Life Cycle"
 date:   2021-03-11 20:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
 # React Lifecycle

@@ -1,46 +1,15 @@
 ---
-layout: post
-title:  "React Reconciliation"
-date:   2021-03-13 12:29:23 +0800
-categories: Front-end Note
+
+title: "CSS"
+last_modified_at: 2021-03-13T09:45:06-05:00
+tags: 
+  - code
+  - syntax highlighting
+toc: true
+categories: Front-end CSS
 ---
 
-<!-- TOC -->
 
-- [CSS](#css)
-  - [1. CSS 盒子模型](#1-css-盒子模型)
-  - [1.1 border](#11-border)
-    - [1.1.1 border使用](#111-border使用)
-    - [1.1.2 表格单元格边框的合并](#112-表格单元格边框的合并)
-    - [1.1.3 边框会影响盒子的实际大小](#113-边框会影响盒子的实际大小)
-  - [1.2 padding](#12-padding)
-    - [1.2.1](#121)
-    - [1.2.2 padding影响盒子大小](#122-padding影响盒子大小)
-  - [1.3 margin](#13-margin)
-    - [1.3.1](#131)
-    - [1.3.2 利用margin使得居中对齐](#132-利用margin使得居中对齐)
-    - [1.3.3 嵌套块元素margin塌陷](#133-嵌套块元素margin塌陷)
-    - [1.3.4 清除默认的外边距](#134-清除默认的外边距)
-  - [2. Shadow](#2-shadow)
-  - [3. float浮动](#3-float浮动)
-    - [3.1](#31)
-    - [3.2浮动的特性](#32浮动的特性)
-    - [3.3 清除浮动](#33-清除浮动)
-  - [4.定位](#4定位)
-    - [1. 定位组成：](#1-定位组成)
-  - [元素的显示与隐藏](#元素的显示与隐藏)
-    - [1. display](#1-display)
-    - [2. visibility](#2-visibility)
-    - [3. overflow](#3-overflow)
-- [CSS3 新增特性](#css3-新增特性)
-  - [新增选择器](#新增选择器)
-  - [2. CSS3 盒子模型](#2-css3-盒子模型)
-  - [3. CSS3其他特性](#3-css3其他特性)
-    - [1. 图片变模糊](#1-图片变模糊)
-    - [2. 计算盒子大小](#2-计算盒子大小)
-    - [3. **CSS3 过渡（重要）**](#3-css3-过渡重要)
-
-<!-- /TOC -->
 # CSS
 ## 1. CSS 盒子模型
 边框(border)，内边距(padding)，外边距(margin)，内容（content）

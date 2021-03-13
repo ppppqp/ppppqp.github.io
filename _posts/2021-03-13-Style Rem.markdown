@@ -1,24 +1,12 @@
 ---
-layout: post
+
 title:  "CSS-rem"
 date:   2021-03-13 12:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note CSS
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Rem](#rem)
-  - [1.rem基础](#1rem基础)
-  - [2. media query媒体查询](#2-media-query媒体查询)
-    - [1. 媒体查询语法规范](#1-媒体查询语法规范)
-    - [2. 引入资源](#2-引入资源)
-  - [3.Less介绍](#3less介绍)
-    - [1. less介绍](#1-less介绍)
-  - [4. Rem适配方案](#4-rem适配方案)
-    - [1. rem+媒体查询+less](#1-rem媒体查询less)
-    - [2. flexible.js](#2-flexiblejs)
-
-<!-- /TOC -->
 # Rem
 
 ## 1.rem基础

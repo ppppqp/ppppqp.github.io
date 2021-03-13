@@ -1,19 +1,12 @@
 ---
-layout: post
+
 title:  "React Reconciliation"
 date:   2021-03-13 12:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Reconciliation](#reconciliation)
-  - [Motivation](#motivation)
-  - [Diffig Algorithm](#diffig-algorithm)
-    - [Elements Of Different Types](#elements-of-different-types)
-    - [DOM Elements Of The Same Type](#dom-elements-of-the-same-type)
-
-<!-- /TOC -->
 # Reconciliation
 ## Motivation
 When you use React, at a single point in time you can think of the render() function as creating a tree of React elements. On the next state or props update, that render() function will return a different tree of React elements. React then needs to figure out how to efficiently update the UI to match the most recent tree.

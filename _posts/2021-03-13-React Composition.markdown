@@ -1,16 +1,12 @@
 ---
-layout: post
+
 title:  "React Composition"
 date:   2021-03-13 7:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Containment](#containment)
-- [Specialization](#specialization)
-
-<!-- /TOC -->
 # Containment
 Some components don’t know their children ahead of time. This is especially common for components like Sidebar or Dialog that represent generic “boxes”.
 

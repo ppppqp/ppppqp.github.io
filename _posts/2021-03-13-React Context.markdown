@@ -1,23 +1,12 @@
 ---
-layout: post
+
 title:  "React Context"
 date:   2021-03-13 9:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Context](#context)
-  - [Usage Senario](#usage-senario)
-  - [API](#api)
-    - [`React.createContext`](#reactcreatecontext)
-    - [`Context.Provider`](#contextprovider)
-    - [`Class.contextType`](#classcontexttype)
-    - [`Context.Consumer`](#contextconsumer)
-  - [Using Context](#using-context)
-  - [Caveats](#caveats)
-
-<!-- /TOC -->
 
 
 # Context

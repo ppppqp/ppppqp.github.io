@@ -1,18 +1,12 @@
 ---
-layout: post
+
 title:  "React Code Splitting"
 date:   2021-03-13 8:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Code-Splitting](#code-splitting)
-  - [Usage Senario](#usage-senario)
-  - [Dynamic Import Syntax](#dynamic-import-syntax)
-  - [React.lazy](#reactlazy)
-
-<!-- /TOC -->
 # Code-Splitting
 
 ## Usage Senario

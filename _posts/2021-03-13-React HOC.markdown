@@ -1,19 +1,12 @@
 ---
-layout: post
+
 title:  "React Higher-Order Components"
 date:   2021-03-13 9:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Higher-Order Components](#higher-order-components)
-  - [Caveat](#caveat)
-    - [Don’t Use HOCs Inside the render Method](#dont-use-hocs-inside-the-render-method)
-    - [Static Methods Must Be Copied Over](#static-methods-must-be-copied-over)
-    - [Refs Aren’t Passed Through](#refs-arent-passed-through)
-
-<!-- /TOC -->
 # Higher-Order Components
 
 Concretely, a higher-order component is a function that takes a component and returns a new component.

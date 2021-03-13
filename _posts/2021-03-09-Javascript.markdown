@@ -1,10 +1,13 @@
 ---
-layout: post
+
 title:  "Javascript笔记"
 date:   2021-03-09 22:29:23 +0800
-categories: Front-end Note
+categories: Javascript Note Frontend
+toc: true
 ---
-#JS
+
+
+# JS
 ## 1. 数据类型
 js的变量数据类型是程序在运行过程中，根据等号右边的值来确定的。
 变量的数据类型是可变的。

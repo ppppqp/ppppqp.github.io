@@ -1,20 +1,12 @@
 ---
-layout: post
+
 title:  "React Refs"
 date:   2021-03-12 20:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [React Ref](#react-ref)
-  - [Overview:](#overview)
-  - [Createing Refs](#createing-refs)
-  - [Accessing Refs](#accessing-refs)
-  - [Callback Refs](#callback-refs)
-- [Forwarding Refs](#forwarding-refs)
-
-<!-- /TOC -->
 
 # React Ref
 [React API](https://reactjs.org/docs/refs-and-the-dom.html)

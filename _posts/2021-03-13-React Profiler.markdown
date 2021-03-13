@@ -1,17 +1,12 @@
 ---
-layout: post
+
 title:  "React Profiler"
 date:   2021-03-13 11:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [Profiler](#profiler)
-  - [Usage](#usage)
-  - [OnRender Callback](#onrender-callback)
-
-<!-- /TOC -->
 # Profiler
 ## Usage
 A Profiler can be added anywhere in a React tree to measure the cost of rendering that part of the tree. It requires two props: an `id` (string) and an `onRender` callback (function) which React calls any time a component within the tree “commits” an update.

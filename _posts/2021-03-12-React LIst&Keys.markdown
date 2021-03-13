@@ -1,17 +1,12 @@
 ---
-layout: post
+
 title:  "React List&Keys"
 date:   2021-03-12 20:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note React
+toc: true
 ---
 
-<!-- TOC -->
 
-- [React List&Keys](#react-listkeys)
-  - [Rendering Multiple Components:](#rendering-multiple-components)
-      - [Reason for Keys](#reason-for-keys)
-
-<!-- /TOC -->
 
 # React List&Keys
 [React API](https://reactjs.org/docs/lists-and-keys.html)

@@ -1,58 +1,20 @@
 ---
-layout: post
+
 title:  "Frontend Interview Problem Set 1"
 date:   2021-03-13 14:29:23 +0800
-categories: Front-end Note
+categories: Front-end Note Intern
+toc: true
 ---
 
-<!-- TOC -->
 
-- [1. http & https](#1-http--https)
-- [2.tcp三次握手](#2tcp三次握手)
-- [3. TCP UDP区别](#3-tcp-udp区别)
-- [4. Websocket](#4-websocket)
-- [5. Http请求方式](#5-http请求方式)
-- [6.  几个很实用的BOM属性对象方法?](#6--几个很实用的bom属性对象方法)
-- [7. http2.0](#7-http20)
-- [8. Cookie、sessionStorage、localStorage的区别](#8-cookiesessionstoragelocalstorage的区别)
-- [9.  Doctype作用?严格模式与混杂模式如何区分？它们有何意义?](#9--doctype作用严格模式与混杂模式如何区分它们有何意义)
-- [10. 讲讲viewport和移动端布局](#10-讲讲viewport和移动端布局)
-- [11. Cookie, Session区别](#11-cookie-session区别)
-- [12.浏览器缓存](#12浏览器缓存)
-- [13. 输入一个url，到这个页面呈现出来，中间发生了什么](#13-输入一个url到这个页面呈现出来中间发生了什么)
-- [14. HTTP2.0 的特性](#14-http20-的特性)
-- [15. 浏览器在生成页面的时候，会生成那两颗树？](#15-浏览器在生成页面的时候会生成那两颗树)
-- [1.  BFC（块级格式化上下文，用于清楚浮动，防止margin重叠等）](#1--bfc块级格式化上下文用于清楚浮动防止margin重叠等)
-- [2.visibility=hidden, opacity=0，display:none](#2visibilityhidden-opacity0displaynone)
-- [3. 水平居中，垂直居中](#3-水平居中垂直居中)
-- [1. JS类的创建和继承](#1-js类的创建和继承)
-- [2. 事件流](#2-事件流)
-- [3. 异步加载js的方法](#3-异步加载js的方法)
-- [4. Ajax解决浏览器缓存问题](#4-ajax解决浏览器缓存问题)
-- [5.  代码的执行顺序](#5--代码的执行顺序)
-- [6.  js判断类型](#6--js判断类型)
-- [7. 闭包 有什么用](#7-闭包-有什么用)
-- [8. 能来讲讲JS的语言特性吗](#8-能来讲讲js的语言特性吗)
-- [9. this的指向](#9-this的指向)
-- [10.说一下什么是virtual dom](#10说一下什么是virtual-dom)
-- [11. 介绍一下promise，及其底层如何实现](#11-介绍一下promise及其底层如何实现)
-- [12. js原型链，原型链的顶端是什么？Object的原型是什么？Object的原型的原型是什么？在数组原型链上实现删除数组重复数据的方法](#12-js原型链原型链的顶端是什么object的原型是什么object的原型的原型是什么在数组原型链上实现删除数组重复数据的方法)
-- [13.  let const var的区别](#13--let-const-var的区别)
-- [14.  ES6箭头函数的特性](#14--es6箭头函数的特性)
-- [15. call和apply是用来做什么？](#15-call和apply是用来做什么)
-- [16. ajax返回的状态](#16-ajax返回的状态)
-- [17.  如何实现一个ajax请求？如果我想发出两个有顺序的ajax需要怎么做？](#17--如何实现一个ajax请求如果我想发出两个有顺序的ajax需要怎么做)
-- [18.react的生命周期函数](#18react的生命周期函数)
-
-<!-- /TOC -->
-## 1. http & https
+## http & https
 https加密
 
-## 2.tcp三次握手
+## tcp三次握手
 
 
 
-## 3. TCP UDP区别
+## TCP UDP区别
 
 
 TCP|UDP
@@ -61,7 +23,7 @@ TCP|UDP
 1对1|1对多
 可靠|不可靠
 
-## 4. Websocket
+## Websocket
 
 1. 什么是WebSocket?
 WebSocket是HTML5中的协议，支持持久连续，http协议不支持持久性连接。Http1.0和HTTP1.1都不支持持久性的链接，HTTP1.1中的keep-alive，将多个http请求合并为1个
@@ -72,12 +34,12 @@ HTTP的生命周期通过Request来界定，也就是Request一个Response，那
 WebSocket是基于Http协议的，或者说借用了Http协议来完成一部分握手，在握手阶段与Http是相同的。我们来看一个websocket握手协议的实现，基本是2个属性，upgrade，connection。
 
 
-## 5. Http请求方式
+## Http请求方式
 get,post,put,delete
 head：类似于get请求，只不过返回的响应中没有具体的内容，用户获取报头
 options：允许客户端查看服务器的性能，比如说服务器支持的请求方式等等。
 
-## 6.  几个很实用的BOM属性对象方法?
+## 几个很实用的BOM属性对象方法?
 
 
 什么是Bom? Bom是浏览器对象。有哪些常用的Bom属性呢？
@@ -106,7 +68,7 @@ history.forward() -- 前进一页
 navigator.userAgent -- 返回用户代理头的字符串表示(就是包括浏览器版本信息等的字符串)
 navigator.cookieEnabled -- 返回浏览器是否支持(启用)cookie
 
-## 7. http2.0
+## http2.0
 
 简要概括：http2.0是基于1999年发布的http1.0之后的首次更新。
 提升访问速度（可以对于，请求资源所需时间更少，访问速度更快，相比http1.0）
@@ -121,7 +83,7 @@ navigator.cookieEnabled -- 返回浏览器是否支持(启用)cookie
 * 服务器端推送
 
 
-## 8. Cookie、sessionStorage、localStorage的区别
+## Cookie、sessionStorage、localStorage的区别
 共同点：都是保存在浏览器端，并且是同源的
 
 Cookie|localStorage|sessionStorage
@@ -137,7 +99,7 @@ Cookie|localStorage|sessionStorage
 
 
   
-## 9.  Doctype作用?严格模式与混杂模式如何区分？它们有何意义?
+## Doctype作用?严格模式与混杂模式如何区分？它们有何意义?
 Doctype声明于文档最前面，告诉浏览器以何种方式来渲染页面，这里有两种模式，严格模式和混杂模式。
 
 * 严格模式的排版和JS 运作模式是 以该浏览器支持的最高标准运行。
@@ -145,11 +107,11 @@ Doctype声明于文档最前面，告诉浏览器以何种方式来渲染页面�
 * 混杂模式，向后兼容，模拟老式浏览器，防止浏览器无法兼容页面。
 
 
-## 10. 讲讲viewport和移动端布局
+## 讲讲viewport和移动端布局
 响应式布局，mediaquery, rem, 百分比
 
 
-## 11. Cookie, Session区别
+## Cookie, Session区别
 
 Cookie|Session
 ---|---|
@@ -158,7 +120,7 @@ Cookie|Session
 数据量小，但不耗费服务器|耗费服务器
 
 
-## 12.浏览器缓存
+## 浏览器缓存
 
 缓存分为两种：强缓存和协商缓存，根据响应的header内容来决定。
 强缓存相关字段有expires，cache-control。
@@ -173,7 +135,7 @@ Cookie|Session
 
 
 
-## 13. 输入一个url，到这个页面呈现出来，中间发生了什么
+## 输入一个url，到这个页面呈现出来，中间发生了什么
 输入url后，首先需要找到这个url域名的服务器ip,为了寻找这个ip，浏览器首先会寻找缓存，查看缓存中是否有记录，缓存的查找记录为：浏览器缓存-》系统缓存-》路由器缓存，缓存中没有则查找系统的hosts文件中是否有记录，如果没有则查询DNS服务器，得到服务器的ip地址后，浏览器根据这个ip以及相应的端口号，构造一个http请求，这个请求报文会包括这次请求的信息，主要是请求方法，请求说明和请求附带的数据，并将这个http请求封装在一个tcp包中，这个tcp包会依次经过传输层，网络层，数据链路层，物理层到达服务器，服务器解析这个请求来作出响应，返回相应的html给浏览器，因为html是一个树形结构，浏览器根据这个html来构建DOM树，在dom树的构建过程中如果遇到JS脚本和外部JS连接，则会停止构建DOM树来执行和下载相应的代码，这会造成阻塞，这就是为什么推荐JS代码应该放在html代码的后面，之后根据外部央视，内部央视，内联样式构建一个CSS对象模型树CSSOM树，构建完成后和DOM树合并为渲染树，这里主要做的是排除非视觉节点，比如script，meta标签和排除display为none的节点，之后进行布局，布局主要是确定各个元素的位置和尺寸，之后是渲染页面，因为html文件中会含有图片，视频，音频等资源，在解析DOM的过程中，遇到这些都会进行并行下载，浏览器对每个域的并行下载数量有一定的限制，一般是4-6个，当然在这些所有的请求中我们还需要关注的就是缓存，缓存一般通过Cache-Control、Last-Modify、Expires等首部字段控制。 Cache-Control和Expires的区别在于Cache-Control使用相对时间，Expires使用的是基于服务器 端的绝对时间，因为存在时差问题，一般采用Cache-Control，在请求这些有设置了缓存的数据时，会先 查看是否过期，如果没有过期则直接使用本地缓存，过期则请求并在服务器校验文件是否修改，如果上一次 响应设置了ETag值会在这次请求的时候作为If-None-Match的值交给服务器校验，如果一致，继续校验 Last-Modified，没有设置ETag则直接验证Last-Modified，再决定是否返回304
 
 
@@ -211,7 +173,7 @@ Cookie|Session
 
 
 
-## 14. HTTP2.0 的特性
+## HTTP2.0 的特性
 
 http2.0的特性如下：
 1. 内容安全，应为http2.0是基于https的，天然具有安全特性，通过http2.0的特性可以避免单纯使用https的性能下降
@@ -221,7 +183,7 @@ http2.0的特性如下：
 3. 多路复用，这个功能相当于是长连接的增强，每个request请求可以随机的混杂在一起，接收方可以根据request的id将request再归属到各自不同的服务端请求里面，另外多路复用中也支持了流的优先级，允许客户端告诉服务器那些内容是更优先级的资源，可以优先传输，
 
 
-## 15. 浏览器在生成页面的时候，会生成那两颗树？
+## 浏览器在生成页面的时候，会生成那两颗树？
 
 构造两棵树，DOM树和CSSOM规则树
 当浏览器接收到服务器相应来的HTML文档后，会遍历文档节点，生成DOM树，
@@ -230,7 +192,7 @@ CSSOM规则树由浏览器解析CSS文件生成，
 
 
 ____
-## 1.  BFC（块级格式化上下文，用于清楚浮动，防止margin重叠等）
+## BFC（块级格式化上下文，用于清楚浮动，防止margin重叠等）
 直译成：块级格式化上下文，是一个独立的渲染区域，并且有一定的布局规则。
 BFC区域不会与float box重叠
 
@@ -250,14 +212,14 @@ display为inline-block、table-cell、table-caption，flex，inline-flex的元�
 
 overflow不为visible的元素
 
-## 2.visibility=hidden, opacity=0，display:none
+## visibility=hidden, opacity=0，display:none
 ||`opacity = 0`|`visibility = hidden`| `display: none`
 |---|---|---|---|
 改变页面布局|no|no|yes
 可触发事件|yes|no|no
 
 
-## 3. 水平居中，垂直居中
+## 水平居中，垂直居中
 1. margin 0 auto
 2. position: absolute; left: 50%; top: 50%;
 3. transform: translate(-50%,-50%);
@@ -265,7 +227,7 @@ overflow不为visible的元素
 
 
 ___
-## 1. JS类的创建和继承
+## JS类的创建和继承
 类的创建
 ```javascript
 //其实就是声明一个constructor
@@ -341,7 +303,7 @@ Cat.prototype = new Super();//将实例作为子类的原型
 ```
 
 
-## 2. 事件流
+## 事件流
 1. 冒泡　IE的事件流叫做事件冒泡(event bubbling)，即事件开始时由最具体的元素(文档中嵌套层次最深的那个节点)接收，然后逐级向上传播到较为不具体的节点(文档)
 2. 捕获
  事件捕获的思想是不太具体的节点应该更早接收到事件，而最具体的节点应该最后接收到事件。事件捕获的用意在于在事件到达预定目标之前就捕获它
@@ -354,7 +316,7 @@ Cat.prototype = new Super();//将实例作为子类的原型
 async，HTML5属性仅适用于外部脚本，并且如果在IE中，同时存在defer和async，那么defer的优先级比较高，脚本将在页面完成时执行。
 创建script标签，插入到DOM中
 
-## 4. Ajax解决浏览器缓存问题
+## Ajax解决浏览器缓存问题
 
 
 在ajax发送请求前加上 anyAjaxObj.setRequestHeader("If-Modified-Since","0")。
@@ -364,7 +326,7 @@ async，HTML5属性仅适用于外部脚本，并且如果在IE中，同时存�
 如果是使用jQuery，直接这样就可以了 $.ajaxSetup({cache:false})。这样页面的所有ajax都会执行这条语句就是不需要保存缓存记录。
 
 
-## 5.  代码的执行顺序
+## 代码的执行顺序
 ```javascript
 setTimeout(function(){console.log(1)},0);
 new Promise(function(resolve,reject){
@@ -378,11 +340,11 @@ console.log(6);
 //https://github.com/forthealllight/blog/issues/5
 ```
 
-## 6.  js判断类型
+## js判断类型
 判断方法：typeof()，instanceof，Object.prototype.toString.call()等
 
 
-## 7. 闭包 有什么用
+## 闭包 有什么用
 （1）什么是闭包：
 闭包是指有权访问另外一个函数作用域中的变量的函数。
 闭包就是函数的局部变量集合，只是这些局部变量在函数返回后会继续存在。闭包就是就是函数的“堆栈”在函数返回后并不释放，我们也可以理解为这些函数堆栈并不在栈上分配而是在堆上分配。当在一个函数内定义另外一个函数就会产生闭包。
@@ -394,7 +356,7 @@ console.log(6);
 结果缓存：我们开发中会碰到很多情况，设想我们有一个处理过程很耗时的函数对象，每次调用都会花费很长时间，那么我们就需要将计算出来的值存储起来，当调用这个函数的时候，首先在缓存中查找，如果找不到，则进行计算，然后更新缓存并返回值，如果找到了，直接返回查找到的值即可。闭包正是可以做到这一点，因为它不会释放外部的引用，从而函数内部的值可以得以保留。
 
 
-## 8. 能来讲讲JS的语言特性吗
+## 能来讲讲JS的语言特性吗
 
 * 运行在客户端浏览器上；
 * 不用预编译，直接解析执行代码；
@@ -402,7 +364,7 @@ console.log(6);
 * 与操作系统无关，跨平台的语言；
 * 脚本语言、解释性语言
 
-## 9. this的指向
+## this的指向
 
 * 默认绑定：全局环境中，this默认绑定到window。
 * 隐式绑定：一般地，被直接对象所包含的函数调用时，也称为方法调用，this隐式绑定到该直接对象。
@@ -419,11 +381,11 @@ console.log(6);
 3. 如果构造函数显式地使用return语句返回一个对象，那么调用表达式的值就是这个对象。
 
 
-## 10.说一下什么是virtual dom
+## 说一下什么是virtual dom
 用JavaScript 对象结构表示 DOM 树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中 当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异 把所记录的差异应用到所构建的真正的DOM树上，视图就更新了。Virtual DOM 本质上就是在 JS 和 DOM 之间做了一个缓存。
 
 
-## 11. 介绍一下promise，及其底层如何实现
+## 介绍一下promise，及其底层如何实现
 
 Promise是一个对象，保存着未来将要结束的事件，她有两个特征:
 1、对象的状态不受外部影响，Promise对象代表一个异步操作，有三种状态，pending进行中，fulfilled已成功，rejected已失败，只有异步操作的结果，才可以决定当前是哪一种状态，任何其他操作都无法改变这个状态，这也就是promise名字的由来
@@ -441,7 +403,7 @@ console.log(val)
 })
 ```
 
-## 12. js原型链，原型链的顶端是什么？Object的原型是什么？Object的原型的原型是什么？在数组原型链上实现删除数组重复数据的方法
+## js原型链，原型链的顶端是什么？Object的原型是什么？Object的原型的原型是什么？在数组原型链上实现删除数组重复数据的方法
 
 首先明白原型是什么，在ES6之前，JS没有类和继承的概念，JS是通过原型来实现继承的，在JS中一个构造函数默认带有一个prototype属性，这个的属性值是一个对象，同时这个prototype对象自带有一个constructor属性，这个属性指向这个构造函数，同时每一个实例都会有一个_proto_属性指向这个prototype对象，我们可以把这个叫做隐式原型，我们在使用一个实例的方法的时候，会先检查这个实例中是否有这个方法，没有的话就会检查这个prototype对象是否有这个方法，
 
@@ -453,10 +415,10 @@ console.log(val)
 
 搜寻轨迹：instance1->instance2->constructor2.prototype……->Object.prototype;这即是原型链，原型链顶端是Object.prototype
 
-## 13.  let const var的区别 
+## let const var的区别 
 提起这三个最明显的区别是var声明的变量是全局或者整个函数块的，而let,const声明的变量是块级的变量，var声明的变量存在变量提升，let,const不存在，let声明的变量允许重新赋值，const不允许
 
-## 14.  ES6箭头函数的特性
+## ES6箭头函数的特性
 
 箭头函数与普通函数的区别在于：
 
@@ -466,7 +428,7 @@ console.log(val)
 
 3、不能通过new关键字调用，同样也没有new.target值和原型
 
-## 15. call和apply是用来做什么？
+## call和apply是用来做什么？
 
 Call和apply的作用是一模一样的，只是传参的形式有区别而已
 1、改变this的指向
@@ -476,7 +438,7 @@ Call和apply的作用是一模一样的，只是传参的形式有区别而已
 3、调用函数，因为apply，call方法会使函数立即执行
 
 
-## 16. ajax返回的状态
+## ajax返回的状态
 
 0 － （未初始化）还没有调用send()方法
 1 － （载入）已调用send()方法，正在发送请求
@@ -484,7 +446,7 @@ Call和apply的作用是一模一样的，只是传参的形式有区别而已
 3 － （交互）正在解析响应内容
 4 － （完成）响应内容解析完成，可以在客户端调用了
 
-## 17.  如何实现一个ajax请求？如果我想发出两个有顺序的ajax需要怎么做？
+## 如何实现一个ajax请求？如果我想发出两个有顺序的ajax需要怎么做？
 
 
 AJAX创建异步对象XMLHttpRequest
@@ -502,7 +464,7 @@ AJAX创建异步对象XMLHttpRequest
 
 发出两个有顺序的ajax，可以用回调函数，也可以使用Promise.then或者async等。
 
-## 18.react的生命周期函数
+## react的生命周期函数
 
 初始化
 1、getDefaultProps()

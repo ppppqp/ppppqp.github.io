@@ -1,8 +1,9 @@
 ---
-layout: post
+
 title:  "HTML5新增特性"
 date:   2021-03-09 20:29:23 +0800
-categories: Front-end Note
+categories: Front-end HTML Note
+toc: true
 ---
 # HTML5 新增特性
 只有IE9+能支持！
