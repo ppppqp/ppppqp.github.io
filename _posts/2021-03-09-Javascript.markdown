@@ -461,6 +461,7 @@ btn.onclick = function(){
 ```
 
 获得样式/属性
+
 ```javascript
 /*style, class*///样式属性——————————————
 div.style.backgroundColor = "pruple";
@@ -685,6 +686,7 @@ fragment|片段（#）
 ### 5.4 Location对象
 
 包含了网站信息
+
 |location属性|说明
 |---|---|
 `location.href`|url
@@ -710,12 +712,14 @@ div.innerHTML = arr[1];
 ```
 ### 5.5 navigator对象
 包含了浏览器信息
+
 |navigator属性|说明
 |---|---|
 `navigator.userAgent`|浏览器的类型（手机/）
 
 ### 5.6 history对象
 与历史记录交互
+
 |location属性|说明
 |---|---|
 `history.back()`|后退

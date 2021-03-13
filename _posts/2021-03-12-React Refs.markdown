@@ -5,8 +5,6 @@ date:   2021-03-12 20:29:23 +0800
 categories: Front-end Note
 ---
 
-<link rel="stylesheet" type="text/css" media="all" href="{{site.url}}/style/index.css" />
-<div class="TOC">
 <!-- TOC -->
 
 - [React Ref](#react-ref)
@@ -17,8 +15,7 @@ categories: Front-end Note
 - [Forwarding Refs](#forwarding-refs)
 
 <!-- /TOC -->
-</div>
-<div class= "content">
+
 # React Ref
 [React API](https://reactjs.org/docs/refs-and-the-dom.html)
 
@@ -190,4 +187,57 @@ class Parent extends React.Component {
 In this way, `this.inputElement` in parent node will be set to the DOM node corresponding ot the `<input>` element in the child node
 
 # Forwarding Refs
-</div>
+
+Ref forwarding is an opt-in feature that lets some components take a ref they receive, and pass it further down (in other words, “forward” it) to a child.
+
+React.forwardRef accepts a render function. 
+```js
+// FancyButton opbtains the ref passed to it
+// and forward it to the button it renders.
+const FancyButton = React.forwardRef((props, ref) => (
+  // the ref params only exists with fowardRef call
+  <button ref={ref} className="FancyButton">
+    {props.children}
+  </button>
+));
+
+// You can now get a ref directly to the DOM button:
+const ref = React.createRef();
+<FancyButton ref={ref}>Click me!</FancyButton>;
+```
+
+
+```js
+//better example
+import React, { Component, createRef, forwardRef } from 'react';
+
+// to use forwardRef, the child has to be declared in this form
+const FocusInput = forwardRef((props, ref) => (
+    <input type="text" ref={ref} />
+));
+
+class ForwardRef extends Component {
+    constructor(props) {
+        super(props);
+        this.ref = createRef();
+        //although this ref is passed as props to FocusInput
+        //it is forwarded to its child so it is binded to the 
+        // grandchild (input component)
+    }
+
+    componentDidMount() {
+        const { current } = this.ref;
+        current.focus();
+    }
+
+    render() {
+        return (
+            <div>
+                <p>forward ref</p>
+                <FocusInput ref={this.ref} />
+            </div>
+        );
+    }
+}
+export default ForwardRef;
+```

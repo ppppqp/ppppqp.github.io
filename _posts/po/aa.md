@@ -1,0 +1,1 @@
+When converting between these two elements, React knows to only modify the color style, not the fontWeight.

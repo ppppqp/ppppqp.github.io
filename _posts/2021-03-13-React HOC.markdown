@@ -1,0 +1,149 @@
+---
+layout: post
+title:  "React Higher-Order Components"
+date:   2021-03-13 9:29:23 +0800
+categories: Front-end Note
+---
+
+<!-- TOC -->
+
+- [Higher-Order Components](#higher-order-components)
+  - [Caveat](#caveat)
+    - [Don’t Use HOCs Inside the render Method](#dont-use-hocs-inside-the-render-method)
+    - [Static Methods Must Be Copied Over](#static-methods-must-be-copied-over)
+    - [Refs Aren’t Passed Through](#refs-arent-passed-through)
+
+<!-- /TOC -->
+# Higher-Order Components
+
+Concretely, a higher-order component is a function that takes a component and returns a new component.
+
+```jsx
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+```
+Whereas a component transforms props into UI, a higher-order component transforms a component into another component.
+
+For two different components, if their structures are identical, for example:
+* On mount, they add a listener to data source
+* Inside the listener, they call setState whenever the data source changes
+* On unmount, remove the cahnge listener.
+
+We can make abstraction of this strucuture.
+
+We can write a function that creates components, like CommentList and BlogPost, that subscribe to DataSource. The function will accept as one of its arguments a child component that receives the subscribed data as a prop. Let’s call the function withSubscription:
+
+
+
+```jsx
+const CommentListWithSubscription = withSubscription(
+  CommentList,
+  (DataSource) => DataSource.getComments()
+);
+
+const BlogPostWithSubscription = withSubscription(
+  BlogPost,
+  (DataSource, props) => DataSource.getBlogPost(props.id)
+);
+```
+
+While in HOC:
+```jsx
+function withSubscription(WrappedComponent, selectData) {
+  // ...and returns another component...
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+      this.state = {
+        data: selectData(DataSource, props)
+      };
+    }
+
+    componentDidMount() {
+      // ... that takes care of the subscription...
+      DataSource.addChangeListener(this.handleChange);
+    }
+
+    componentWillUnmount() {
+      DataSource.removeChangeListener(this.handleChange);
+    }
+
+    handleChange() {
+      this.setState({
+        data: selectData(DataSource, this.props)
+      });
+    }
+
+    render() {
+      // ... and renders the wrapped component with the fresh data!
+      // Notice that we pass through any additional props
+      return <WrappedComponent data={this.state.data} {...this.props} />;
+    }
+  };
+}
+```
+HOC is:
+* a pure function that doesn't modify the input
+* takes a component and return a new component based on the input
+* Makes an abstraction of "processing" the input component, like retrieving data.
+
+By HOC, we create 
+1. a function that takes a wrapped component and other params that
+2. returns a component that can use the params and component
+___
+The HOC should always be a pure function that doesn't mutate the input component.
+```jsx
+function logProps(InputComponent) {
+  //mutating the inputComponent
+  InputComponent.prototype.componentDidUpdate = function(prevProps) {
+    console.log('Current props: ', this.props);
+    console.log('Previous props: ', prevProps);
+  };
+  // The fact that we're returning the original input is a hint that it has
+  // been mutated.
+  return InputComponent;
+}
+
+// EnhancedComponent will log whenever props are received
+const EnhancedComponent = logProps(InputComponent);
+```
+The problems with this mutating version of HOC:
+*  if you apply another HOC to EnhancedComponent that also mutates componentDidUpdate, the first HOC’s functionality will be overridden! 
+*  Doesn't work with function components (don't have lifecycle methods)
+
+It's better to use composition that returns a new class:
+```jsx
+function logProps(WrappedComponent) {
+  return class extends React.Component {
+    componentDidUpdate(prevProps) {
+      console.log('Current props: ', this.props);
+      console.log('Previous props: ', prevProps);
+    }
+    render() {
+      // Wraps the input component in a container, without mutating it. Good!
+      return <WrappedComponent {...this.props} />;
+    }
+  }
+}
+```
+
+## Caveat
+### Don’t Use HOCs Inside the render Method
+```jsx
+render() {
+  // A new version of EnhancedComponent is created on every render
+  // EnhancedComponent1 !== EnhancedComponent2
+  const EnhancedComponent = enhance(MyComponent);
+  // That causes the entire subtree to unmount/remount each time!
+  return <EnhancedComponent />;
+}
+```
+
+The problem here isn’t just about performance — remounting a component causes the state of that component and all of its children to be lost.
+
+Instead, apply HOCs outside the **component definition so that the resulting component is created only once.** Then, its identity will be consistent across renders. This is usually what you want, anyway.
+
+### Static Methods Must Be Copied Over
+
+
+### Refs Aren’t Passed Through
