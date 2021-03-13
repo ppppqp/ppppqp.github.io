@@ -7,513 +7,770 @@ toc: true
 ---
 
 
-## http & https
-https加密
+## 1. Cookie的利弊
+* Cookie: 小型文本文件，网站为了辨别用户身份，进行session跟踪而储存在用户本地终端上的数据，有用户的客户端计算机暂时或永久保存的信息。
+* 一个Web 站点可能会为每一个访问者产生一个唯一的ID, 然后以 Cookie 文件的形式保存在每个用户的机器上。如果使用浏览器访问 Web, 会看到所有保存在硬盘上的 Cookie。在这个文件夹里每一个文件都是一个由“名/值”对组成的文本文件,另外还有一个文件保存有所有对应的 Web 站点的信息。
 
-## tcp三次握手
+利：
+* 分担服务器存储的负担
+* 持久保存用户信息
+* 扩展性和可用性
+  * 通过编程，控制cookie中session对象的大小
+  * 通过安全传输技术，减少cookie被破解的可能性
+  * cookie中存放不敏感数据
 
+局限性：
+* 最大大约4096字节。
+* 每个domain最多只有20条cookie。
+* 安全性问题：拦截者并不需要直到cookie的意义，只要照原样发送cookie就可以了。
 
-
-## TCP UDP区别
-
-
-TCP|UDP
----|---|
-面向连接|无连接，即时
-1对1|1对多
-可靠|不可靠
-
-## Websocket
-
-1. 什么是WebSocket?
-WebSocket是HTML5中的协议，支持持久连续，http协议不支持持久性连接。Http1.0和HTTP1.1都不支持持久性的链接，HTTP1.1中的keep-alive，将多个http请求合并为1个
-
-2. WebSocket是什么样的协议，具体有什么优点？
-HTTP的生命周期通过Request来界定，也就是Request一个Response，那么在Http1.0协议中，这次Http请求就结束了。在Http1.1中进行了改进，是的有一个connection：Keep-alive，也就是说，在一个Http连接中，可以发送多个Request，接收多个Response。但是必须记住，在Http中一个Request只能对应有一个Response，而且这个Response是被动的，不能主动发起。
-
-WebSocket是基于Http协议的，或者说借用了Http协议来完成一部分握手，在握手阶段与Http是相同的。我们来看一个websocket握手协议的实现，基本是2个属性，upgrade，connection。
-
-
-## Http请求方式
-get,post,put,delete
-head：类似于get请求，只不过返回的响应中没有具体的内容，用户获取报头
-options：允许客户端查看服务器的性能，比如说服务器支持的请求方式等等。
-
-## 几个很实用的BOM属性对象方法?
-
-
-什么是Bom? Bom是浏览器对象。有哪些常用的Bom属性呢？
-1. location对象
-
-location.href-- 返回或设置当前文档的URL
-location.search -- 返回URL中的查询字符串部分。例如 http://www.dreamdu.com/dreamdu.php?id=5&name=dreamdu 返回包括(?)后面的内容?id=5&name=dreamdu
-location.hash -- 返回URL#后面的内容，如果没有#，返回空
-location.host -- 返回URL中的域名部分，例如www.dreamdu.com
-location.hostname -- 返回URL中的主域名部分，例如dreamdu.com
-location.pathname -- 返回URL的域名后的部分。例如 http://www.dreamdu.com/xhtml/ 返回/xhtml/
-location.port -- 返回URL中的端口部分。例如 http://www.dreamdu.com:8080/xhtml/ 返回8080
-location.protocol -- 返回URL中的协议部分。例如 http://www.dreamdu.com:8080/xhtml/ 返回(//)前面的内容http:
-location.assign -- 设置当前文档的URL
-location.replace() -- 设置当前文档的URL，并且在history对象的地址列表中移除这个URL location.replace(url);
-location.reload() -- 重载当前页面
-
-2. history对象
-
-history.go() -- 前进或后退指定的页面数 history.go(num);
-history.back() -- 后退一页
-history.forward() -- 前进一页
-
-3. Navigator对象
-
-navigator.userAgent -- 返回用户代理头的字符串表示(就是包括浏览器版本信息等的字符串)
-navigator.cookieEnabled -- 返回浏览器是否支持(启用)cookie
-
-## http2.0
-
-简要概括：http2.0是基于1999年发布的http1.0之后的首次更新。
-提升访问速度（可以对于，请求资源所需时间更少，访问速度更快，相比http1.0）
-
-* 允许多路复用：
-  多路复用允许同时通过单一的HTTP/2连接发送多重请求-响应信息。改善了：在http1.1中，浏览器客户端在同一时间，针对同一域名下的请求有一定数量限制（连接数量），超过限制会被阻塞。
-
-* 二进制分帧：HTTP2.0会将所有的传输信息分割为更小的信息或者帧，并对他们进行二进制编码
-
-* 首部压缩
-
-* 服务器端推送
-
-
-## Cookie、sessionStorage、localStorage的区别
-共同点：都是保存在浏览器端，并且是同源的
-
-Cookie|localStorage|sessionStorage
----|---|---
-服务器和浏览器来回|不会把数据发送给服务器，只本地保存
-会过期|永久保存|仅仅在当前页面未关闭时有效
-
-
-补充说明一下cookie的作用：
-  * 保存用户登录状态。例如将用户id存储于一个cookie内，这样当用户下次访问该页面时就不需要重新登录了，现在很多论坛和社区都提供这样的功能。 cookie还可以设置过期时间，当超过时间期限后，cookie就会自动消失。因此，系统往往可以提示用户保持登录状态的时间：常见选项有一个月、三个 月、一年等。
-  * 跟踪用户行为。例如一个天气预报网站，能够根据用户选择的地区显示当地的天气情况。如果每次都需要选择所在地是烦琐的，当利用了cookie后就会显得很人性化了，系统能够记住上一次访问的地区，当下次再打开该页面时，它就会自动显示上次用户所在地区的天气情况。因为一切都是在后 台完成，所以这样的页面就像为某个用户所定制的一样，使用起来非常方便定制页面。如果网站提供了换肤或更换布局的功能，那么可以使用cookie来记录用户的选项，例如：背景色、分辨率等。当用户下次访问时，仍然可以保存上一次访问的界面风格。
-
-
-
+---
+<input type = "checkbox"></input>
+## 2. 浏览器本地储存是怎样的
+* 在较高版本的浏览器中，js提供了sessionStorage和globalStorage。在HTML5中提供了localStorage来取代globalStorage。
+* html5中的Web Storage包括了两种存储方式：sessionStorage和localStorage。
+  * sessionStorage用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。
+  * 而localStorage用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。
+---
+<input type = "checkbox"></input>
+## 3. Web storage和cookie的区别
+* Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。
+* 除此之外，Web Storage拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie，getCookie。
+* 但是Cookie也是不可以或缺的：***Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生***
+---
+<input type = "checkbox"></input>
+## 4. display:none和visibility:hidden
+* display:none  隐藏对应的元素，在文档布局中不再给它分配空间，它各边的元素会合拢，就当他从来不存在。
+* visibility:hidden  隐藏对应的元素，但是在文档布局中仍保留原来的空间。
   
-## Doctype作用?严格模式与混杂模式如何区分？它们有何意义?
-Doctype声明于文档最前面，告诉浏览器以何种方式来渲染页面，这里有两种模式，严格模式和混杂模式。
+---
+<input type = "checkbox"></input>
+## 5. CSS中 link 和@import 的区别是？
+1. `link`属于HTML标签，而`@import`是CSS提供的;
 
-* 严格模式的排版和JS 运作模式是 以该浏览器支持的最高标准运行。
+2. 页面被加载的时，`link`会同时被加载，而`@import`引用的CSS会等到页面被加载完再加载;
 
-* 混杂模式，向后兼容，模拟老式浏览器，防止浏览器无法兼容页面。
+3. import只在IE5以上才能识别，而link是HTML标签，无兼容问题;
 
+---
+<input type = "checkbox"></input>
+## 6. position的absolute与fixed共同点与不同点:
+* 共同点：
+  1. 改变行内元素的呈现方式，display被置为inline-block；
+  2. 让元素脱离普通流，不占据空间；
+  3. 默认会覆盖到非定位元素上
+* 不同点：\
+  absolute的”根元素“是可以设置的，而fixed的”根元素“固定为浏览器窗口。
+当你滚动网页，fixed元素与浏览器窗口之间的距离是不变的。
 
-## 讲讲viewport和移动端布局
-响应式布局，mediaquery, rem, 百分比
-
-
-## Cookie, Session区别
-
-Cookie|Session
----|---|
-数据存放在浏览器上|数据存放在服务器上
-不安全|安全
-数据量小，但不耗费服务器|耗费服务器
-
-
-## 浏览器缓存
-
-缓存分为两种：强缓存和协商缓存，根据响应的header内容来决定。
-强缓存相关字段有expires，cache-control。
-* Expires是一个绝对时间，即服务器时间。浏览器检查当前时间，如果还没到失效时间就直接使用缓存文件。但是该方法存在一个问题：服务器时间与客户端时间可能不一致。因此该字段已经很少使用。
-* cache-control中的max-age保存一个相对时间。例如Cache-Control: max-age = 484200，表示浏览器收到文件后，缓存在484200s内均有效。 如果同时存在cache-control和Expires，浏览器总是优先使用cache-control。
-
-协商缓存相关字段有Last-Modified/If-Modified-Since，Etag/If-None-Match
-
-* last-modified是第一次请求资源时，服务器返回的字段，表示最后一次更新的时间。下一次浏览器请求资源时就发送if-modified-since字段。服务器用本地Last-modified时间与if-modified-since时间比较，如果不一致则认为缓存已过期并返回新资源给浏览器；如果时间一致则发送304状态码，让浏览器继续使用缓存。
-
-* Etag：资源的实体标识（哈希字符串），当资源内容更新时，Etag会改变。服务器会判断Etag是否发生变化，如果变化则返回新资源，否则返回304。
+___
+<input type = "checkbox"></input>
+## 7. CSS盒子模型:
+* 盒子模型：
+  * 内容(content)：盒子内容的大小
+  * 填充(padding)：content到border的距离
+  * * 边框(border)：边框
+  * 边界(margin)：边框到父元素或其他元素的距离
 
 
+  ![box](images/box.jpeg)
 
-## 输入一个url，到这个页面呈现出来，中间发生了什么
-输入url后，首先需要找到这个url域名的服务器ip,为了寻找这个ip，浏览器首先会寻找缓存，查看缓存中是否有记录，缓存的查找记录为：浏览器缓存-》系统缓存-》路由器缓存，缓存中没有则查找系统的hosts文件中是否有记录，如果没有则查询DNS服务器，得到服务器的ip地址后，浏览器根据这个ip以及相应的端口号，构造一个http请求，这个请求报文会包括这次请求的信息，主要是请求方法，请求说明和请求附带的数据，并将这个http请求封装在一个tcp包中，这个tcp包会依次经过传输层，网络层，数据链路层，物理层到达服务器，服务器解析这个请求来作出响应，返回相应的html给浏览器，因为html是一个树形结构，浏览器根据这个html来构建DOM树，在dom树的构建过程中如果遇到JS脚本和外部JS连接，则会停止构建DOM树来执行和下载相应的代码，这会造成阻塞，这就是为什么推荐JS代码应该放在html代码的后面，之后根据外部央视，内部央视，内联样式构建一个CSS对象模型树CSSOM树，构建完成后和DOM树合并为渲染树，这里主要做的是排除非视觉节点，比如script，meta标签和排除display为none的节点，之后进行布局，布局主要是确定各个元素的位置和尺寸，之后是渲染页面，因为html文件中会含有图片，视频，音频等资源，在解析DOM的过程中，遇到这些都会进行并行下载，浏览器对每个域的并行下载数量有一定的限制，一般是4-6个，当然在这些所有的请求中我们还需要关注的就是缓存，缓存一般通过Cache-Control、Last-Modify、Expires等首部字段控制。 Cache-Control和Expires的区别在于Cache-Control使用相对时间，Expires使用的是基于服务器 端的绝对时间，因为存在时差问题，一般采用Cache-Control，在请求这些有设置了缓存的数据时，会先 查看是否过期，如果没有过期则直接使用本地缓存，过期则请求并在服务器校验文件是否修改，如果上一次 响应设置了ETag值会在这次请求的时候作为If-None-Match的值交给服务器校验，如果一致，继续校验 Last-Modified，没有设置ETag则直接验证Last-Modified，再决定是否返回304
+___
+ <input type = "checkbox"></input> 
+## CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？ CSS3新增伪类有那些？
 
+CSS 选择符：
+1. id选择器(# myid)
+2. 类选择器(.myclassname)
+3. 标签选择器(div, h1, p)
+4. 相邻选择器(h1 + p)
+5. 子选择器(ul > li)
+6. 后代选择器(li a)
+7. 通配符选择器( * )
+8. 属性选择器(a[rel = "external"])
+9. 伪类选择器(a: hover, li:nth-child)
 
-1. 浏览器的地址栏输入URL并按下回车。
+可继承的样式：
+1. font-size
+2. font-family
+3. color
+4. text-indent
 
-2. 浏览器查找当前URL是否存在缓存，并比较缓存是否过期。
+不可继承的样式：
+1. border
+2. padding
+3. margin
+4. width
+5. height
 
-3. DNS解析URL对应的IP。
-   1. 如果本地hosts文件有网址的映射关系，则调用
-    2. 若没有，则使用DNS服务器解析。
-4. 根据IP建立TCP连接（三次握手）。
-   1. 第一次握手： 建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认； 
-   2. 第二次握手： 服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；
-    3. 第三次握手： 客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。
+优先级算法：
+1. 优先级就近原则，同权重情况下样式定义最近者为准;
+2. 载入样式以最后载入的定位为准;
+3. !important >  id > class > tag  
+4. important 比 内联优先级高，但内联比 id 要高
 
-![](images/tcp.png)
+CSS3新增伪类举例：
+`p:first-of-type` 选择属于其父元素的首个 <p> 元素的每个 <p> 元素。
+`p:last-of-type`  选择属于其父元素的最后 <p> 元素的每个 <p> 元素。
+`p:only-of-type ` 选择属于其父元素唯一的 <p> 元素的每个 <p> 元素。
+`p:only-child`    选择属于其父元素的唯一子元素的每个 <p> 元素。
+`p:nth-child(2)`  选择属于其父元素的第二个子元素的每个 <p> 元素。
+`:enabled :disabled` 控制表单控件的禁用状态。
+`:checked`        单选框或复选框被选中。
 
-5. HTTP发起请求。
-完整的HTTP请求包含请求起始行、请求头部、请求主体三部分。
-6. 服务器处理请求，浏览器接收HTTP响应。
-服务器在收到浏览器发送的HTTP请求之后，会将收到的HTTP报文封装成HTTP的Request对象，并通过不同的Web服务器进行处理，处理完的结果以HTTP的Response对象返回，主要包括状态码，响应头，响应报文三个部分.
-7. 渲染页面，构建DOM树。
-   在浏览器还没接收到完整的 HTML 文件时，它就开始渲染页面了，在遇到外部链入的脚本标签或样式标签或图片时，会再次发送 HTTP 请求重复上述的步骤。在收到 CSS 文件后会对已经渲染的页面重新渲染，加入它们应有的样式，图片文件加载完立刻显示在相应位置。在这一过程中可能会触发页面的重绘或重排。这里就涉及了两个重要概念：Reflow和Repaint。
-　　Reflow，也称作Layout，中文叫回流，一般意味着元素的内容、结构、位置或尺寸发生了变化，需要重新计算样式和渲染树，这个过程称为Reflow。
-　　Repaint，中文重绘，意味着元素发生的改变只是影响了元素的一些外观之类的时候（例如，背景色，边框颜色，文字颜色等），此时只需要应用新样式绘制这个元素就OK了，这个过程称为Repaint。
+---
+<input type = "checkbox"></input>
+## 列出display的值，说明他们的作用。position的值， relative和absolute分别是相对于谁进行定位的？
 
-8. 关闭TCP连接（四次挥手)
-   ![](images/tcpend.png)
+display 的值的作用：
+1. block 象块类型元素一样显示。
+2. inline 缺省值。象行内元素类型一样显示。
+3. inline-block 象行内元素一样显示，但其内容象块类型元素一样显示。
+4. list-item 象块类型元素一样显示，并添加样式列表标记。
 
-  * 第一次挥手是浏览器发完数据后，发送FIN请求断开连接。
+position 的值的定位区别：
+1. absolute 生成绝对定位的元素，相对于 static 定位以外的第一个祖先元素进行定位。
+2. fixed 生成固定定位的元素，相对于浏览器窗口进行定位（老IE不支持）。
+3. relative 生成相对定位的元素，相对于其在普通流中的位置进行定位。
+4. static 默认值。没有定位，元素出现在正常的流中（忽略 top, bottom, left, right z-index 声明）。
+5. inherit 规定从父元素继承 position 属性的值。
+ ___
+<input type = "checkbox"></input>
+## 10. CSS3有哪些新特性？
+1. CSS3实现圆角（border-radius），阴影（box-shadow），
+2. 对文字加特效（text-shadow、），线性渐变（gradient），旋转（transform）
+3. transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);// 旋转,缩放,定位,倾斜
+4. 增加了更多的CSS选择器  多背景 rgba
+5. 在CSS3中唯一引入的伪类是 ::selection.
+6. 媒体查询，多栏布局
+7. border-image
+___
+<input type = "checkbox"></input>
+## 11.为什么要初始化CSS样式
+因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
+当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化。
+___
+<input type = "checkbox"></input>
+<h2 > <font color = blue>12. 对BFC规范的理解？</font></h2>
 
-  * 第二次挥手是服务器发送ACK表示同意，如果在这一次服务器也发送FIN请求断开连接似乎也没有不妥，但考虑到服务器可能还有数据要发送，所以服务器发送FIN应该放在第三次挥手中。
+BFC，块级格式化上下文，一个创建了新的BFC的盒子是独立布局的，盒子里面的子元素的样式不会影响到外面的元素。在同一个 BFC 中的两个毗邻的块级盒在垂直方向（和布局方向有关系）的 margin 会发生折叠。
 
-* 这样浏览器需要返回ACK表示同意，也就是第四次挥手。
+W3C CSS 2.1 规范中的一个概念，它决定了元素如何对其内容进行布局，以及与其他元素的关系和相互作用。
 
+___
+<input type = "checkbox"></input>
+## 13. 解释下 CSS sprites，以及你要如何在页面或网站中使用它。
 
+CSS Sprites 其实就是把网页中一些背景图片整合到一张图片文件中，再利用 CSS 的"background-image"，"background-repeat"，"background-position" 的组合进行背景定位，background-position 可以用数字能精确的定位出背景图片的位置。这样可以减少很多图片请求的开销，因为请求耗时比较长；请求虽然可以并发，但是也有限制，一般浏览器都是6个。对于未来而言，就不需要这样做了，因为有了 http2。
 
-## HTTP2.0 的特性
+___
+<input type = "checkbox"></input>
+ ## 14. 说说你对语义化的理解？
 
-http2.0的特性如下：
-1. 内容安全，应为http2.0是基于https的，天然具有安全特性，通过http2.0的特性可以避免单纯使用https的性能下降
+1. 去掉或者丢失样式的时候能够让页面呈现出清晰的结构
+2. 有利于SEO：和搜索引擎建立良好沟通，有助于爬虫抓取更多的有效信息：爬虫依赖于标签来确定上下文和各个关键字的权重；
+3. 方便其他设备解析（如屏幕阅读器、盲人阅读器、移动设备）以意义的方式来渲染网页；
+4. 便于团队开发和维护，语义化使得网页更具可读性，是进一步开发网页的必要步骤，遵循W3C标准的团队都遵循这个标准，可以减少差异化。
 
-2. 二进制格式，http1.X的解析是基于文本的，http2.0将所有的传输信息分割为更小的消息和帧，并对他们采用二进制格式编码，基于二进制可以让协议有更多的扩展性，比如引入了帧来传输数据和指令
+___
+<input type = "checkbox"></input>
+## 15. Doctype作用? 严格模式与混杂模式如何区分？它们有何意义?
 
-3. 多路复用，这个功能相当于是长连接的增强，每个request请求可以随机的混杂在一起，接收方可以根据request的id将request再归属到各自不同的服务端请求里面，另外多路复用中也支持了流的优先级，允许客户端告诉服务器那些内容是更优先级的资源，可以优先传输，
-
-
-## 浏览器在生成页面的时候，会生成那两颗树？
-
-构造两棵树，DOM树和CSSOM规则树
-当浏览器接收到服务器相应来的HTML文档后，会遍历文档节点，生成DOM树，
-
-CSSOM规则树由浏览器解析CSS文件生成，
-
-
-____
-## BFC（块级格式化上下文，用于清楚浮动，防止margin重叠等）
-直译成：块级格式化上下文，是一个独立的渲染区域，并且有一定的布局规则。
-BFC区域不会与float box重叠
-
-BFC是页面上的一个独立容器，子元素不会影响到外面
-
-计算BFC的高度时，浮动元素也会参与计算
-
-那些元素会生成BFC：
-
-根元素
-
-float不为none的元素
-
-position为fixed和absolute的元素
-
-display为inline-block、table-cell、table-caption，flex，inline-flex的元素
-
-overflow不为visible的元素
-
-## visibility=hidden, opacity=0，display:none
-||`opacity = 0`|`visibility = hidden`| `display: none`
-|---|---|---|---|
-改变页面布局|no|no|yes
-可触发事件|yes|no|no
-
-
-## 水平居中，垂直居中
-1. margin 0 auto
-2. position: absolute; left: 50%; top: 50%;
-3. transform: translate(-50%,-50%);
-4. display: flex, align-items: center; justify-content: center
+1. `<!DOCTYPE> `声明位于文档中的最前面，处于` <html> `标签之前。告知浏览器以何种模式来渲染文档。 
+2. 严格模式的排版和 JS 运作模式是  以该浏览器支持的最高标准运行。
+3. 在混杂模式中，页面以宽松的向后兼容的方式显示。模拟老式浏览器的行为以防止站点无法工作。
+4. DOCTYPE不存在或格式不正确会导致文档以混杂模式呈现。 
 
 
 ___
-## JS类的创建和继承
-类的创建
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>16. 你知道多少种Doctype文档类型？</font></h2>
+1. 该标签可声明三种 DTD 类型，分别表示严格版本、过渡版本以及基于框架的 HTML 文档。
+2. HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。
+3. XHTML 1.0 规定了三种 XML 文档类型：Strict、Transitional 以及 Frameset。
+4. Standards （标准）模式（也就是严格呈现模式）用于呈现遵循最新标准的网页，而 Quirks（包容）模式（也就是松散呈现模式或者兼容模式）用于呈现为传统浏览器而设计的网页。
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>17. HTML与XHTML——二者有什么区别</font></h2>
+
+最主要的不同：
+
+* XHTML 元素必须被正确地嵌套。
+* XHTML 元素必须被关闭。
+* 标签名必须用小写字母。
+* XHTML 文档必须拥有根元素。
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>18. html常见兼容性问题？</font></h2>
+
+1. png24位的图片在iE6浏览器上出现背景
+解决方案：做成PNG8，也可以引用一段脚本处理.
+
+2. 浏览器默认的margin和padding不同
+解决方案：加一个全局的 *{margin:0;padding:0;} 来统一。
+
+5. IE下，可以使用获取常规属性的方法来获取自定义属性，也可以使用 getAttribute() 获取自定义属性；Firefox下,只能使用getAttribute()获取自定义属性
+解决方法：统一通过getAttribute()获取自定义属性
+
+6. IE下，event对象有 x、y 属性，但是没有 pageX、pageY属性; Firefox下，event对象有 pageX、pageY 属性，但是没有 x、y 属性
+解决方法：（条件注释）缺点是在IE浏览器下可能会增加额外的HTTP请求数。
+
+7. Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示
+解决方法：可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决
+
+8. 超链接访问过后 hover 样式就不出现了，被点击访问过的超链接样式不在具有 hover 和 active 了
+解决方法：改变CSS属性的排列顺序 L-V-H-A
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font>20. 解释下浮动和它的工作原理？清除浮动的技巧</font></h2>
+
+浮动元素脱离文档流，不占据空间。浮动元素碰到包含它的边框或者浮动元素的边框停留。
+
+1. 使用空标签清除浮动。
+这种方法是在所有浮动标签后面添加一个空标签 定义css clear:both. 弊端就是增加了无意义标签。
+
+2. 使用overflow。
+给包含浮动元素的父标签添加css属性 overflow:auto; zoom:1; zoom:1用于兼容IE6。
+
+3. 使用after伪对象清除浮动。
+该方法只适用于非IE浏览器。具体写法可参照以下示例。使用中需注意以下几点。一、该方法中必须为需要清除浮动元素的伪对象中设置 height:0，否则该元素会比实际高出若干像素；
+
+可以给父元素设置`overflow：auto`或者`hidden`
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font>21. IE 8以下版本的浏览器中的盒模型有什么不同</font></h2>
+IE8以下浏览器的盒模型中定义的元素的宽高包括内边距和边框
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>22. DOM操作——怎样添加、移除、移动、复制、创建和查找节点。</font></h2>
+1. 创建新节点
+
+```
+createDocumentFragment() // 创建一个DOM片段
+createElement() // 创建一个具体的元素
+createTextNode() // 创建一个文本节点
+```
+
+1. 添加、移除、替换、插入
+  
+```
+appendChild()
+removeChild()
+replaceChild()
+insertBefore() // 在已有的子节点前插入一个新的子节点
+```
+
+1. 查找
+```
+getElementsByTagName() // 通过标签名称
+getElementsByName() // 通过元素的Name属性的值(IE容错能力较强，会得到一个数组，其中包括id等于name值的)
+getElementById() // 通过元素Id，唯一性
+```
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>23. html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？</font></h2>
+
+
+新特性：
+HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。
+1. 拖拽释放(Drag and drop) API 
+2. 语义化更好的内容标签（header,nav,footer,aside,article,section）
+3. 音频、视频API(audio,video)
+4. 画布(Canvas) API
+5. 地理(Geolocation) API
+6. 本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；
+7. sessionStorage 的数据在浏览器关闭后自动删除
+8. 表单控件，calendar、date、time、email、url、search  
+9. 新的技术webworker, websocket, Geolocation
+
+移除的元素：
+1. 纯表现的元素：basefont，big，center，font, s，strike，tt，u；
+2. 对可用性产生负面影响的元素：frame，frameset，noframes；
+
+支持HTML5新标签：
+1. IE8/IE7/IE6支持通过 document.createElement 方法产生的标签，可以利用这一特性让这些浏览器支持 HTML5 新标签，浏览器支持新标签后，还需要添加标签默认的样式（当然最好的方式是直接使用成熟的框架、使用最多的是html5shiv框架）：
+```html
+<!--[if lt IE 9]> 
+<script> src="http://html5shiv.googlecode.com/svn/trunk/html5.js"</script> 
+<![endif]--> 
+```
+如何区分： 
+DOCTYPE声明新增的结构元素、功能元素
+
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>24. iframe的优缺点？</font></h2>
+优点：
+1. 解决加载缓慢的第三方内容如图标和广告等的加载问题
+2. Security sandbox
+3. 并行加载脚本
+
+缺点：
+1. iframe会阻塞主页面的Onload事件
+2. 即时内容为空，加载也需要时间
+3. 没有语意
+ ___
+
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>25.如何实现浏览器内多个标签页之间的通信?</font></h2>
+调用 localstorge、cookies 等本地存储方式
+
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>26.webSocket 如何兼容低浏览器？?</font></h2>
+Adobe Flash Socket 、 ActiveX HTMLFile (IE) 、 基于 multipart 编码发送 XHR 、 基于长轮询的 XHR
+
+
+___
+
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>27.线程与进程的区别?</font></h2>
+
+1. 一个程序至少有一个进程,一个进程至少有一个线程
+2. 线程的划分尺度小于进程，使得多线程程序的并发性高
+3. 另外，进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率
+4. 线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制 
+5. 从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。这就是进程和线程的重要区别
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>28.你如何对网站的文件和资源进行优化？?</font></h2>
+
+期待的解决方案包括：
+1. 文件合并
+2. 文件最小化/文件压缩
+3. 使用 CDN 托管
+4. 缓存的使用（多个域名来提供缓存）
+5. 其他
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>29请说出三种减少页面加载时间的方法</font></h2>
+
+1. 优化图片 
+2. 图像格式的选择（GIF：提供的颜色较少，可用在一些对颜色要求不高的地方） 
+3. 优化CSS（压缩合并css，如 margin-top, margin-left...) 
+4. 网址后加斜杠（如 www.campr.com/ 目录，会判断这个目录是什么文件类型，或者是目录。） 
+5. 标明高度和宽度（如果浏览器没有找到这两个参数，它需要一边下载图片一边计算大小，如果图片很多，浏览器需要不断地调整页面。这不但影响速度，也影响浏览体验。 
+当浏览器知道了高度和宽度参数后，即使图片暂时无法显示，页面上也会腾出图片的空位，然后继续加载后面的内容。从而加载时间快了，浏览体验也更好了） 
+6. 减少http请求（合并文件，合并图片）
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>31.什么是 FOUC（无样式内容闪烁）？你如何来避免 FOUC？
+</font></h2>
+
+FOUC - Flash Of Unstyled Content 文档样式闪烁
+
+```<style type="text/css" media="all">@import "../fouc.css";</style> ```
+
+而引用CSS文件的@import就是造成这个问题的罪魁祸首。IE会先加载整个HTML文档的DOM，然后再去导入外部的CSS文件，因此，在页面DOM加载完成到CSS导入完成中间会有一段时间页面上的内容是没有样式的，这段时间的长短跟网速，电脑速度都有关系。
+解决方法简单的出奇，只要在```<head>之间加入一个<link>或者<script>元素就可以了```
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>32.null和undefined的区别？
+</font></h2>
+
+null是一个表示"无"的对象，转为数值时为0
+undefined是一个表示"无"的原始值，转为数值时为NaN
+
+当声明的变量还未被初始化时，变量的默认值为undefined
+null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象
+
+undefined表示 “缺少值”，就是此处应该有一个值，但是还没有定义。典型用法是：
+1. 变量被声明了，但没有赋值时，就等于 undefined
+2. 调用函数时，应该提供的参数没有提供，该参数等于 undefined
+3. 对象没有赋值的属性，该属性的值为 undefined
+4. 函数没有返回值时，默认返回 undefined
+
+null表示“没有对象”，即该处不应该有值。典型用法是：
+1. 作为函数的参数，表示该函数的参数不是对象
+2. 作为对象原型链的终点
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>33.new操作符具体干了什么呢?
+</font></h2>
+
+
+1. 创建一个空对象，并且 this 变量引用该对象，同时还继承了该函数的原型
+2. 属性和方法被加入到 this 引用的对象中
+3. 新创建的对象由 this 所引用，并且最后隐式的返回 this
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>34.对JSON 的了解？
+</font></h2>
+
+JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。它是基于JavaScript的一个子集。数据格式简单, 易于读写, 占用带宽小。
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>35.js延迟加载的方式有哪些？
+</font></h2>
+
+1. defer和async
+2. 动态创建DOM方式（创建script，插入到DOM中，加载完毕后callBack）
+3. 按需异步载入js
+
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>35.js延迟加载的方式有哪些？
+</font></h2>
+
+document.write 只能重绘整个页面
+
+innerHTML 可以重绘页面的一部分
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>36.call() 和 .apply() 的作用？
+</font></h2>动态改变某个类的某个方法的运行环境
+
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>37.哪些操作会造成内存泄漏？
+</font></h2>
+内存泄漏指任何对象在您不再拥有或需要它之后仍然存在。
+垃圾回收器定期扫描对象，并计算引用了每个对象的其他对象的数量。如果一个对象的引用数量为 0（没有其他对象引用过该对象），或对该对象的惟一引用是循环的，那么该对象的内存即可回收。
+
+1. setTimeout 的第一个参数使用字符串而非函数的话，会引发内存泄漏。
+2. 闭包
+3. 控制台日志
+4. 循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>37.如何判断当前脚本运行在浏览器还是node环境中？
+</font></h2>
+
+通过判断 Global 对象是否为window，如果不为window，当前脚本没有运行在浏览器中。即在node中的全局变量是global ,浏览器的全局变量是window。 可以通过该全局变量是否定义来判断宿主环境
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>44.你有哪些性能优化的方法？
+</font></h2>
+
+1. 减少http请求次数：CSS Sprites, JS、CSS 源码压缩、图片大小控制合适；网页 Gzip，CDN 托管，data 缓存 ，图片服务器
+2. 前端模板 JS + 数据，减少由于HTML标签导致的带宽浪费，前端用变量保存 AJAX 请求结果，每次操作本地变量，不用请求，减少请求次数
+3. 用 innerHTML 代替 DOM 操作，减少 DOM 操作次数，优化 javascript 性能
+4. 当需要设置的样式很多时设置 className 而不是直接操作 style
+5. 少用全局变量、缓存DOM节点查找的结果。减少 IO 读取操作
+6. 避免使用 CSS Expression（css表达式)又称 Dynamic properties(动态属性)
+7. 图片预加载，将样式表放在顶部，将脚本放在底部，加上时间戳
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>46.一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？
+</font></h2>
+
+分为4个步骤：
+1. 当发送一个 URL 请求时，不管这个 URL 是 Web 页面的 URL 还是 Web 页面上每个资源的 URL，浏览器都会开启一个线程来处理这个请求，同时在远程 DNS 服务器上启动一个 DNS 查询。这能使浏览器获得请求对应的 IP 地址。
+2. 浏览器与远程 Web 服务器通过 TCP 三次握手协商来建立一个 TCP/IP 连接。该握手包括一个同步报文，一个同步-应答报文和一个应答报文，这三个报文在 浏览器和服务器之间传递。该握手首先由客户端尝试建立起通信，而后服务器应答并接受客户端的请求，最后由客户端发出该请求已经被接受的报文。
+3. 一旦 TCP/IP 连接建立，浏览器会通过该连接向远程服务器发送 HTTP 的 GET 请求。远程服务器找到资源并使用 HTTP 响应返回该资源，值为 200 的 HTTP 响应状态表示一个正确的响应。
+4. 此时，Web 服务器提供资源服务，客户端开始下载资源。
+
+请求返回后，便进入了我们关注的前端模块
+简单来说，浏览器会解析 HTML 生成 DOM Tree，其次会根据 CSS 生成 CSS Rule Tree，而 javascript 又可以根据 DOM API 操作 DOM
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>47.javascript对象的几种创建方式
+</font></h2>
+
+创建方式：
+1. 工厂模式
+2. 构造函数模式
+3. 原型模式
+4. 混合构造函数和原型模式
+5. 动态原型模式
+6. 寄生构造函数模式
+7. 稳妥构造函数模式
+
+继承方法：
+1. 原型链继承
+2. 借用构造函数继承
+3. 组合继承(原型+借用构造)
+4. 原型式继承
+5. 寄生式继承
+6. 寄生组合式继承
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>51.javascript对象的几种创建方式
+</font></h2>
+
+
+1. 创建XMLHttpRequest对象,也就是创建一个异步调用对象
+2. 创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息
+3. 设置响应HTTP请求状态变化的函数
+4. 发送HTTP请求
+5. 获取异步调用返回的数据
+6. 使用JavaScript和DOM实现局部刷新
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>52.异步加载和延迟加载
+</font></h2>
+
+
+1. 异步加载的方案： 动态插入 script 标签
+2. 通过 ajax 去获取 js 代码，然后通过 eval 执行
+3. script 标签上添加 defer 或者 async 属性
+4. 创建并插入 iframe，让它异步执行 js
+5. 延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>58.请解释一下 JavaScript 的同源策略。
+</font></h2>
+
+概念：
+同源策略是客户端脚本（尤其是Javascript）的重要的安全度量标准。它最早出自Netscape Navigator2.0，其目的是防止某个文档或脚本从多个不同源装载。
+这里的同源策略指的是：协议，域名，端口相同，同源策略是一种安全协议，指一段脚本只能读取来自同一来源的窗口和文档的属性。
+
+为什么要有同源限制：
+我们举例说明：比如一个黑客程序，他利用Iframe把真正的银行登录页面嵌到他的页面上，当你使用真实的用户名，密码登录时，他的页面就可以通过Javascript读取到你的表单中input中的内容，这样用户名，密码就轻松到手了。
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>61.GET和POST的区别，何时使用POST？
+</font></h2>
+
+
+GET：一般用于信息获取，使用URL传递参数，对所发送信息的数量也有限制，一般在2000个字符
+POST：一般用于修改服务器上的资源，对所发送的信息没有限制
+
+GET方式需要使用 Request.QueryString 来取得变量的值
+POST方式通过 Request.Form 来获取变量的值
+也就是说 Get 是通过地址栏来传值，而 Post 是通过提交表单来传值。
+
+在以下情况中，请使用 POST 请求：
+1. 无法使用缓存文件（更新服务器上的文件或数据库）
+2. 向服务器发送大量数据（POST 没有数据量限制）
+3. 发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>62.哪些地方会出现css阻塞，哪些地方会出现js阻塞？
+</font></h2>
+
+js 的阻塞特性：所有浏览器在下载 JS 的时候，会阻止一切其他活动，比如其他资源的下载，内容的呈现等等。直到 JS 下载、解析、执行完毕后才开始继续并行下载其他资源并呈现内容。为了提高用户体验，新一代浏览器都支持并行下载 JS，但是 JS 下载仍然会阻塞其它资源的下载（例如.图片，css文件等）。
+由于浏览器为了防止出现 JS 修改 DOM 树，需要重新构建 DOM 树的情况，所以就会阻塞其他的下载和呈现。
+嵌入 JS 会阻塞所有内容的呈现，而外部 JS 只会阻塞其后内容的显示，2 种方式都会阻塞其后资源的下载。也就是说外部样式不会阻塞外部脚本的加载，但会阻塞外部脚本的执行。
+
+CSS 怎么会阻塞加载了？CSS 本来是可以并行下载的，在什么情况下会出现阻塞加载了(在测试观察中，IE6 下 CSS 都是阻塞加载）
+当 CSS 后面跟着嵌入的 JS 的时候，该 CSS 就会出现阻塞后面资源下载的情况。而当把嵌入 JS 放到 CSS 前面，就不会出现阻塞的情况了。
+根本原因：因为浏览器会维持 html 中 css 和 js 的顺序，样式表必须在嵌入的 JS 执行前先加载、解析完。而嵌入的 JS 会阻塞后面的资源加载，所以就会出现上面 CSS 阻塞下载的情况。
+
+嵌入JS应该放在什么位置？
+1. 放在底部，虽然放在底部照样会阻塞所有呈现，但不会阻塞资源下载。
+2. 如果嵌入JS放在head中，请把嵌入JS放在CSS头部。
+3. 使用 defer（只支持IE）
+4. 不要在嵌入的JS中调用运行时间较长的函数，如果一定要用，可以用 setTimeout 来调用
+
+Javascript无阻塞加载具体方式：
+1. 将脚本放在底部。`<link>`还是放在head中，用以保证在js加载前，能加载出正常显示的页面。`<script>`标签放在`</body>`前。
+2. 阻塞脚本：由于每个`<script>`标签下载时阻塞页面解析过程，所以限制页面的`<script>`总数也可以改善性能。适用于内联脚本和外部脚本。
+3. 非阻塞脚本：等页面完成加载后，再加载js代码。也就是，在 window.onload 事件发出后开始下载代码。
+4. defer属性：支持IE4和fierfox3.5更高版本浏览器
+5. 动态脚本元素：文档对象模型（DOM）允许你使用js动态创建HTML的几乎全部文档内容。代码如下：
+```html
+<script>
+    var script=document.createElement("script");
+    script.type="text/javascript";
+    script.src="file.js";
+    document.getElementsByTagName("head")[0].appendChild(script);
+</script>
+```
+此技术的重点在于：无论在何处启动下载，文件额下载和运行都不会阻塞其他页面处理过程，即使在head里（除了用于下载文件的 http 链接）。
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>70.Ajax 是什么？Ajax 的交互模型？同步和异步的区别？如何解决跨域问题？
+</font></h2>
+
+Ajax 是什么：
+1. 通过异步模式，提升了用户体验
+2. 优化了浏览器和服务器之间的传输，减少不必要的数据往返，减少了带宽占用
+3. Ajax 在客户端运行，承担了一部分本来由服务器承担的工作，减少了大用户量下的服务器负载。
+
+Ajax 的最大的特点：
+1. Ajax可以实现动态不刷新（局部刷新）
+2. readyState 属性 状态 有5个可取值： 0 = 未初始化，1 = 启动， 2 = 发送，3 = 接收，4 = 完成
+
+Ajax 同步和异步的区别:
+1. 同步：提交请求 -> 等待服务器处理 -> 处理完毕返回，这个期间客户端浏览器不能干任何事
+2. 异步：请求通过事件触发 -> 服务器处理（这是浏览器仍然可以作其他事情）-> 处理完毕
+ajax.open方法中，第3个参数是设同步或者异步。
+
+Ajax 的缺点：
+1. Ajax 不支持浏览器 back 按钮
+2. 安全问题 Ajax 暴露了与服务器交互的细节
+3. 对搜索引擎的支持比较弱
+4. 破坏了程序的异常机制
+5. 不容易调试
+
+解决跨域问题：
+1. jsonp
+2. iframe
+3. window.name、window.postMessage
+4. 服务器上设置代理页面
+
+
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>71.js对象的深度克隆代码实现
+</font></h2>
+
 ```javascript
-//其实就是声明一个constructor
-function Animal (name) {
-// 属性
-  this.name = name || 'Animal';
-// 实例方法
-  this.sleep = function(){
-    console.log(this.name + '正在睡觉！');
+function clone(Obj) {
+    var buf;   
+    if (Obj instanceof Array) {
+        buf = [];  // 创建一个空的数组
+        var i = Obj.length;
+        while (i--) {
+            buf[i] = clone(Obj[i]);
+        }
+        return buf;
+    } else if (Obj instanceof Object){
+        buf = {};  // 创建一个空对象
+        for (var k in Obj) {  // 为这个对象添加新的属性
+            buf[k] = clone(Obj[k]);
+        }
+        return buf;
+    }else{
+        return Obj;
+    }
+}
+```
+
+
+___
+<input type = "checkbox"></input>
+
+<h2 > <font color = blue>74.js数组去重p
+</font></h2>
+
+```javascript
+//利用filter
+[1,1,2,2,3,3,3,3].filter(function(elem, index, self) {
+    return index == self.indexOf(elem);
+})
+```
+
+```javascript
+//利用set
+var arry =[1,25,15,1,2,15,5,15,25,35,1]
+var set =new Set(arry)
+console.log([...set])
+```
+
+
+```javascript
+//利用hash
+Array.prototype.rmRepeat = function(){  
+    var res = [],hash={};
+    var len=this.length;
+    for (var i=0;i<len ;i++) {
+        if( !hash.hasOwnProperty('_'+this[i]) )
+        {
+            hash['_'+this[i]] = 1;
+            res.push(this[i]);
+        }
+    }
+    return res;
+}
+
+```
+```javascript
+//利用indexof
+  if (typeof array.indexOf !== 'undefined') {
+    var arr = [];
+    for (var i = 0; i < array.length; i++) {
+      if (arr.indexOf(array[i]) === -1) {
+        arr.push(array[i]);
+      }
+    }
+    return arr;
   }
-}
-
-// 原型方法
-Animal.prototype.eat = function(food) {
-console.log(this.name + '正在吃：' + food);
-};
 ```
 
-
-原型链继承
-```javascript
-//其实就是声明一个constructor
-function Cat(){ }
-Cat.prototype = new Animal();
-Cat.prototype.name = 'cat';
-//　Test Code
-var cat = new Cat();
-console.log(cat.name);
-console.log(cat.eat('fish'));
-console.log(cat.sleep());
-console.log(cat instanceof Animal); //true
-console.log(cat instanceof Cat); //true
-};
-```
-
-构造继承
-```javascript
-function Cat(name){
-  Animal.call(this);
-  this.name = name || 'Tom';
-}
-// Test Code
-var cat = new Cat();
-console.log(cat.name);
-console.log(cat.sleep());
-console.log(cat instanceof Animal); // false
-console.log(cat instanceof Cat); // true
-
-```
-
-组合继承
-```javascript
-function Cat(name){
-  Animal.call(this);
-  this.name = name || 'Tom';
-}
-Cat.prototype = new Animal();
-Cat.prototype.constructor = Cat;
-// Test Code
-var cat = new Cat();
-console.log(cat.name);
-console.log(cat.sleep());
-console.log(cat instanceof Animal); // true
-console.log(cat instanceof Cat); // true
-```
-
-
-寄生组合继承
-```javascript
-var Super = function(){};//创建一个没有实方法的类
-Super.prototype = Animal.prototype;
-Cat.prototype = new Super();//将实例作为子类的原型
-```
-
-
-## 事件流
-1. 冒泡　IE的事件流叫做事件冒泡(event bubbling)，即事件开始时由最具体的元素(文档中嵌套层次最深的那个节点)接收，然后逐级向上传播到较为不具体的节点(文档)
-2. 捕获
- 事件捕获的思想是不太具体的节点应该更早接收到事件，而最具体的节点应该最后接收到事件。事件捕获的用意在于在事件到达预定目标之前就捕获它
-
- ![](images/event.jpg)
-
-
- ## 3. 异步加载js的方法
- defer：只支持IE如果您的脚本不会改变文档的内容，可将 defer 属性加入到`<script>`标签中，以便加快处理文档的速度。因为浏览器知道它将能够安全地读取文档的剩余部分而不用执行脚本，它将推迟对脚本的解释，直到文档已经显示给用户为止。
-async，HTML5属性仅适用于外部脚本，并且如果在IE中，同时存在defer和async，那么defer的优先级比较高，脚本将在页面完成时执行。
-创建script标签，插入到DOM中
-
-## Ajax解决浏览器缓存问题
-
-
-在ajax发送请求前加上 anyAjaxObj.setRequestHeader("If-Modified-Since","0")。
-在ajax发送请求前加上 anyAjaxObj.setRequestHeader("Cache-Control","no-cache")。
-在URL后面加上一个随机数： "fresh=" + Math.random()。
-在URL后面加上时间搓："nowtime=" + new Date().getTime()。
-如果是使用jQuery，直接这样就可以了 $.ajaxSetup({cache:false})。这样页面的所有ajax都会执行这条语句就是不需要保存缓存记录。
-
-
-## 代码的执行顺序
-```javascript
-setTimeout(function(){console.log(1)},0);
-new Promise(function(resolve,reject){
-console.log(2);
-resolve();
-}).then(function(){console.log(3)
-}).then(function(){console.log(4)});
-process.nextTick(function(){console.log(5)});
-console.log(6);
-//输出2,6,5,3,4,1
-//https://github.com/forthealllight/blog/issues/5
-```
-
-## js判断类型
-判断方法：typeof()，instanceof，Object.prototype.toString.call()等
-
-
-## 闭包 有什么用
-（1）什么是闭包：
-闭包是指有权访问另外一个函数作用域中的变量的函数。
-闭包就是函数的局部变量集合，只是这些局部变量在函数返回后会继续存在。闭包就是就是函数的“堆栈”在函数返回后并不释放，我们也可以理解为这些函数堆栈并不在栈上分配而是在堆上分配。当在一个函数内定义另外一个函数就会产生闭包。
-
-（2）为什么要用：
-
-匿名自执行函数：我们知道所有的变量，如果不加上var关键字，则默认的会添加到全局对象的属性上去，这样的临时变量加入全局对象有很多坏处，比如：别的函数可能误用这些变量；造成全局对象过于庞大，影响访问速度(因为变量的取值是需要从原型链上遍历的)。除了每次使用变量都是用var关键字外，我们在实际情况下经常遇到这样一种情况，即有的函数只需要执行一次，其内部变量无需维护，可以用闭包。
-
-结果缓存：我们开发中会碰到很多情况，设想我们有一个处理过程很耗时的函数对象，每次调用都会花费很长时间，那么我们就需要将计算出来的值存储起来，当调用这个函数的时候，首先在缓存中查找，如果找不到，则进行计算，然后更新缓存并返回值，如果找到了，直接返回查找到的值即可。闭包正是可以做到这一点，因为它不会释放外部的引用，从而函数内部的值可以得以保留。
-
-
-## 能来讲讲JS的语言特性吗
-
-* 运行在客户端浏览器上；
-* 不用预编译，直接解析执行代码；
-* 是弱类型语言，较为灵活；
-* 与操作系统无关，跨平台的语言；
-* 脚本语言、解释性语言
-
-## this的指向
-
-* 默认绑定：全局环境中，this默认绑定到window。
-* 隐式绑定：一般地，被直接对象所包含的函数调用时，也称为方法调用，this隐式绑定到该直接对象。
-
-* 隐式丢失：隐式丢失是指被隐式绑定的函数丢失绑定对象，从而默认绑定到window。
-* 显式绑定：通过call()、apply()、bind()方法把对象绑定到this上，叫做显式绑定。
-
-* new绑定：如果函数或者方法调用之前带有关键字new，它就构成构造函数调用。对于this绑定来说，称为new绑定。
-
-1. 构造函数通常不使用return关键字，它们通常初始化新对象，当构造函数的函数体执行完毕时，它会显式返回。在这种情况下，构造函数调用表达式的计算结果就是这个新对象的值。
-
-2. 如果构造函数使用return语句但没有指定返回值，或者返回一个原始值，那么这时将忽略返回值，同时使用这个新对象作为调用结果。
-
-3. 如果构造函数显式地使用return语句返回一个对象，那么调用表达式的值就是这个对象。
-
-
-## 说一下什么是virtual dom
-用JavaScript 对象结构表示 DOM 树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中 当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异 把所记录的差异应用到所构建的真正的DOM树上，视图就更新了。Virtual DOM 本质上就是在 JS 和 DOM 之间做了一个缓存。
-
-
-## 介绍一下promise，及其底层如何实现
-
-Promise是一个对象，保存着未来将要结束的事件，她有两个特征:
-1、对象的状态不受外部影响，Promise对象代表一个异步操作，有三种状态，pending进行中，fulfilled已成功，rejected已失败，只有异步操作的结果，才可以决定当前是哪一种状态，任何其他操作都无法改变这个状态，这也就是promise名字的由来
-
-2、一旦状态改变，就不会再变，promise对象状态改变只有两种可能，从pending改到fulfilled或者从pending改到rejected，只要这两种情况发生，状态就凝固了，不会再改变，这个时候就称为定型resolved
 
 ```javascript
-let promise1 = new Promise(function(resolve,reject){
-setTimeout(function(){
-resolve('ok')
-},1000)
-})
-promise1.then(function success(val){
-console.log(val)
-})
+// 利用blueuce
+  if (typeof array.blueuce !== 'undefined') {
+    return array.blueuce(function(arr, currentValue){
+      if (!arr.includes(currentValue)) {
+        arr.push(currentValue);
+      }
+      return arr;
+    }, [])
+  }
+
 ```
-
-## js原型链，原型链的顶端是什么？Object的原型是什么？Object的原型的原型是什么？在数组原型链上实现删除数组重复数据的方法
-
-首先明白原型是什么，在ES6之前，JS没有类和继承的概念，JS是通过原型来实现继承的，在JS中一个构造函数默认带有一个prototype属性，这个的属性值是一个对象，同时这个prototype对象自带有一个constructor属性，这个属性指向这个构造函数，同时每一个实例都会有一个_proto_属性指向这个prototype对象，我们可以把这个叫做隐式原型，我们在使用一个实例的方法的时候，会先检查这个实例中是否有这个方法，没有的话就会检查这个prototype对象是否有这个方法，
-
-基于这个规则，如果让原型对象指向另一个类型的实例，即constructor1.protoytpe=instance2，这时候如果试图引用constructor1构造的实例instance1的某个属性p1,
-
-首先会在instance1内部属性中找一遍，
-
-接着会在instance1._proto_（constructor1.prototype）即是instance2中寻找p1
-
-搜寻轨迹：instance1->instance2->constructor2.prototype……->Object.prototype;这即是原型链，原型链顶端是Object.prototype
-
-## let const var的区别 
-提起这三个最明显的区别是var声明的变量是全局或者整个函数块的，而let,const声明的变量是块级的变量，var声明的变量存在变量提升，let,const不存在，let声明的变量允许重新赋值，const不允许
-
-## ES6箭头函数的特性
-
-箭头函数与普通函数的区别在于：
-
-1、箭头函数没有this，所以需要通过查找作用域链来确定this的值，这就意味着如果箭头函数被非箭头函数包含，this绑定的就是最近一层非箭头函数的this，
-
-2、箭头函数没有自己的arguments对象，但是可以访问外围函数的arguments对象
-
-3、不能通过new关键字调用，同样也没有new.target值和原型
-
-## call和apply是用来做什么？
-
-Call和apply的作用是一模一样的，只是传参的形式有区别而已
-1、改变this的指向
-
-2、借用别的对象的方法，
-
-3、调用函数，因为apply，call方法会使函数立即执行
-
-
-## ajax返回的状态
-
-0 － （未初始化）还没有调用send()方法
-1 － （载入）已调用send()方法，正在发送请求
-2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
-3 － （交互）正在解析响应内容
-4 － （完成）响应内容解析完成，可以在客户端调用了
-
-## 如何实现一个ajax请求？如果我想发出两个有顺序的ajax需要怎么做？
-
-
-AJAX创建异步对象XMLHttpRequest
-操作XMLHttpRequest 对象
-
-（1）设置请求参数（请求方式，请求页面的相对路径，是否异步）
-
-（2）设置回调函数，一个处理服务器响应的函数，使用 onreadystatechange ，类似函数指针
-
-（3）获取异步对象的readyState 属性：该属性存有服务器响应的状态信息。每当 readyState 改变时，onreadystatechange 函数就会被执行。
-
-（4）判断响应报文的状态，若为200说明服务器正常运行并返回响应数据。
-
-（5）读取响应数据，可以通过 responseText 属性来取回由服务器返回的数据。
-
-发出两个有顺序的ajax，可以用回调函数，也可以使用Promise.then或者async等。
-
-## react的生命周期函数
-
-初始化
-1、getDefaultProps()
-
-设置默认的props，也可以用dufaultProps设置组件的默认属性.
-
-2、getInitialState()
-
-在使用es6的class语法时是没有这个钩子函数的，可以直接在constructor中定义this.state。此时可以访问this.props
-
-3、componentWillMount()
-
-组件初始化时只调用，以后组件更新不调用，整个生命周期只调用一次，此时可以修改state。
-
-4、 render()
-
-react最重要的步骤，创建虚拟dom，进行diff算法，更新dom树都在此进行。此时就不能更改state了。
-
-5、componentDidMount()
-
-组件渲染之后调用，只调用一次。
-
-更新
-
-6、componentWillReceiveProps(nextProps)
-
-组件初始化时不调用，组件接受新的props时调用。
-
-7、shouldComponentUpdate(nextProps, nextState)
-
-react性能优化非常重要的一环。组件接受新的state或者props时调用，我们可以设置在此对比前后两个props和state是否相同，如果相同则返回false阻止更新，因为相同的属性状态一定会生成相同的dom树，这样就不需要创造新的dom树和旧的dom树进行diff算法对比，节省大量性能，尤其是在dom结构复杂的时候
-
-8、componentWillUpdata(nextProps, nextState)
-
-组件初始化时不调用，只有在组件将要更新时才调用，此时可以修改state
-
-9、render()
-
-组件渲染
-
-10、componentDidUpdate()
-
-组件初始化时不调用，组件更新完成后调用，此时可以获取dom节点。
-
-卸载
-
-11、componentWillUnmount()
-
-组件将要卸载时调用，一些事件监听和定时器需要在此时清除。
-
-
-![](images/react.png)
