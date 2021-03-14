@@ -2,7 +2,10 @@
 
 title:  "Frontend Interview Problem Set 1"
 date:   2021-03-13 14:29:23 +0800
-categories: Front-end Note Intern
+categories: 
+  - Front-end 
+  - Note 
+  - Intern
 toc: true
 ---
 
