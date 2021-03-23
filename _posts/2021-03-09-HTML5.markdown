@@ -9,6 +9,10 @@ toc: true
 
 # HTML5 新增特性
 只有IE9+能支持！
+首先html5为了更好的实践web语义化，增加了header，footer，nav,aside,section等语义化标签，在表单方面，为了增强表单，为input增加了color，emial,data ,range等类型，在存储方面，提供了sessionStorage，localStorage,和离线存储，通过这些存储方式方便数据在客户端的存储和获取，在多媒体方面规定了音频和视频元素audio和vedio，另外还有地理定位，canvas画布，拖放，多线程编程的web worker和websocket协议
+
+
+
 ## 1. HTML5新增语义标签
 * `<header>`
 * `<nav>`
@@ -46,10 +50,10 @@ toc: true
 
 
   |属性|说明|
-  | --- | --- |
+  | --- | --- |you
   |`autoplay = "autoplay"` |是否自动播放|
   |`muted = "muted"` |对chrome使用muted来强制自动播放|
-|`controls = "controls"` |控制组件|
+  |`controls = "controls"` |控制组件|
  |`width`| 和普通盒子一样|
   |`loop = "loop"`| 是否循环|
   

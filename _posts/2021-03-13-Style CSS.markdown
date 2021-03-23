@@ -84,7 +84,7 @@ border-top: 1px solid red;
   1. 为父元素定义外边框 `border: 1px solid transparent`
   2. 为父元素定义内边距 `padding: 1px`
   3. 为父元素添加`overflow: hidden`
-
+  4. 
   ### 1.3.4 清除默认的外边距
   ```css
   *{
@@ -92,6 +92,15 @@ border-top: 1px solid red;
     padding: 0;
   }
   ```
+  ### 1.3.5 外边距折叠
+
+    **外边距折叠**： 相邻的两个或多个外边距 (margin) 在垂直方向会合并成一个外边距（margin）
+
+    **相邻**： 没有被非空内容、padding、border 或 clear 分隔开的margin特性. 非空内容就是说这元素之间要么是兄弟关系或者父子关系
+    垂直方向外边距合并计算:
+    1.  参加折叠的margin都是正值：取其中 margin 较大的值为最终 margin 值。
+    2. 参与折叠的 margin 都是负值：取的是其中绝对值较大的，然后，从 0 位置，负向位移。
+    3. 参与折叠的 margin 中有正值，有负值：先取出负 margin 中绝对值中最大的，然后，和正 margin 值中最大的 margin 相加。
 ___
 
 ## 2. Shadow
@@ -337,8 +346,11 @@ ___
     content: "hello";
   }
   ```
+### 优先级判断
 
-
+1. 同类型，同级别， 后者先于前者
+2. 内联 > 内部 > 外联
+3. important > 内联 > ID > 伪类|属性|类 > 标签 > * > 继承
   ## 2. CSS3 盒子模型
   
 原来：加border， padding都会使得盒子变大，需要将原本的width减去这些东西。
