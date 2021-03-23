@@ -1,0 +1,23 @@
+---
+
+title:  "CNN"
+date:   2021-03-22 21:29:23 +0800
+categories: Note CV
+toc: true
+---
+
+# Convolutional Neural Network
+
+## Layer description
+
+* Input: batchSize x #channel x #kernel H x #kernel W
+
+* Convolution Layer: #filter x #channel x kernel H x kernel W
+
+* Activation Layer: keep the same
+
+* Pooling Layer: reduce the H and W
+
+## Batch Normalization
+
+'Normalization' means the output of each layer has zero mean and unit variance
