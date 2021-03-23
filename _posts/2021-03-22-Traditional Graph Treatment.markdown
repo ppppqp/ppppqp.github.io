@@ -25,7 +25,7 @@ Mathematically, gradient is defined as
 
 \[\dfrac{\delta f(x,y)}{\delta{x}} = \lim_{\epsilon\rightarrow 0} \dfrac{f(x+\epsilon,y)-f(x,y)}{\epsilon}\]
 
-Obviously we can't calculate a continuous function of $f$. Nor we can't take $\epsilon$ to 0. In practice, we use $\epsilon = 2$ and align to approximate. In this way, we can take account of both direction(left, right) of the change.
+Obviously we can't calculate a continuous function of $$f$$. Nor we can't take $$\epsilon$$ to 0. In practice, we use $\epsilon = 2$ and align to approximate. In this way, we can take account of both direction(left, right) of the change.
 
 \[\dfrac{\delta f(x,y)}{\delta{x}} =  \dfrac{f(x+1,y)-f(x-1,y)}{2}\]
 
