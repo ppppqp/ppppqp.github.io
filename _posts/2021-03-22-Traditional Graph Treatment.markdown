@@ -39,11 +39,11 @@ $$\begin{bmatrix}
 
 and 
 
-\\(\begin{bmatrix}
+$$\begin{bmatrix}
 -1 \\
 0 \\
 1\\
-\end{bmatrix}\\)
+\end{bmatrix}$$
 
 This gives us two images: the gradient on the x-axis and y-axis. We can compute the L-2 magnitude of the two values to generate the composite gradient.
 
@@ -55,7 +55,7 @@ To improve the model, the notion of sliding window can help. If when we slide th
 
 To formalize, we can calculate
 
-\\[ E(u,v) = \sum_{(x,y)\in W}(I[x+u, y+v]-I[x,y])^{2} \\]
+\[ E(u,v) = \sum_{(x,y)\in W}(I[x+u, y+v]-I[x,y])^{2}\]
 
 To simpily the calculation, we can use taylor series.
 
