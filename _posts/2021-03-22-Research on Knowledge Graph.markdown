@@ -1,7 +1,7 @@
 ---
 
 title:  "Research on Knowledge Graph"
-date:   2021-03-022 20:29:23 +0800
+date:   2021-03-22 20:29:23 +0800
 categories: Note
 toc: true
 ---
