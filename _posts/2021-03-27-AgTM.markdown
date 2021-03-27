@@ -132,11 +132,9 @@ ___
 * Talking about
 
 
-![alt]({{ site.url }}{{ site.baseurl }}/assets/images/PRP/example1.jpg)
 
 
-
-{% include figure image_path="{{site.url}}/assets/images/PRP/example1.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
+{% include figure image_path="{{site.url}}{{site.baseurl}}/assets/images/PRP/example1.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
 
 {% include figure image_path="{{site.url}}/assets/images/PRP/example2.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 expanded)." %}
 
