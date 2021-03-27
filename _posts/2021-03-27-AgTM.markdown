@@ -14,6 +14,7 @@ When searching for academic papers, compared with simply matching keywords, rese
 There are two main aspects to calculate entity(papers) similarity: **content and relationship**. Current research includes:
 
 ### Content-based work
+
 |Method |Similarity Rep | Example
 |--|--|--|
 |convert documents into vectors | distance between vectors|BoW, VSM, word2vec
@@ -30,6 +31,7 @@ There are two main aspects to calculate entity(papers) similarity: **content and
 
 
 ### Put them together
+
 |Method |Similarity Rep | Example
 |--|--|--|
 |improved topic model(allows each word to be drawn from reference) |probability distribution of reference papers | RefTM|
@@ -128,8 +130,8 @@ ___
 * Talking about
 
 
+![alt]({{ site.url }}{{ site.baseurl }}/assets/images/PRP/example1.jpg)
 
-![image-center](/assets/images/PRP/example1.jpg){: .align-center}
 
 
 {% include figure image_path="{{site.url}}/assets/images/PRP/example1.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
