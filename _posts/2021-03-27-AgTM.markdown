@@ -46,6 +46,8 @@ There are two main aspects to calculate entity(papers) similarity: **content and
 
 # Porposed Model: AgTM
 
+So this is the proposed model: AgTM.
+
 #### Originated from LDA but different
   
 1. Allow each word to be drawn from not only the papers own topic, but from its references, authors and conference.
