@@ -128,8 +128,8 @@ ___
 * Talking about
 
 
-![alt]({{ site.url }}{{ site.baseurl }}/assets/images/PRP/example1.jpg)
-![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/PRP/example1.jpg){: .align-center}
+
+![image-center](/assets/images/PRP/example1.jpg){: .align-center}
 
 
 {% include figure image_path="{{site.url}}/assets/images/PRP/example1.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
