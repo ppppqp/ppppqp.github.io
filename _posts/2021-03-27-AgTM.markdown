@@ -113,7 +113,7 @@ Suppose we have
 Gibbs Sampling (Omitted)
 
 #### 4. Example
-{% include figure image_path="{{site.url}}/assets/images/PRP/sample.jpg" alt="this is a placeholder image" caption="Example." %}
+{% include figure image_path="/assets/images/PRP/sample.png" alt="this is a placeholder image" caption="Example." %}
 
 ___
 # Take Away for My Project
