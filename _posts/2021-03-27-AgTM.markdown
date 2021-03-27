@@ -109,7 +109,7 @@ Suppose we have
 Gibbs Sampling (Omitted)
 
 #### 4. Example
-{% include figure image_path="/assets/images/PRP/sample.jpg" alt="this is a placeholder image" caption="Example." %}
+{% include figure image_path="{{site.url}}/assets/images/PRP/sample.jpg" alt="this is a placeholder image" caption="Example." %}
 
 ___
 # Take Away for My Project
@@ -128,8 +128,12 @@ ___
 * Talking about
 
 
-{% include figure image_path="/assets/images/PRP/example1.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
+![alt]({{ site.url }}{{ site.baseurl }}/assets/images/PRP/example1.jpg)
+![image-center]({{ site.url }}{{ site.baseurl }}/assets/images/PRP/example1.jpg){: .align-center}
 
-{% include figure image_path="/assets/images/PRP/example2.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 expanded)." %}
 
-{% include figure image_path="/assets/images/PRP/example3.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 keyword 1 selected)." %}
+{% include figure image_path="{{site.url}}/assets/images/PRP/example1.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
+
+{% include figure image_path="{{site.url}}/assets/images/PRP/example2.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 expanded)." %}
+
+{% include figure image_path="{{site.url}}/assets/images/PRP/example3.jpg" alt="this is a placeholder image" caption="Initial Status (mentor 1 keyword 1 selected)." %}
