@@ -1,0 +1,25 @@
+---
+title:  "Traditional Image Processing"
+date:   2021-03-22 21:29:23 +0800
+categories: Note CV
+toc: true
+---
+
+
+# ROC & AUC
+
+
+### ROC(Reveiver Operator Characteristic)
+ 
+
+y-axis(sensitivity): The portion of correctedly classfied positives. (should be pos, predicted as pos)
+
+  $$True \ Positive \ Rate = \dfrac{True Positives}{True Positives + False Negatives}$$
+
+x-axis(1-specificity): The portion of wrongly classified negatives. (should be neg, predicted as pos)
+$$False\ Positive\ Rate = \dfrac{False Positives}{False Positives + True Negatives}$$
+
+
+### AUC(Area under the curve)
+
+If area under the curve is greater, it means its a better ROC. Help identiy which method(curve) is better.

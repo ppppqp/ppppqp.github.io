@@ -28,7 +28,7 @@ However, this method is very insufficient because computing the loss function of
 
 ### Stochastic Gradient Descent (SGD)
 
-We improve the above method by using minibatch of examples rather than all of them. "Stochastic" stands for ramdomness.
+We improve the above method by using minibatch of examples rather than all of them. "Stochastic" stands for randomness.
 
 
 ### SGD + Momentum
@@ -51,4 +51,6 @@ We choose $\rho$ to be 0.9 to 0.99 commonly.
 
 
 ### Adam
+
+There's another way to improve the method: currently we are using the same learning rate for all parameters(directions). However, it's better if we use bigger learning rate if the gradient is small and smaller learning rate if the gradient is big. This can make the gradient fall faster in the direction with small descent, rather then going back and forth.
 

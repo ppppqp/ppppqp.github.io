@@ -30,7 +30,7 @@ Obviously we can't calculate a continuous function of $f$. Nor we can't take $\e
 
 $$\dfrac{\delta f(x,y)}{\delta{x}} =  \dfrac{f(x+1,y)-f(x-1,y)}{2}$$
 
-{% include figure image_path="/assets/images/unsplash-image-10.jpg" alt="this is a placeholder image" caption="This is a figure caption." %}
+
 
 To find which point has higher possibility of being an edge, we can calculate the gradient $(x', y')$ for each point $(x,y)$. Notice that this gives us a new image. An efficient way to calculate this is to convolute the image with the kernel 
 
