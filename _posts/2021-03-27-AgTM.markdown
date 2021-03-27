@@ -133,9 +133,9 @@ ___
 
 
 
-
+<!-- 
 {% include figure image_path="/assets/images/PRP/example1.png" alt="this is a placeholder image" caption="Initial Status (mentor 1 selected)." %}
 
 {% include figure image_path="/assets/images/PRP/example2.png" alt="this is a placeholder image" caption="Initial Status (mentor 1 expanded)." %}
 
-{% include figure image_path="/assets/images/PRP/example3.png" alt="this is a placeholder image" caption="Initial Status (mentor 1 keyword 1 selected)." %}
+{% include figure image_path="/assets/images/PRP/example3.png" alt="this is a placeholder image" caption="Initial Status (mentor 1 keyword 1 selected)." %} -->
