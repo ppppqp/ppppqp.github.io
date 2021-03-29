@@ -118,18 +118,44 @@ Gibbs Sampling (Omitted)
 ___
 # Take Away for My Project
 
+LDA and other topic modeling is based on text: If we use topic modeling, we can utilize the abstract. 
+
+Otherwise, we just need to see the frequency of each keyword.
+
+| LDA | my project |
+|---|---|
+| Each doc consists of different topics | Each mentor consists of different topics
+| Each topic consists of different words | Each topic consists of different docs
+| | Each doc consists of different keywords 
+
+### Problems
+
+* How to choose the number of topics
+* Using Gensim: multiple level?
+* Similarity Measuring
+* Sarcity of keyword: need clustering
+
+
 ### Knowledge Graph Component
 
 
 **Entity:**
+
 * Paper
   * five largest topics in probability distribution on topic
 * Mentor
 
 
 **Relationship:**
+
 * Written-by
 * Talking about
+
+**Generation Step**
+
+1. Pool all the keywords and do clustering into 30 categories
+2. Calculate the mentor-wise feature of the 30 categories(using the probability likelihood method)
+3. Calculate the similarity between mentor by the cosine correlation of the vectors
 
 
 
@@ -139,3 +165,7 @@ ___
 {% include figure image_path="/assets/images/PRP/example2.png" alt="this is a placeholder image" caption="Initial Status (mentor 1 expanded)." %}
 
 {% include figure image_path="/assets/images/PRP/example3.png" alt="this is a placeholder image" caption="Initial Status (mentor 1 keyword 1 selected)." %} 
+
+
+### Justification
+
