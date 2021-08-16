@@ -2,7 +2,7 @@
 
 title:  "Javascript笔记"
 date:   2021-03-09 22:29:23 +0800
-categories: Javascript Note Frontend
+categories: Javascript Note Front-end
 toc: true
 ---
 

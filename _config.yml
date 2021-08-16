@@ -95,7 +95,7 @@ analytics:
 author:
   name: "Qiping Pan"
   avatar: # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio: "Umich and SJTU senior student."
+  bio: "I am a Umich and SJTU senior student. Currently working on colleage courses. Used to intern in Tiktok as web developer."
   location: "SH/MI"
   email: "panqiping@outlook.com"
   links:
@@ -267,7 +267,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
       mathjax: true

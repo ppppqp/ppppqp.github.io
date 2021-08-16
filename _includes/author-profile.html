@@ -53,14 +53,14 @@
         </li>
       {% endif %}
 
-      {% if author.email %}
+      <!-- {% if author.email %}
         <li>
           <a href="mailto:{{ author.email }}">
             <meta itemprop="email" content="{{ author.email }}" />
             <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">{{ site.data.ui-text[site.locale].email_label | default: "Email" }}</span>
           </a>
         </li>
-      {% endif %}
+      {% endif %} -->
 
       {% if author.keybase %}
         <li>
@@ -238,13 +238,13 @@
         </li>
       {% endif %}
 
-      {% if author.vine %}
+      <!-- {% if author.vine %}
         <li>
           <a href="https://vine.co/u/{{ author.vine }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
             <i class="fab fa-fw fa-vine" aria-hidden="true"></i><span class="label">{{ site.data.ui-text[site.locale].email_label | default: "Email" }}</span>
           </a>
         </li>
-      {% endif %}
+      {% endif %} -->
 
       {% include author-profile-custom-links.html %}
     </ul>

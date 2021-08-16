@@ -1,13 +1,12 @@
 ---
-
-title:  "AgTM"
+title:  "💡 [Paper] AgTM"
 date:   2021-03-26 21:29:23 +0800
-categories: Note NLP
+categories: Note Paper
 toc: true
 ---
 
 
-# Background
+## Background
 
 When searching for academic papers, compared with simply matching keywords, researchers prefer to see the exact documents, scholars or academic conferences which are highly correlated in discussing topics and research areas with which they have read.
 
@@ -34,7 +33,7 @@ There are two main aspects to calculate entity(papers) similarity: **content and
 
 |Method |Similarity Rep | Example
 |--|--|--|
-|improved topic model(allows each word to be drawn from reference) |probability distribution of reference papers | RefTM|
+|improved topic model(allows each word to be drawn from reference) |probability distribution of reference papers | RefTM
 
 
 ### Problems:
@@ -44,7 +43,7 @@ There are two main aspects to calculate entity(papers) similarity: **content and
 
 
 
-# Porposed Model: AgTM
+## Porposed Model: AgTM
 
 So this is the proposed model: AgTM.
 
@@ -115,8 +114,9 @@ Gibbs Sampling (Omitted)
 #### 4. Example
 {% include figure image_path="/assets/images/PRP/sample.png" alt="this is a placeholder image" caption="Example." %}
 
-___
-# Take Away for My Project
+···
+
+### Take Away for My Project
 
 LDA and other topic modeling is based on text: If we use topic modeling, we can utilize the abstract. 
 
@@ -128,7 +128,7 @@ Otherwise, we just need to see the frequency of each keyword.
 | Each topic consists of different words | Each topic consists of different docs
 | | Each doc consists of different keywords 
 
-### Problems
+#### Problems
 
 * How to choose the number of topics
 * Using Gensim: multiple level?

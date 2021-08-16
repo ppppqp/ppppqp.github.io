@@ -1,7 +1,17 @@
 # main links
 main:
-  - title: "Quick-Start Guide"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+  - title: "ML-Blogs"
+    url: "/categories/#cv"
+    description: "Machine Learns to rock"
+  - title: "Web-Blogs"
+    url: "/categories/#front-end"
+    description: "H5, CSS, and JS!"
+  - title: "🔎  Search"
+    url: /search/
+    description: "Search anything."
+  - title: "❤️ Donate"
+    url: /donate/
+    description: "Maybe buy me a coffee... in future?"
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
