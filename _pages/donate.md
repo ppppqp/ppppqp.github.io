@@ -2,6 +2,7 @@
 layout: "single"
 title:  "Dontate"
 author_profile: true
+permalink: /donate/
 ---
 
 ## Notice:
