@@ -1,6 +1,7 @@
 ---
 layout: "single"
 title:  "Dontate"
+author_profile: true
 ---
 
 ## Notice:

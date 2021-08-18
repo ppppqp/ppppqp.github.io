@@ -1,14 +1,11 @@
 # main links
 main:
-  - title: "ML-Blogs"
-    url: "/categories/#cv"
-    description: "Machine Learns to rock"
-  - title: "Web-Blogs"
-    url: "/categories/#front-end"
-    description: "H5, CSS, and JS!"
-  - title: "🔎  Search"
-    url: /search/
-    description: "Search anything."
+  - title: "🗂  Categories"
+    url: "/categories/"
+    description: "View By Categories"
+  - title: "👨🏻‍💻  About"
+    url: "/about/"
+    description: "Everything about me"
   - title: "❤️ Donate"
     url: /donate/
     description: "Maybe buy me a coffee... in future?"
