@@ -2,7 +2,7 @@
 
 title:  "Machine Learning Loss function"
 date:   2021-03-22 22:29:23 +0800
-categories: Note CV
+categories: Note ML
 toc: true
 ---
 

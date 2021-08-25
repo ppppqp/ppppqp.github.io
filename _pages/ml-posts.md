@@ -1,7 +1,7 @@
 ---
 title: "Machine Learning Blogs"
 layout: category
-taxonomy: CV
+taxonomy: ML
 permalink: /category/ML
 author_profile: true
 ---
