@@ -2,7 +2,7 @@
 
 title:  "Research on Knowledge Graph"
 date:   2021-03-22 20:29:23 +0800
-categories: Note
+categories: Note ML
 toc: true
 ---
 
