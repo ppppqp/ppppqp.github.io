@@ -282,3 +282,6 @@ defaults:
         - title: "Web blogs"
           url: "/category/web"
           description: "H5, CSS and JS!"
+        - title: "Common blogs"
+          url: "/category/common"
+          description: "Everything else"
