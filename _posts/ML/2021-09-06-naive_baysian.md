@@ -41,13 +41,16 @@ Now we add another feature, headache. Our feature vector now become a 2-dimensio
 1 |1| 1
 0 |1| 1
 1 |0| 1
-1 |1| 0
-
-The problem become the probability that if someone cough and headache($X_1=1, X_2=1$), what is the probability that he/she gets cold.
-
-The equation we use is $P(Y|X_1, X_2)=\dfrac{P(X_1,X_2|Y)P(Y)}{P(X_1,X_2)}$. It is hard to deal with $P(X_1,X_2|Y)$, so we make an assumption that the two feature is **independent**, that is, $P(X_1,X_2|Y)P(Y)=P(X_1|Y)P(X_2|Y)$. Now we can safely plugin the values by the observed value.
+1 |1| 0|
 
 
+---
+
+The problem become the probability that if someone cough and headache($X_1=1, X_2=1$), what is the probability that he/she gets cold. 
+
+The equation we use is $P(Y ｜ X_1, X_2)=\dfrac{P(X_1,X_2｜Y)P(Y)}{P(X_1,X_2)}$.
+
+It is hard to deal with $P(X_{1},X_{2}|Y)$, so we make an assumption that the two feature is **independent**, that is, $P(X_1,X_2|Y)P(Y)=P(X_1|Y)P(X_2|Y)$. Now we can safely plugin the values by the observed value.
 ## Code Implementation
 
 ```python
