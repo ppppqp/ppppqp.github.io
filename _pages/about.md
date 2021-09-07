@@ -11,6 +11,6 @@ This is the era of big data. I firmly believe that great models that solves our 
 
 During my data mining adventure, I find that visualization plays a critical role in enhancing the intepretation. I began to learn [d3.js](https://d3js.org/) as the visualization tool for the data. As I dig deeper, it makes me also a self-taught web developer and successfully find a job intern in [tiktok](https://www.tiktok.com/). Developing a webpage is a convenient way to display data in customized way.
 
-That's so far I can tell about myself. If something interested you, don't hesitate to contact me by email.
+That's so far I can tell about myself. If something interests you, don't hesitate to contact me by email.
 
 <a href="/assets/CV_2021-09-06.pdf" target="_blank"> My CV </a>
