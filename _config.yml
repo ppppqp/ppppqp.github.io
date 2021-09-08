@@ -285,3 +285,6 @@ defaults:
         - title: "Common blogs"
           url: "/category/common"
           description: "Everything else"
+        - title: "DL Notes"
+          url: "https://panqiping.gitbook.io/deep-learning-bible-note/"
+          description: Deeplearning Notes

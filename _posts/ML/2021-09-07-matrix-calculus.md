@@ -1,6 +1,6 @@
 ---
 title:  "Matrix Calculus"
-date:   2021-09-02 21:29:23 +0800
+date:   2021-09-07 21:29:23 +0800
 categories: Note ML
 ---
 [reference1: MIT linear Algebra](https://www.youtube.com/watch?v=oGZK3yGF-6k&list=PL7rilRdYxlDuGCMCzBf7IPak8iO00fjGy&index=1)
