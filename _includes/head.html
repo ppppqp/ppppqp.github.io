@@ -31,6 +31,9 @@
     }
   </style>
 <![endif]-->
+{% if page.mermaid %}
+  {% include mermaid.html %}
+{% endif %}
 
 {% if site.head_scripts %}
 {% for script in site.head_scripts %}
