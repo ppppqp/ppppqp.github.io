@@ -9,6 +9,7 @@ categories: Note ML
 
 The model developed by google, Word2Vec, gave its first show in 2013. It used a unsupervised learning model to train vector representation for words. 
 
+
 ## Word Vector
 
 For every word, we can use a vector to represent it. The most intuitive way is **one-hot representation**. We gave every word a dimension and if for each word, the value on its own dimension is 1. The rest is 0.
@@ -28,6 +29,7 @@ Many methods can be applied to obtain word vectors, such as LSA and LDA. We can 
 The paper "Efficient Estimation of Word Representations in Vector Space" introduced an architecture that "can be used for learning high-quality word vectors from huge data sets". The expectation of this model is to represent word in vectors so that similar words tend to be close to each other, but words can have **multiple degree of similarity**(in syntactic aspect, it means words that have similar endings). Beyond that, the word vector support algebraic operations: vector("king") - vector("man") + vector("woman") is close to vector("quene").
 
 {% include figure image_path="/assets/images/word2vec/cbow.jpeg" alt="this is a placeholder image" caption="strcuture" %}
+
 
 ### Context
 
@@ -94,14 +96,19 @@ CBOW is the structure in the case where we know the context $w_{t-2}$, $w_{t-1}$
 We input $C$ one-hot vectors as the context of the target word. Then we propagate through a linear unit. Notice that the product of a one-hot vector with the weight matrix is actually one row of the matrix. After propogate through the weight matrix, we have $C$ distributed vectors corresponding to the $C$ rows of the weight matrix. Then we sum them up and take the average.
 
 The result from the hidden unit then passes to the output unit, undergoing another linear transformation. The result is processed through softmax and the cross entropy loss is computed.
+
 {% include figure image_path="/assets/images/word2vec/cbow_structure.jpeg" alt="this is a placeholder image" caption="strcuture" %}
+
 
 
 #### Skip-gram
 
 Skip-gram is the strucuture in the case where we know a word and want to get the probabilities of other words. It tries to maximize classification of a word based on another word in the same sentence. We use the current word as an input to a log-linear classifier with continuous projection layer, and predict words within a certain range before and after the current word. The input-to-hidden is the same as CBOW, but only having one context. The hidden-to-output is different. It is changed into the sum of $C$ loss functions.
 
+
 {% include figure image_path="/assets/images/word2vec/skipgram_structure.jpeg" alt="this is a placeholder image" caption="strcuture" %}
+
+
 
 
 ### Results
