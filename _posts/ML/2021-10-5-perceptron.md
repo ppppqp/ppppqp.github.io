@@ -116,7 +116,7 @@ $$
 
 What we are essentially doing is mapping the current space to a higher dimension where we are able to separate with a linear classifier. In the figure below, the points are not able to classify in a 2D space with a linear classifier without offset. However, if we map it to a 3D space simply by adding a dimension with constant 1, we are able to find a 3D hyperplane(the plane with green) that both passes the origin and correctly classifies the points. Also note that the intersection line of the hyperplane and the x1-x2 plane is the corresponding linear classifier with offset in 2D, which is exactly what we are trying to find. Thanks for Prof.Kutty in UM for this great illustration.
 
-{% include figure image_path="/assets/images/ML/precept_offset.png" alt="this is a placeholder image" caption="Mapping" %}
+{% include figure image_path="/assets/images/ML/percept_offset.png" alt="this is a placeholder image" caption="Mapping" %}
 
 
 ## Non-linearly Separable Data
