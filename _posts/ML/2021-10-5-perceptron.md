@@ -41,7 +41,8 @@ $$ h(\bar x; \bar \theta) = \text{sign}(\bar \theta \cdot \bar x) $$
 
 where $\theta$ specifies the hyperplane, $x$ is the input. There are two ways we can think of it. 
 
-1. The signed distance from $\bar x$ to the hyperplane $\bar \theta$ is given by $\dfrac{\bar x \cdot \theta}{||\theta||}$. Therefore, the difference in $ \text{sign}(\bar \theta \cdot \bar x)$ signifies that $x$ locates at the different side of the hyperplane.
+1. The signed distance from $\bar x$ to the hyperplane $\bar \theta$ is given by $\dfrac{\bar x \cdot \theta}{\lVert  \theta \rVert }$. Therefore, the difference in $ \text{sign}(\bar \theta \cdot \bar x)$ signifies that $x$ locates at the different side of the hyperplane.
+
 2.  Mathematically, $\bar \theta$ is a normal vector to the hyperplane. Therefore, the difference in $ \text{sign}(\bar \theta \cdot \bar x)$ also signifies that $x$ is at sharp angle or obtuse angle with the normal vector.
 
 {% include figure image_path="/assets/images/ML/decision_boundary.png" alt="this is a placeholder image" caption="Linear Classifier" %}
@@ -70,7 +71,7 @@ The perceptron is actually a type of single layer neural network. It has a weigt
 
 How does $\bar \theta^{(k+1)} = \bar \theta^{(k)} + y^{(i)}\bar x^{(i)}$ work? Say if  $y^{(i)} (\bar \theta^{(k)} \cdot \bar x^{(i)}) < 0$, then adding a term will make it closer to positive:
 
- $$y^{(i)} (\bar \theta^{(k)} + y^{(i)}x^{(i)}\cdot \bar x^{(i)})= y^{(i)} (\bar \theta^{(k)} \cdot \bar x^{(i)}) + y^2 ||\bar x^{(i)}||^2$$
+ $$y^{(i)} (\bar \theta^{(k)} + y^{(i)}x^{(i)}\cdot \bar x^{(i)})= y^{(i)} (\bar \theta^{(k)} \cdot \bar x^{(i)}) + y^2 \lVert\bar x^{(i)}\rVert^2$$
 
 The perceptron algorithm will **always** find a feasible solution as long as the data is linearly separable. If it doesn't, it will loop forever.
 
@@ -145,7 +146,7 @@ k = 0, $\theta^{(0)} = 0$
 
 While convergence criteria is not met
 
-$$\theta^{(k+1)} = \theta^{k} - \eta\nabla_{\theta}\mathcal{L}(\theta)|_{\theta = \theta^k}$$
+$$\theta^{(k+1)} = \theta^{k} - \eta\nabla_{\theta}\mathcal{L}(\theta)\lvert_{\theta = \theta^k}$$
 
 ---
 
@@ -157,11 +158,11 @@ k = 0, $\theta^{(0)} = 0$
 
 While convergence criteria is not met
 
-$$\theta^{(k+1)} = \theta^{k} - \eta\nabla_{\theta}\mathcal{L}(y^{(i)}(\theta \cdot x^{(i)}))|_{\theta = \theta^k}$$
+$$\theta^{(k+1)} = \theta^{k} - \eta\nabla_{\theta}\mathcal{L}(y^{(i)}(\theta \cdot x^{(i)}))\lvert_{\theta = \theta^k}$$
 
 ---
 
-In the hinge loss case, $$\nabla_{\theta}\mathcal{L}(y^{(i)}(\theta \cdot x^{(i)})) = y^{(i)x^{i}}
+In the hinge loss case, $$\nabla_{\theta}\mathcal{L}(y^{(i)}(\theta \cdot x^{(i)})) = y^{(i)x^{i}}$$
 
 ### Convergence Criteria
 
