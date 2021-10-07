@@ -53,11 +53,11 @@ So how can we find such a hyperplane that correctly classifies points? Here the 
 
 On input $S_n = \{(\bar x^{(i)}, y^{(i)})\}^n_{i=1}$
 
-Initialize k = 0, $\bar \theta^{0}$ = 0, which stands for the hyperplane before the first iteration.
-    While there exists a misclassified point
-        for i = 1 ... n
-            if $y^{i}(\bar \theta^{(k)}\cdot \bar x^{(i)})\leq 0$
-                **$\bar \theta^{(k+1)} = \bar \theta^{(k)} + y^{(i)}\bar x^{(i)}$**
+Initialize k = 0, $\bar \theta^{0}$ = 0, which stands for the hyperplane before the first iteration.<br>
+    While there exists a misclassified point<br>
+        for i = 1 ... n<br>
+            if $y^{i}(\bar \theta^{(k)}\cdot \bar x^{(i)})\leq 0$<br>
+                **$\bar \theta^{(k+1)} = \bar \theta^{(k)} + y^{(i)}\bar x^{(i)}$**<br>
                 k++
 
 Several things to notice:
