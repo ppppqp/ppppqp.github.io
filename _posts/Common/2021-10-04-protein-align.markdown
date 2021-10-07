@@ -100,6 +100,7 @@ The idea of dynamic programming is to find the optimal solution of the problem b
 
 #### Intro
 We can convert the alignment problem into constructing an optimal matrix. Specifically, the two axis of the matrix are two input residue sequences respectively. For example, if we want to align ATGATG and AGTATGT, we will have such a matrix D
+
 | | A| T| G| A| T|G|
 |-|--|--|--|--|--|--|
  A|
