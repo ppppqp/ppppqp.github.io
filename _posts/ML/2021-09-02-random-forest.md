@@ -3,14 +3,16 @@ title:  "Random Forest"
 date:   2021-09-02 21:29:23 +0800
 categories: Note ML
 ---
+
+ > A brief intro on ramdom forest algorithm
 ## Integrated Model
 
 Integrated Model use a series of weak classifier (base mode) to learn and combine, so that it can achieve better performance than individual model. Common integrating method includes Bagging and Boosting. Bagging is utilized in the Random Forest model introduced in this post. Boosting will be covered in the future in AdaBoost, GBDT, XGBoost, LightGBM.
 
 ## Bagging Algorithm
 
-The idea of Bagging is similar to voting. Every weak classifier has a vote. The final result is compliant to the rule of "The minority obeys the majority." Suppose have a big sample pool, which contains 10000 samples. 
-1. We first perform **bootstrap** for each model, that is, we randomly pick **n** samples for each model **with return** and form the dataset for that specific base model. Therefore, each sample may appear multiple times in a base model's training dataset. 
+The idea of Bagging is to average across multiple models to decrease estimation error(variance). It is similar to voting. Every weak classifier has a vote. The final result is compliant to the rule of "The minority obeys the majority." Suppose have a big sample pool, which contains 10000 samples. 
+1. We first perform **bootstrap sampling** for each model, that is, we randomly pick **n** samples for each model **with return** and form the dataset for that specific base model. Therefore, each sample may appear multiple times in a base model's training dataset. The reason we need bootstrap sampling is to make sure that it produces different weak calssifiers and they are independent with each other.
 2. Each model now trains and predicts.
 3. The final results is based on the voting on each prediction.
 

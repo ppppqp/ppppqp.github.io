@@ -11,11 +11,6 @@ categories: Note ML MLBasics
 A perceptron is essentially a linear binary classifier. Given a vector $x$ as input, the perceptron algorithm outputs the class it belongs by doing a linear transformation on it and inspect the result. Specifically, a perceptron is defined by a parameter vector $\theta$. It make predictions using the function
 $$ \text{sign}(\theta x) $$
 
-<div class="mermaid">
-graph LR
-    A --> B((B))
-     
-</div>
 
 
 ## A Little History

@@ -8,8 +8,12 @@ categories: Note Bioinformatics common
 > This blog will introduce Needleman–Wunsch algorithm and Smith–Waterman algorithm for protein sequence alignment.
 
 [Ref-global](https://www.youtube.com/watch?v=ipp-pNRIp4g)
+
 [Ref-local](https://www.youtube.com/watch?v=lu9ScxSejSE)
+
 [Ref-sjss](https://www.cs.sjsu.edu/~aid/cs152/NeedlemanWunsch.pdf)
+
+[Ref-medium](https://medium.com/analytics-vidhya/sequence-alignment-and-the-needleman-wunsch-algorithm-710c7b1a23a4)
 
 
 ## Types of Alignment

@@ -28,15 +28,60 @@ Applying this concept to building a decision tree, we can think of a feature tha
 
 $$gini(T) = \dfrac{S_1}{S_1+S_2}gini(T_1) + \dfrac{S_2}{S_1+S_2}gini(T_2)$$
 
-where $T_1$ is the sample group that has the feature and $T_2$ is the sample group that doesn't. For a given group $T$, we want to find the optimal feature that can divide the group such that $gini(T)$ is as low as possible.
 
 
+## Informatio Gain
 Another method to measure the chaosness of a system is through Shannon entropy. The euqation is $$ H(X) = -\sum p_i \log_2(p_i)$$ where $X$ stands for the ramdom variable. Dividing the sample set with a variable $A$ gives us the entropy
 $$H_A(T) = \dfrac{S_1}{S_1+S_2}H(X_1) + \dfrac{S_2}{S_1+S_2}H(X_2)$$
 
 To measure the effect of different division, we can calculate the entropy loss, also named "gain".
 
 $$ Gain(A) = H(X) - H_A(X)$$
+
+
+## Algorithm Details
+The basic steps of calculating the information gain w.r.t a feature $x$ is the following.
+1. Clarify the possible values of $x \in \{x_1, x_2, \cdots, x_n\}$
+2. Clarify the possible values of $y \in \{y_1, y_2, \cdots, y_m\}$
+3. For each possible value of $x$, calculate
+   $$H(y \vert x=x_i)=\sum_{j=1}^{m}P(y=y_j\vert x=x_i)\log_2P(y=y_j\vert x=x_i)$$
+   that is, the information entropy of given the info that $x = x_i$. Notice that we sum over all possible value of $y$. Also notice that we use base 2 log.
+4. Get the weighted sum of all conditional entropy, which is essentially the expectation.
+   $$H(y \vert x) = \sum_{i=1}^{n}P(x=x_i)H(y \vert x=x_i)$$
+
+
+ The algorithm is the same no matter which metric we choose. It is a greedy approach:
+
+ 1. start with an empty tree
+ 2. split on the best feature
+ 3. recurse
+
+
+We stop recursing when one of the following criteria are met:
+1. When all records have the same label
+2. If all records have identical features
+3. If all attributes have zero Information gain
+
+
+{% include figure image_path="/assets/images/ML/learn_DT.png" alt="this is a placeholder image" caption="decision tree algorithm" %}
+
+
+The third criterion is possibly not a good idea because it ignores the potential feature interactions.
+
+x1 | x2| y
+---|---|---
+1 | 1 | 0
+1 | 0 | 1
+0 | 1 | 1
+0 | 0 | 0
+
+The xor function has zero information gain for either x1 or x2
+
+$$\begin{aligned}
+H(y \lvert x1) &= \dfrac{1}{2}(P(y=0 \lvert x=1) \log P(y=0 \lvert x=1) + P(y=1 \lvert x=1) \log P(y=1 \lvert x=1)) \\
+&+ \dfrac{1}{2}(P(y=0 \lvert x=0) \log P(y=0 \lvert x=0) + P(y=1 \lvert x=0) \log P(y=1 \lvert x=0)) \end{aligned}$$
+
+As $x_1$ also split the data evenly , all the probabilities are $1/2$, which means no information gain. However, if we split on x1 first, we can see strong correlation between x2 and y.
 
 
 ## Code Implementation
