@@ -68,7 +68,8 @@ $$
 \end{aligned}$$
 
 > 💥 Bang! This looks very similar to the matrix factorization in recommending system.
-> 
+
+
 ### How do we get $R$ ?
 
 A simple way to get $R$ is to make $S$ multiply itself, i.e $R = ss^T$. This is a relatively fixed mapping and it tends to make the diagonal elements large, which also make sense because they are always relevent to themselves, but the negative side is that the attention doesn't change the origin sequence much. If we want this method to work, we need relevant words to have the similar embeddings so that their dot product is big. For example, we need $s_{not}\cdot s_{bad}$ to be large so that $R_{not,bad}$ is large. This imposes many restrictions on our embedding space.
