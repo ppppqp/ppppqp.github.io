@@ -1,7 +1,7 @@
 ---
 title:  "Pitfalls in Installing Local Python"
-date:   2021-11-16 21:29:23 +0800
-categories: Note ML MLBasics NLP
+date:   2021-11-22 21:29:23 +0800
+categories: Note common 
 ---
 
 > Some fun stuff I went through trying to install a local python on a shared linux machine
