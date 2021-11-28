@@ -35,6 +35,7 @@ where $u\in \mathbb{R}^m, v\in \mathbb{R}^r$. In other words, **we capture each 
 
 #### Observation 1: $f(x)$ is an least upperbound (supremum) of $\underset{u\leq 0}{L}(x,u,v)$ if constraints are satisfied
 We state that $f(x) \geq = L_{u\geq 0}(x,u,v)$ i.e the value of $f(x)$ is always greater than or equal to the value of $L(x,u,v)$ conditioned that $u\geq 0$. The equality is reached when $u_i h_i(x) = 0$ for all $i = 1,\cdots,m$.
+
 **Proof**: 
 Since we need $h_i(x) \leq 0$, if $u\geq 0$, $\sum_{i=1}^{m} u_ih_i(x) \leq 0$. 
 Since we need $l_j(x) = 0$, $\sum_{j=1}^{r}v_jl_j(x) = 0$
