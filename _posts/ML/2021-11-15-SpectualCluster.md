@@ -51,6 +51,8 @@ Some properties of $L$ are:
 4. The multiplicity of the eigenvalue 0 is the number of connected components in the graph
 
 We do the grouping by observing the leaps in eigenvalues. For example,  consider the following graph:
+
+
 <div class="mermaid">
 graph LR
     A((A)) -- 0.5 --- B((B))
