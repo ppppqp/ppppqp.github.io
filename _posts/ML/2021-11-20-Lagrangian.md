@@ -58,7 +58,7 @@ The optimal value of the dual problem, $g^{*}$ is $\underset{u\geq 0,v}{\sup}\un
 
 ### Weak and Strong Duality
 
-The weak duality states that $f^{*} \geq g^{*}$. 
+The weak duality states that $f^* \geq g^*$. 
 
 **Proof:**
 

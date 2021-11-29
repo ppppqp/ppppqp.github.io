@@ -31,7 +31,7 @@ where $A$ and $\bar A$ mean a subgraph and its complement.
 
 This is based on the intuitive to **make the links between the clusters to be weaker (bigger)** However, it doesn't consider the links inside a cluster, so it is suscpetible to the outliers (may easily result in one point per group). 
 
-The ratio cut can also take the links within the cluster into account. It makes **links (distance) inside the cluster to be stronger (smaller)$** as well.
+The ratio cut can also take the links within the cluster into account. It makes **links (distance) inside the cluster to be stronger (smaller)** as well.
 
 $$\text{RatioCut}(A_1, \cdots, A_k) = \dfrac{1}{2}\sum_{i=1}^{k}\dfrac{\text{cut}(A_i, \bar A_i)}{\lvert A_i \rvert}$$
 
@@ -51,7 +51,7 @@ Some properties of $L$ are:
 4. The multiplicity of the eigenvalue 0 is the number of connected components in the graph
 
 We do the grouping by observing the leaps in eigenvalues. For example,  consider the following graph:
-<div class="mermaid" style="text-align:center">
+<div class="mermaid">
 graph LR
     A((A)) -- 0.5 --- B((B))
           C((C))
