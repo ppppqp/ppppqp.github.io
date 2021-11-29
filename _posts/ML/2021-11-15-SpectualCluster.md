@@ -2,6 +2,7 @@
 title:  "Spectral Clustering"
 date:   2021-11-16 6:29:23 +0800
 categories: Note ML MLBasics Clustering
+mermaid: true
 ---
 
 > They tell you how it works. I tell you why.
@@ -53,7 +54,7 @@ Some properties of $L$ are:
 We do the grouping by observing the leaps in eigenvalues. For example,  consider the following graph:
 
 
-<div class="mermaid">
+<div class="mermaid" style="text-align:center">
 graph LR
     A((A)) -- 0.5 --- B((B))
           C((C))
