@@ -31,6 +31,7 @@ I walked into the bar and sat down. I was about to ask for a drink before I saw 
 
 
 "Have you heard of a proverb in Caloran", she interrupted me, "The better you live, the faster you die. Lucky you. I bet you will live a long time."
+
 "I am sorry about your dismissal. I truly am. You shouldn't have cared about me so much. You should have let me be." I finished the sentence in a breath, for fear that she would interrupt me again.
 
 

@@ -2,7 +2,7 @@
 
 title:  "Short Story: Suicide by Delight"
 date:   2021-09-22 23:30:23 +0800
-categories: Note common
+categories: Story common
 ---
 
 > Another short story that I wrote in sophomore year.
@@ -53,7 +53,9 @@ It felt good to be with Lily. She was like an Athen goddess, I thought when I sa
 
 
 I stared out of the window. The rain blurred the pedestrians' face and everythings were illusory. This place was so dismay that I couldn't think of a reason of living. I recalled the lady that was executed today. She was a mother. All these years she was avoiding the happiness of being a mother, but she was able to feel delight just a week after her son's death. I remembered her tears. Are they tears of delight or sorrow?
-"Lily, What do you think people are living for if they can't feel happy?"
+
+"What do you think people are living for if they can't feel happy?" Lily asked.
+
 "You don't feel happy either, so what are you living for?" I asked back.
 
 "I don't know others, but I live for honors" She said. "In this era you can't be blamed for suicide, but you are honored to live."
