@@ -1,0 +1,61 @@
+{% assign entry = page.expEntries[include.id] %}
+<article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+<div class="page__inner-wrap">
+        <h2>{{ entry.name }}</h2>
+    
+        <div class="exp-entry__attrs">
+            <span class="exp-entry__time exp-entry__attr">
+                <i class="fas fa-calendar-alt"></i> {{ entry.time }}
+            </span>
+    
+            <span class="exp-entry__loc exp-entry__attr">
+                {% if entry.locLink %}
+                    <a href="{{ entry.locLink }}">
+                        <i class="fas fa-location-arrow"></i> {{ entry.loc }}
+                    </a>
+                {% else %}
+                    <i class="fas fa-location-arrow"></i> {{ entry.loc }}
+                {% endif %}
+            </span>
+        </div>
+    
+        <div class="exp-entry__tags">
+            {% for tag in entry.tags %}
+                <div class="page__taxonomy-item exp-entry__tag">
+                    {%if tag.link %}
+                        <a href="{{ tag.link }}">
+                            {%if tag.ic %}
+                                <i class="{{ tag.ic }}"></i>
+                            {% endif %}
+    
+                            {{ tag.txt }}
+                        </a>
+                    {% else %}
+                        {%if tag.ic %}
+                            <i class="{{ tag.ic }}"></i>
+                        {% endif %}
+                        {{ tag.txt }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    
+        {% for set in entry.sets %}
+            <hr class='hr__light'>
+            <div class="exp-entry__sets">
+                <ul class="exp-entry__bullets">
+                    {% for bullet in set.bullets %}
+                        <li><span>{{ bullet | markdownify | remove: "<p>" | remove: "</p>" }}</span></li>
+                    {% endfor %}
+                </ul>
+                {% if set.media %}
+                    {% for fig in set.media %}
+                        {% include figure image_path=fig.src alt="this is a placeholder image" caption="" %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <hr>
+</div>
+</article>

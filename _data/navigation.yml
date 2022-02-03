@@ -6,9 +6,9 @@ main:
   - title: "👨🏻‍💻  About"
     url: "/about/"
     description: "Everything about me"
-  - title: "❤️ Donate"
-    url: /donate/
-    description: "Maybe buy me a coffee... in future?"
+  - title: "💡  Projects"
+    url: "/experiences/"
+    description: "Experiences"
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
