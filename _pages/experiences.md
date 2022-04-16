@@ -2,6 +2,8 @@
 title: "Experiences"
 permalink: /experiences/
 author_profile: true
+header: 
+  overlay_image: "assets/images/project_background.jpeg"
 expEntries:
   TikTok:
     name: "Front-end Software Engineer Intern"
@@ -82,10 +84,13 @@ expEntries:
       - media:
             - src: "/assets/images/Exp/HCI.png"
 ---
+{% include page__hero.html %}
 <div id="main" role="main">
 {% include sidebar.html %}
+<article class="page" itemscope itemtype="https://schema.org/CreativeWork">
 {% include experiences.html id="NLP" %}
 {% include experiences.html id="BioInformatics" %}
 {% include experiences.html id="HCI" %}
 {% include experiences.html id="TikTok" %}
+</article>
 </div>

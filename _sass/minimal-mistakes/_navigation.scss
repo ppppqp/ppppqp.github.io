@@ -177,7 +177,7 @@
   -ms-flex-align: center;
   align-items: center;
   min-height: $nav-height;
-  background: $background-color;
+  // background: $background-color;
 
   a {
     display: block;
@@ -237,19 +237,19 @@
     a {
       position: relative;
 
-      &:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 4px;
-        background: $primary-color;
-        width: 100%;
-        -webkit-transition: $global-transition;
-        transition: $global-transition;
-        -webkit-transform: scaleX(0) translate3d(0, 0, 0);
-        transform: scaleX(0) translate3d(0, 0, 0); // hide
-      }
+      // &:before {
+      //   content: "";
+      //   position: absolute;
+      //   left: 0;
+      //   bottom: 0;
+      //   height: 4px;
+      //   background: $primary-color;
+      //   width: 100%;
+      //   -webkit-transition: $global-transition;
+      //   transition: $global-transition;
+      //   -webkit-transform: scaleX(0) translate3d(0, 0, 0);
+      //   transform: scaleX(0) translate3d(0, 0, 0); // hide
+      // }
 
       &:hover:before {
         -webkit-transform: scaleX(1);
@@ -494,9 +494,12 @@
   padding: 0.25rem 0;
   font-family: $sans-serif-narrow;
   font-size: $type-size-6;
-  font-weight: bold;
+  // font-weight: bold;
   text-transform: uppercase;
   border-bottom: 1px solid $border-color;
+  @include breakpoint(max-width $large - 1px) {
+    display: none
+  }
 }
 
 /*
@@ -507,15 +510,15 @@
   font-family: $sans-serif-narrow;
   color: $gray;
   background-color: $background-color;
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
-  -webkit-box-shadow: $box-shadow;
-  box-shadow: $box-shadow;
+  // border: 1px solid $border-color;
+  // border-radius: $border-radius;
+  // -webkit-box-shadow: $box-shadow;
+  // box-shadow: $box-shadow;
 
   .nav__title {
-    color: #fff;
+    // color: #fff;
     font-size: $type-size-6;
-    background: $primary-color;
+    // background: $primary-color;
     border-top-left-radius: $border-radius;
     border-top-right-radius: $border-radius;
   }
@@ -523,6 +526,12 @@
   // Scrollspy marks toc items as .active when they are in focus
   .active a {
     @include yiq-contrasted($active-color);
+  }
+}
+
+@media (max-width: 1200px) {
+  .toc_menu {
+      display: none;
   }
 }
 

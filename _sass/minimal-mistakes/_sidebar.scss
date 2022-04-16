@@ -8,6 +8,7 @@
 
 .sidebar {
   @include clearfix();
+  padding-right: 1rem ;
   @include breakpoint(max-width $large) {
     /* fix z-index order of follow links */
     position: relative;
@@ -71,18 +72,20 @@
   }
 }
 
+
+
 .sidebar__right {
   margin-bottom: 1em;
-
+  display:none;
   @include breakpoint($large) {
+    display:block;   
     position: absolute;
     top: 0;
     right: 0;
     width: $right-sidebar-width-narrow;
     margin-right: -1 * $right-sidebar-width-narrow;
-    padding-left: 1em;
+    padding-left: 2em;
     z-index: 10;
-
     &.sticky {
       @include clearfix();
       position: -webkit-sticky;
@@ -93,6 +96,7 @@
   }
 
   @include breakpoint($x-large) {
+    display:block;          
     width: $right-sidebar-width;
     margin-right: -1 * $right-sidebar-width;
   }
@@ -317,6 +321,10 @@
   }
 }
 
+
+.quicklink{
+  text-decoration: none;
+}
 /*
    Wide Pages
    ========================================================================== */

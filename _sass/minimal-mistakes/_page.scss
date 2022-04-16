@@ -37,14 +37,16 @@ body {
 
 .page {
   @include breakpoint($large) {
-    float: right;
+    float: left;
     width: calc(100% - #{$right-sidebar-width-narrow});
-    padding-right: $dummy-sidebar-width-narrow;
+    // padding-right: $dummy-sidebar-width-narrow;
+    padding-right:$right-sidebar-width-narrow;
   }
 
   @include breakpoint($x-large) {
     width: calc(100% - #{$right-sidebar-width});
-    padding-right: $dummy-sidebar-width;
+    // padding-right: $dummy-sidebar-width;
+    padding-right:$right-sidebar-width;
   }
 
   .page__inner-wrap {
@@ -169,7 +171,7 @@ body {
   &--overlay {
     position: relative;
     margin-bottom: 2em;
-    padding: 3em 0;
+    padding-bottom: 3em;
     @include clearfix;
     background-size: cover;
     background-repeat: no-repeat;

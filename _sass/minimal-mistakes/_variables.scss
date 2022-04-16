@@ -115,7 +115,7 @@ $link-color: mix(#000, $info-color, 20%) !default;
 $link-color-hover: mix(#000, $link-color, 25%) !default;
 $link-color-visited: mix(#fff, $link-color, 15%) !default;
 $masthead-link-color: $primary-color !default;
-$masthead-link-color-hover: mix(#000, $primary-color, 25%) !default;
+$masthead-link-color-hover: mix(#fff, $primary-color, 75%) !default;
 $navicon-link-color-hover: mix(#fff, $primary-color, 75%) !default;
 
 /* syntax highlighting (base16) */
@@ -151,8 +151,8 @@ $max-width: $x-large !default;
    Grid
    ========================================================================== */
 
-$right-sidebar-width-narrow: 200px !default;
-$right-sidebar-width: 300px !default;
+$right-sidebar-width-narrow: 150px !default;
+$right-sidebar-width: 250px !default;
 $right-sidebar-width-wide: 400px !default;
 
 $dummy-sidebar-width-narrow: 50px !default;

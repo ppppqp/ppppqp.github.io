@@ -10,7 +10,7 @@
       <!-- {% if s.title %}<h3>{{ s.title }}</h3>{% endif %} -->
       {% if s.text %}{{ s.text | markdownify }}{% endif %}
       <!-- {% if s.nav %}{% include nav_list nav=s.nav %}{% endif %} -->
-      {% if s.url%}<a href="{{ s.url | relative_url }}" {% if s.description %} title="{{ s.description }}" {% endif
+      {% if s.url%}<a class="quicklink" href="{{ s.url | relative_url }}" {% if s.description %} title="{{ s.description }}" {% endif
         %}><span class="nav__sub-title">{{ s.title }}</span></a>{% endif %}
     {% endfor %}
     {% if page.sidebar.nav %}
