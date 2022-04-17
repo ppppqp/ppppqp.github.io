@@ -1,6 +1,7 @@
 {% assign entry = page.expEntries[include.id] %}
 
 <div class="page__inner-wrap">
+    <section class="page__content">
         <h2>{{ entry.name }}</h2>
     
         <div class="exp-entry__attrs">
@@ -57,4 +58,5 @@
         {% endfor %}
         
         <hr>
+    </section>
 </div>

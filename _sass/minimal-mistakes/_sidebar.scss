@@ -95,6 +95,9 @@
     }
   }
 
+  .toc li{
+    font-size: 1em;
+  }
   @include breakpoint($x-large) {
     display:block;          
     width: $right-sidebar-width;
