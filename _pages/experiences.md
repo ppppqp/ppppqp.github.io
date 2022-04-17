@@ -1,5 +1,7 @@
 ---
-title: "Experiences"
+title: "Dots"
+subtitle: "\"You can only connect them looking backwards.
+\" -- Steve Jobs"
 permalink: /experiences/
 author_profile: true
 header: 

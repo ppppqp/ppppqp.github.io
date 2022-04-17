@@ -1,5 +1,6 @@
 ---
 title: "About Me"
+subtitle: "「君子不器」"
 layout: single
 permalink: /about/
 author_profile: true

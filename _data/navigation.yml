@@ -6,7 +6,7 @@ main:
   - title: "👨🏻‍💻  About"
     url: "/about/"
     description: "Everything about me"
-  - title: "💡  Projects"
+  - title: "💡  Dots"
     url: "/experiences/"
     description: "Experiences"
   # - title: "About"
