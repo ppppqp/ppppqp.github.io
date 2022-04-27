@@ -5,7 +5,6 @@ categories: Note common
 toc: true
 mermaid: true
 ---
-
 > Shh...it's classified.
 
 >Fun Fact:
@@ -77,10 +76,10 @@ SHA-1。
 
 ### Diffie-Hellman算法
 
-有一个公开的数$g$和一个公开的质数$p$，Alice选一个秘密的数字$a$, Bob选一个$b$, Alice把$g^a \mod p$告诉 Bob, Bob把$g^b \mod p$告诉Alice。密钥即为$g^{ab} \mod p$。原理在于，除非你知道$a$,$b$中的一个，否则你无法从$g^a \mod p$和$g^b\mod p$得到$g^{ab}\ \mod p$。然而，这个还是会受到MITM的影响。如果Mallory在传输过程中选一个m，并把$g^b \mod p$告诉Bob，那么Mallory也可以知道key是什么。
+有一个公开的数$g$和一个公开的质数$p$，Alice选一个秘密的数字$a$, Bob选一个$b$, Alice把$g^a \mod p$告诉 Bob, Bob把$g^b \mod p$告诉Alice。密钥即为$g^{ab} \mod p$。原理在于，除非你知道$a$,$b$中的一个，否则你无法从$g^a \mod p$和$g^b\mod p$得到$g^{ab}\ \mod p$ ([discrete log problem](https://en.wikipedia.org/wiki/Discrete_logarithm)是很难的)。这样我们可以防止监听者破解信息。然而，这个还是会受到MITM的影响。MITM和被动监听者的区别在于可以主动干预。如果Mallory在传输过程中选一个m，并把$g^b \mod p$告诉Bob，那么Mallory也可以知道key是什么。
     {% include figure image_path="/assets/images/common/MITM_DH.png" alt="this is a placeholder image" %}
 
-这是一个对称加密的密钥交换算法，因为Alice和Bob所得到的密钥是相同的。有时候为了规模化(scalability)的原因，我们希望不对称。比如一下几个场景：
+这是一个对称加密的密钥交换算法，因为Alice和Bob所得到的密钥是相同的。对称加密的问题在于，**对于每一个连接都需要独一无二的一个key pair**。有时候为了规模化(scalability)的原因，我们希望不对称。比如一下几个场景：
 * 很多人想要验证一个数据，但我们不能公布integrity key，否则所有人都可以改数据然后用integrity key来证明数据是完整且权威的。
 * Alice想从很多人哪里获得加密的数据，但不能使用对称的同一个key，否则所有人都可以互相解密。每人一个key又有太多overhead。所以我们需要非对称的key，即自己掌握一个私钥，公布一个公钥。
 
@@ -96,8 +95,11 @@ SHA-1。
 #### RSA算法的用途
 RSA可以用以加密，也可以用以验证信息完整性和真实性。
 * 加密：别人用public key 加密, 我用private key 解密
-* 验证：我用private key 加密，别人用public key解密
+* 验证：我用private key 加密（签署, sign），别人用public key解密
 
+有了验证的功能，我们可以通过RSA来防止MITM攻击。具体方法就是让信息的发送者用private key签署自己的信息，接受者通过public key解密验证是否一致。这样Mallory必须知道private key，重新签署信息才能更改信息的内容。所以可以通过在DH算法过程中用RSA签署$g^a \mod p$, $g^b \mod p$来保证不受MITM的影响，建立一个安全的连接。
 #### RSA算法的缺陷
 1. 如果两个key pair用了同一个prime，那么就很容易破解着两个key pair
 2. key太小，导致$k^e < N$，不能wrap around，所以可以直接开方得到k
+3. 太慢了。解决办法是可以用RSA来加密AES的key，然后用block cipher加密后传输。
+4. RSA不能向前保密(forward secrecy)。一种可能的通过RSA的key exchange算法是，Alice挑一个随机数，用Bob的public key进行加密，然后发给Bob。有人把这些key的密文保存起来的话，一旦Bob的private key在未来泄漏，那么所有会话的key都会被破解。DH可以向前保密，因为每次会话两个人都可以选不同的key，会话之间没有重复使用的key。

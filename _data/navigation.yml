@@ -9,6 +9,9 @@ main:
   - title: "💡  Dots"
     url: "/experiences/"
     description: "Experiences"
+  - title: "🎨  Gallery"
+    url: "/gallery/"
+    description: "Gallery"
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
