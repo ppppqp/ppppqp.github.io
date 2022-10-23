@@ -1,8 +1,8 @@
 ---
 title:  "Cryptography: Primitive to Modern"
-date:   '2022-4-17'
+date:   '2022-04-17'
 author: 'Qiping Pan'
-description: 'Shh...it's classified.'
+description: "shh ..It's classified."
 ---
 
 >Fun Fact:
