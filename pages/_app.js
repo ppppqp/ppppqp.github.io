@@ -7,13 +7,7 @@ export const IdentityContext = createContext({
   toggleId: () => {},
 });
 export default function App({ Component, pageProps, location}) {
-  let params = undefined;
-  if(typeof window !== 'undefined'){
-    console.log(window.location.pathname)
-    params = new URLSearchParams(window.location.search);
-  }
-  const initialId = (params) ? params.get('id') === 'panqp' : true;
-  const [identity, toggleId] = useState(initialId);
+  const [identity, toggleId] = useState(true);
   console.log(identity);
   const value = {identity, toggleId};
   return <IdentityContext.Provider value={value}>
