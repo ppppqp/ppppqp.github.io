@@ -30,7 +30,18 @@
     margin: -20px;
   }
 
-
+.motto{
+    line-height: 4rem;
+    padding-left: 2rem;
+    color: #666;
+    font-style: italic;
+    font-size: 1.3rem;
+}
+.motto::after{
+    content: '\00000a I think, therefore I am';
+    /* white-space: pre-wrap; */
+    font-size: 1rem;
+}
 .entries{
     margin: 0 2rem;
     display: flex;

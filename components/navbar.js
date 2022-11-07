@@ -20,6 +20,7 @@ export default function Navbar() {
   return (
     <div className={styles.navbar}>
       <div className={styles.mask}>
+        {/* <span className = {styles.motto}>Cogito, ergo sum</span> */}
         <div className={styles.entries}>
                 {
                     entries.map(e =>{

@@ -1,16 +1,14 @@
 
 import Image from 'next/image';
 import utilStyles from '../styles/utils.module.css';
-import { IdentityContext } from '../pages/_app';
-import { useContext } from 'react';
 
-const getConfig = (identity) => ({
-    imageSrc: identity ? "/images/profile.jpg" : "/images/profile_retep.png",
-    name: identity ? "Qiping Pan" : "Retep"
+
+const getConfig = () => ({
+    imageSrc: "/images/profile.jpg",
+    name: "Qiping Pan"
 })
-export default function Avartar({imageSize, textStyle, enableSwitch}){
-    const {identity, toggleId} = useContext(IdentityContext);
-    const config = getConfig(identity);
+export default function Avartar({imageSize, textStyle}){
+    const config = getConfig();
     return <>
             <Image
               priority
@@ -18,7 +16,6 @@ export default function Avartar({imageSize, textStyle, enableSwitch}){
               className={utilStyles.borderCircle}
               height={imageSize}
               width={imageSize}
-              onDoubleClick={() => enableSwitch && toggleId(!identity)}
               alt=""
             />
             <h1 className={utilStyles[textStyle]}>{config.name}</h1>

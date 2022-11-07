@@ -27,6 +27,19 @@ img {
 }
 
 
+blockquote{
+  color: rgb(74, 190, 198);
+  font-style: italic;
+  border-left: 3px solid #ccc;
+  padding: 0 0.8rem;
+}
+
+h2{
+  color: rgb(1, 33, 151);
+}
+h3{
+  color: rgb(45, 85, 231)
+}
 /* https://codesandbox.io/s/unified-forked-k1sh7y?file=/src/markdown.css */
 /* good example to check out */
 /*!

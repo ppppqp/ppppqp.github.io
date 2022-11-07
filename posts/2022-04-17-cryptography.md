@@ -2,6 +2,7 @@
 title:  "Cryptography: Primitive to Modern"
 date:   '2022-04-17'
 author: 'Qiping Pan'
+tag: 'Tech'
 description: "shh ..It's classified."
 ---
 
