@@ -5,6 +5,7 @@ import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
 import { IdentityContext } from '../_app';
 import {useContext} from 'react'
+
 export async function getStaticProps({ params }) {
   // Add the "await" keyword like this:
   const postData = await getPostData(params.id);

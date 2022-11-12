@@ -40,6 +40,72 @@ h2{
 h3{
   color: rgb(45, 85, 231)
 }
+
+/* # TOC */
+@media only screen and (max-width: 1026px) {
+  .toc {
+      display: none;
+  }
+}
+
+.toc {
+  position: fixed;
+  left: 3em;
+  top: 5em;
+  padding: 1em;
+  width: 14em;
+  line-height: 2;
+}
+.toc ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc ol ol {
+  padding-left: 2em;
+}
+.toc .toc-item a {
+  padding: 0 0.5rem;
+}
+.toc .toc-item a:hover{
+  /* background-color: #c9e2ff; */
+  color: black;
+}
+.toc .toc-level-1{
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.toc .toc-level-2{
+  font-size: 1rem;
+  font-weight: 400;
+}
+.toc .toc-level-3{
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.toc li a {
+  display: inline-block;
+  color: #aaa;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+.toc li.visible>a {
+  color: #111;
+  transform: translate( 5px );
+}
+
+:target::before {
+  content: "";
+  display: block;
+  height: 4rem; /* fixed header height*/
+  margin: -4rem 0 0; /* negative fixed header height */
+}
+
+
+
 /* https://codesandbox.io/s/unified-forked-k1sh7y?file=/src/markdown.css */
 /* good example to check out */
 /*!

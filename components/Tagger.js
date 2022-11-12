@@ -12,7 +12,7 @@ export default function Tagger({setTag, curTag}){
                     const classNames =  (tag === curTag) ? `${styles.item} ${styles.chosen}` :styles.item;
                     console.log(classNames)
                     return (
-                    <div className={classNames} onClick={()=>setTag(tag)}>
+                    <div className={classNames} key={tag} onClick={()=>setTag(tag)}>
                             {tag}
                     </div>
                 )})
