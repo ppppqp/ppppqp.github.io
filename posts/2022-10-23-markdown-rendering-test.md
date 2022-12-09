@@ -31,6 +31,8 @@ function a(){
 - unordered list item 1
 - unordered list item 2
 
+
+
 | asd  | Asd  | Asd  |
 | ---- | ---- | ---- |
 | a    | a    | a    |
@@ -39,5 +41,8 @@ function a(){
 
 ## Emoji
 :+1:
+
+## Math
+$a$
 
 > seems good!

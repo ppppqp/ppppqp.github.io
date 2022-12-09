@@ -34,6 +34,21 @@ blockquote{
   padding: 0 0.8rem;
 }
 
+blockquote.callout{
+  font-style: normal;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+
+th,td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+
 h2{
   color: rgb(1, 33, 151);
 }
@@ -42,7 +57,7 @@ h3{
 }
 
 /* # TOC */
-@media only screen and (max-width: 1026px) {
+@media only screen and (max-width: 1200px) {
   .toc {
       display: none;
   }
@@ -53,7 +68,7 @@ h3{
   left: 3em;
   top: 5em;
   padding: 1em;
-  width: 14em;
+  width: 16em;
   line-height: 2;
 }
 .toc ol {
