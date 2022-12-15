@@ -45,7 +45,6 @@
 // let Uint8View = new Uint8Array(memory.buffer);
 
 function runMcts(nextMove) {
-    console.log(nextMove)
     const cpp_run = Module.cwrap("cpp_run", "number", [null]);
     const cpp_get_path_ptr = Module.cwrap('cpp_get_path_ptr', "number", [null]);
     const cpp_get_path_len = Module.cwrap('cpp_get_path_len', "number", [null]);
@@ -53,40 +52,31 @@ function runMcts(nextMove) {
     const cpp_get_board = Module.cwrap('cpp_get_board', "number", [null]);
     const cpp_update_actions = Module.cwrap("cpp_update_actions", null, [null]);
     // check if the move is valid
-    valid_actions = getActions();
+    let valid_actions = getActions();
     // valid_actions = []
     // load the next move to the stack
     let flag = false;
-    console.log(valid_actions)
     valid_actions.forEach(a =>{
-        console.log(a.y, a.x);
         if(a.x == nextMove.x && a.y == nextMove.y) flag = true;
     })
-    if(!flag) return -1;
+    if(!flag) return [];
 
     const path_ptr = cpp_get_path_ptr();
     const path_len = cpp_get_path_len();
     Module.setValue(path_ptr+path_len*4, nextMove.x + (nextMove.y << 8), 'i32');
     cpp_set_path_len(path_len+1);
+
+    valid_actions = getActions();
+    if(valid_actions.length === 0) return []
     const ret = cpp_run();
     cpp_update_actions();
-    console.log(ret)
     const board_ptr = cpp_get_board();
     const board = []
-    for(let i = 0; i < 8; i++){
-        const temp = []
-        for (let j =0; j < 8; j++){
-            const n = Module.getValue(board_ptr + (i*8+j) * 4, 'i32');  
-            // console.log(n);  
-            temp.push(n);
-        }
-        board.push(temp)
+    for(let i = 0; i < BOARD_SIZE*BOARD_SIZE; i++){
+        const n = Module.getValue(board_ptr + i * 4, 'i32');   
+        board.push(n)
     }
-    console.log(board);
-    return {
-        x: ret & 0xff, // lower 8 bits
-        y: ret >> 8, // upper 8 bits
-    };
+    return board;
 }
 
 
@@ -105,8 +95,6 @@ function getActions() {
     const retArr = [];
     for (let i = 0; i < action_len; i++) {
         const n = Module.getValue(action_ptr + i * 4, 'i32');    
-        console.log(`y:${n >> 8}, x:${n & 0xff}`);
-
         retArr.push({
             x: n & 0xff,
             y: n >> 8,

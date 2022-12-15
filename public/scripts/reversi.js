@@ -11,13 +11,13 @@ const BOARD_SIZE = 8;
 //     [2,2,2,2,2,2,2,2],
 //     [2,2,2,2,2,2,2,2],
 // ]
-const board = [
+let board = [
     2,2,2,2,2,2,2,2,
     2,2,2,2,2,2,2,2,
-    2,2,2,2,3,2,2,2,
-    2,2,2,0,1,3,2,2,
-    2,2,3,1,0,2,2,2,
     2,2,2,3,2,2,2,2,
+    2,2,3,1,0,2,2,2,
+    2,2,2,0,1,3,2,2,
+    2,2,2,2,3,2,2,2,
     2,2,2,2,2,2,2,2,
     2,2,2,2,2,2,2,2
 ]
@@ -25,10 +25,22 @@ const board = [
 const addIndex = (board) =>{
     return board.map((d, i) => ({value: d, id: i}))
 }
+
+const check = ()=>{
+    let count = 0;
+    board.forEach(b => {
+        if(b === 0) count ++;
+        if(b === 1) count --;
+    })
+    if(count > 0) return "🎊Looks like we have a winner!!🎊"
+    if(count < 0) return "🤡LAME🤡"
+    if(count === 0) return "😬DRAW😬"
+    return count;
+}
 const index = d3.local(); 
 // config
-const width = 500;
-const height = 500;
+const width = 375;
+const height = 375;
 const boardWidth = 250;
 const boardHeight = 250
 // visualization
@@ -40,6 +52,7 @@ const x = d3.scaleBand()
 const y = d3.scaleBand()
 .range([0,250])
 .domain(d3.range(BOARD_SIZE));
+
 const drawCircle = (container) => {
     const offset = boardWidth/16;
     container.selectAll("circle")
@@ -78,8 +91,19 @@ const drawCircle = (container) => {
     })
     .on("click", (_, d)=>{
         if(d.value === 3){
-            // const ret = runMcts({x: d%BOARD_SIZE, y: Math.floor(d/BOARD_SIZE)});
-            board[d.id] = 0
+            newBoard = runMcts({x: d.id%BOARD_SIZE, y: Math.floor(d.id/BOARD_SIZE)});
+            if(newBoard.length === 0){
+                alert(check(board));
+                return;
+            }
+            board = newBoard;
+            const actions = getActions();
+            if(actions.length === 0){
+                alert(check(board));
+            }
+            actions.forEach(a => {
+                board[a.y*BOARD_SIZE + a.x] = 3;
+            })
             container.selectAll("circle").remove()
             drawCircle(container)
         }
@@ -105,11 +129,16 @@ const draw = () => {
     .attr('width', width)
     .attr('height', height)
     .style('background-color', 'white')
+
+
     const data = d3.range(BOARD_SIZE*BOARD_SIZE);
 
-    const grid = svg.append("g").attr("transform", "translate(120,120)");
+
+    
+
+    const grid = svg.append("g").attr("transform", "translate(60,60)");
     const container = svg.append("g")
-        .attr("transform", "translate(120,120)");
+        .attr("transform", "translate(60,60)");
     drawCircle(container);
     grid.selectAll("rect")
     .data(data)

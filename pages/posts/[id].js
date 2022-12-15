@@ -18,7 +18,7 @@ export async function getStaticProps({ params }) {
 }
 export default function Post({ postData }) {
   const {identity, toggleId} = useContext(IdentityContext);
-  if(postData.author === 'Retep' && identity) toggleId(!identity);
+  // if(postData.author === 'Retep' && identity) toggleId(!identity);
   return (
     <Layout>
       <Head>
