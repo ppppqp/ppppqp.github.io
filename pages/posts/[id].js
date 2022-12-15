@@ -1,10 +1,12 @@
 import Layout from '../../components/layout';
+import NoSSRWrapper from '../../components/NoSSRWrapper';
 import { getAllPostIds, getPostData } from '../../lib/posts';
 import Date from '../../components/date';
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
 import { IdentityContext } from '../_app';
 import {useContext} from 'react'
+
 
 export async function getStaticProps({ params }) {
   // Add the "await" keyword like this:
@@ -19,8 +21,8 @@ export async function getStaticProps({ params }) {
 export default function Post({ postData }) {
   const {identity, toggleId} = useContext(IdentityContext);
   // if(postData.author === 'Retep' && identity) toggleId(!identity);
-  return (
-    <Layout>
+  const content = (
+      <Layout>
       <Head>
         <title>{postData.title}</title>
       </Head>
@@ -32,6 +34,13 @@ export default function Post({ postData }) {
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>
+  )
+  return (
+    <>
+      {
+        postData.noSSR ? <NoSSRWrapper>{content}</NoSSRWrapper> : content
+      }
+    </>
   );
 }
 export async function getStaticPaths() {
