@@ -150,8 +150,7 @@ const draw = () => {
     .attr('stroke', '#ccc')
     .attr("fill", "#eff5fb")
 }
-// document.addEventListener("DOMContentLoaded", ()=>{
-//     console.log('load')
-//     draw()
-// })
-draw()
+document.addEventListener("DOMContentLoaded", ()=>{
+    console.log('load')
+    draw()
+})

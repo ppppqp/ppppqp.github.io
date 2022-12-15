@@ -22,7 +22,7 @@ export default function Post({ postData }) {
   const {identity, toggleId} = useContext(IdentityContext);
   // if(postData.author === 'Retep' && identity) toggleId(!identity);
   const scripts = (postData.scripts)
-    ? postData.scripts.map(script => <Script src={script}/>)
+    ? postData.scripts.map(script => <Script src={script} key={script}/>)
     : <></>
   const content = (
       <Layout>
