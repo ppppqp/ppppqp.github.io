@@ -151,5 +151,6 @@ const draw = () => {
     .attr("fill", "#eff5fb")
 }
 document.addEventListener("DOMContentLoaded", ()=>{
+    console.log('load')
     draw()
 })
