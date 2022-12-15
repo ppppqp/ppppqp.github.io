@@ -21,6 +21,10 @@ const board = [
     2,2,2,2,2,2,2,2,
     2,2,2,2,2,2,2,2
 ]
+
+const addIndex = (board) =>{
+    return board.map((d, i) => ({value: d, id: i}))
+}
 const index = d3.local(); 
 // config
 const width = 500;
@@ -36,31 +40,16 @@ const x = d3.scaleBand()
 const y = d3.scaleBand()
 .range([0,250])
 .domain(d3.range(BOARD_SIZE));
-
-document.addEventListener("DOMContentLoaded", ()=>{
-    const svg = d3.select("#mcts")
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height)
-    .style('background-color', 'white')
-    const data = d3.range(BOARD_SIZE*BOARD_SIZE);
-
-    const grid = svg.append("g").attr("transform", "translate(120,120)");
-    const container = svg.append("g")
-        .attr("transform", "translate(120,120)");
-
-    const radius = 12
+const drawCircle = (container) => {
     const offset = boardWidth/16;
-
-    console.log(offset)
     container.selectAll("circle")
-    .data(board)
+    .data(addIndex(board))
     .enter().append("circle")
     .attr('cx', function(d, i){return x(i%BOARD_SIZE)+offset;})
     .attr('cy', function(d, i){return y(Math.floor(i/BOARD_SIZE))+offset;})
     .attr('r', 12)
     .attr('fill', function(d, i){
-        switch(d){
+        switch(d.value){
             case 0:
                 return 'white';
             case 1:
@@ -72,7 +61,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     })
     .style('stroke', function(d){
-        switch(d){
+        switch(d.value){
             case 0:
                 return '#555';
             case 1:
@@ -84,30 +73,44 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
     })
     .style('stroke-dasharray', function(d, i){
-        if(d === 3) return 5;
+        if(d.value === 3) return 5;
         return false
     })
     .on("click", (_, d)=>{
-        if(d === 3){
+        if(d.value === 3){
             // const ret = runMcts({x: d%BOARD_SIZE, y: Math.floor(d/BOARD_SIZE)});
-            // console.log(index.get(this))
-            board[0] = 1
-            console.log(board)
+            board[d.id] = 0
+            container.selectAll("circle").remove()
+            drawCircle(container)
         }
     })
     .on("mouseenter", function(_, d){
-        if(d == 3){
+        if(d.value == 3){
             d3.select(this)
             .attr("fill", "#69afff");
         }
     })
     .on("mouseout", function(_, d){
-        if(d== 3)
+        if(d.value == 3)
         d3.select(this)
             .attr("fill", "#eff5fb");
     })
+}
 
 
+const draw = () => {
+    const svg = d3.select("#mcts")
+    .append('svg')
+    .attr('class', 'mcts-svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('background-color', 'white')
+    const data = d3.range(BOARD_SIZE*BOARD_SIZE);
+
+    const grid = svg.append("g").attr("transform", "translate(120,120)");
+    const container = svg.append("g")
+        .attr("transform", "translate(120,120)");
+    drawCircle(container);
     grid.selectAll("rect")
     .data(data)
     .enter().append("rect")
@@ -117,4 +120,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     .attr('height', boardHeight/8)
     .attr('stroke', '#ccc')
     .attr("fill", "#eff5fb")
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+    draw()
 })
