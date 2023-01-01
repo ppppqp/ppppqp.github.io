@@ -5,7 +5,7 @@ import utilStyles from '../styles/utils.module.css';
 
 const getConfig = () => ({
     imageSrc: "/images/profile.jpg",
-    name: "Qiping Pan"
+    name: "Retep"
 })
 export default function Avartar({imageSize, textStyle}){
     const config = getConfig();

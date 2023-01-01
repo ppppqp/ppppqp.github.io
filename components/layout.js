@@ -4,8 +4,8 @@ import styles from './layout.module.css';
 import Link from 'next/link';
 import Navbar from './navbar';
 import Avartar from './Avartar';
-const name = 'Qiping Pan';
-export const siteTitle = 'Qiping Pan\'s Blog';
+const name = 'Retep';
+export const siteTitle = 'Retep\'s Blog';
 
 
 const config = {
@@ -27,7 +27,7 @@ export default function Layout({ children, home }) {
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Developer Blog of Qiping Pan"
+          content="Developer Blog of Retep"
         />
         <meta
           property="og:image"
@@ -42,7 +42,7 @@ export default function Layout({ children, home }) {
             <Avartar
               imageSize={144}
               textStyle="heading2Xl"
-              name="Qiping Pan"
+              name="Retep"
               enableSwitch={true}
             />
           </>
@@ -51,7 +51,7 @@ export default function Layout({ children, home }) {
           <Avartar
               imageSize={108}
               textStyle="headingLg"
-              name="Qiping Pan"
+              name="Retep"
               enableSwitch={false}
             />
           </>
