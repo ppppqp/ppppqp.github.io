@@ -11,7 +11,7 @@ function getRemainingYears(){
 export default function About() {
     return (<Layout home>
     <div className={utilStyles.lightText}>Male, {getAge()}.</div>
-    <div className={utilStyles.lightText}>{getRemainingYears()} years left before becoming bold, overweight and useless.</div> 
+    <div className={utilStyles.lightText}>{getRemainingYears()} years left before becoming bald, overweight and useless.</div> 
 
     {/* <h2 className={utilStyles.headingMd}>Publication</h2> */}
 
