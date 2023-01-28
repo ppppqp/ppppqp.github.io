@@ -4,6 +4,7 @@ date:   '2021-11-22'
 author: 'Qiping Pan'
 description: 'Some fun stuff I went through trying to install a local python on a shared linux machine'
 tag: 'Tech'
+language: 'EN'
 ---
 
 

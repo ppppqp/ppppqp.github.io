@@ -29,7 +29,7 @@ export default function Home({ allPostsData }) {
           <div className={utilStyles.lightText}>Categorized as...</div>
           <Tagger  curTag={tag} setTag={setTag}/>
           <ul className={utilStyles.list}>
-            {postsData.map(({ id, date, title, description }) => (
+            {postsData.map(({ id, date, title, language }) => (
               <li className={utilStyles.listItem} key={id}>
               <Link href={`/posts/${id}`}>
                 <a>{title}</a>
@@ -37,6 +37,8 @@ export default function Home({ allPostsData }) {
               <br />
               <small className={utilStyles.lightText}>
                 <Date dateString={date} />
+                <div className={utilStyles.boxedText}>{language}</div>
+
               </small>
             </li>
             ))}
