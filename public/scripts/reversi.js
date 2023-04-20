@@ -151,7 +151,6 @@ const draw = () => {
     .attr("fill", "#eff5fb")
 }
 document.addEventListener("DOMContentLoaded", ()=>{
-    console.log('load')
     document.querySelector("#mcts-loading").setAttribute("style", "display:none")
     draw()
 })
