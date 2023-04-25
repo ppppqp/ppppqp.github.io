@@ -6,6 +6,7 @@ export const IdentityContext = createContext({
   identity: true,
   toggleId: () => {},
 });
+
 export default function App({ Component, pageProps, location}) {
   const [identity, toggleId] = useState(true);
   const value = {identity, toggleId};
@@ -13,3 +14,4 @@ export default function App({ Component, pageProps, location}) {
       <Component {...pageProps} />
     </IdentityContext.Provider>;
 }
+
