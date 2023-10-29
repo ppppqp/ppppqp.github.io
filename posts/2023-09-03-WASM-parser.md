@@ -10,7 +10,7 @@ noSSR: 0
 
 ## Meta-Intro
 
-Recently I have spent my spare time exploring WASM(Web Assembly). It is an interesting virtual instruction set that offers many charming features, like cross-platform portability, simplicity, great performance and security. 
+WASM is an interesting virtual instruction set that offers many charming features, like cross-platform portability, simplicity, great performance and security. 
 
 ## Intro
 This blog will introduce the starting point of our journey: a WASM binary. WASM ships in binary, which makes it efficient and secure (at least harder to reverse engineer than Javascript.) The binary structure is well-designed and by studying the structure, we get a taste of how WASM works.
@@ -51,7 +51,7 @@ The first 4 bytes (i.e. `00 61 73 6d`) are magic bytes. They indicate that the f
 00000000 00 61 73 6d 01 00 00 00  01 8a 80 80 80 00 02 60  |.asm...........`|
                       ^  ^  ^  ^
 ```
-The next 4 bytes (i.e. `00 61 73 6d`) are version numbers. They indicate that the file is encoded in WASM 1.0 specification.
+The next 4 bytes (i.e. `01 00 00 00`) are version numbers. They indicate that the file is encoded in WASM 1.0 specification.
 
 ## Sections
 Then it comes to the actual contents. A webassembly module can be divided into 10 sections: Types, Functions, Tables, Memories, Globals, Element Segments, Data Segments, Start Function, Exports and Imports.
@@ -210,9 +210,10 @@ Code section consists of a vector of code entries that are pairs of value type v
 ```
 This whole bunch of bytes are all dedicated to the Code section, which has an id of 10. `02` means there will be two function definitions. `c6 80 80 80 00` indicates the body size (70) of the first function definition. Then the local variables, grouped in (number, type), are specified. `01` means there will be only 1 type of variable, and `02 7f` represents two `i32` variables (which is all local variable we need since there is only 1 type of local variable). The rest of the bytes (body size - bytes taken by local variables) are instructions.
 
-From the above example we see there is only two `i32` variables for the first function and 
+From the above example we see there is only two `i32` variables for the first function and no variable for the second function.
 
-
+# Epilogue
+So we have successfully parsed a wasm binary. Next blog we will introduce how the pieces come together in runtime.
 
 
 # Appendix
@@ -227,5 +228,3 @@ int main(){
   return fib(5);
 }
 ```
-
-## WASM Table links
