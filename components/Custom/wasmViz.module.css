@@ -4,6 +4,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  .title{
+    color: #333;
+  }
 }
 
 .brickContainer{
@@ -38,7 +41,7 @@
   bottom: 35px;
   padding: 10px;
   color: rgb(15, 37, 55);
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(246, 251, 255, 0.9);
 
   /* z-index: 50; */
 }

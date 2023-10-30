@@ -44,7 +44,7 @@ function parse() {
 
 parse();
 function parseHeader() {
-  const section = "Header";
+  const section = "Meta";
   const magic = {
     start: 0,
     end: 4,
