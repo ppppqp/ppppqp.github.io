@@ -184,9 +184,9 @@ In the above example there's no entry function specified.
 ### Element Section
 The initial contents of a table is uninitialized. Element segments can be used to initialize a subrange of a table from a static vector of elements.
 
-$$ elem := \{\text{type}\ reftype,\ \text{init}\ vec(expr),\ \text{mode}\ elemmode\}$$
+$$ \begin{align*}elem &:= \{\text{type}\ reftype,\ \\ &\text{init}\ vec(expr),\ \text{mode}\ mode\}\end{align*}$$
 
-$$\begin{align*} elemmode &::= \text{passive} \\ &|\ \text{active}\{\text{table}~\text{tableidx},~\text{offset}~\text{expr}\} \\ &|\ \text{declarative}\end{align*}$$
+$$\begin{align*} elemmode &::= \text{passive} \\ &|\text{active}\{\text{table}~\text{tableidx},~\text{offset}~\text{expr}\} \\ &|\text{declarative}\end{align*}$$
 
 ### Code Section
 
