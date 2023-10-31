@@ -356,27 +356,37 @@ function readInstruction(bytes, start, size){
 
       case 'I32Const':{
         i += 1;
-        formatOpCode(section, inst);
+        const opCode = formatOpCode(section, inst);
         const value = readI32(bytes, i);
         i = value.end;
         formatI32Range(section, value, (I32) => `The specified I32 const value is ${I32.result}`);
+        // some adjustment on generalRange
+        // opCode.rangeStart = opCode.rangeStart;
+        opCode.rangeEnd = i;
+        for(let j = value.start; j < value.end; j++){
+          parsedBytes[j].rangeStart = opCode.rangeStart;  
+        }
         break;
       }
       case 'Call':{
         i += 1;
-        formatOpCode(section, inst);
+        const opCode = formatOpCode(section, inst);
         // function index
         i += 1;
-        formatByte(section, (v) => `The called function index is ${v}`);
+        const funIdx = formatByte(section, (v) => `The called function index is ${v}`);
+        opCode.rangeEnd = i;
+        funIdx.rangeStart = opCode.rangeStart;
         break;
       }
       case 'LocalSet':
       case 'LocalGet': {
         // local var index
         i += 1;
-        formatOpCode(section, inst);
+        const opCode = formatOpCode(section, inst);
         i += 1;
-        formatByte(section, (v) => `The index for the local variable to retrieve is ${v}`);
+        const varIdx = formatByte(section, (v) => `The index for the local variable to retrieve is ${v}`);
+        opCode.rangeEnd = i;
+        varIdx.rangeStart = opCode.rangeStart;
         break;
       }
       case 'Unreachable':
@@ -388,9 +398,11 @@ function readInstruction(bytes, start, size){
       case 'Block':
       case 'Loop': {
         i += 1;
-        formatOpCode(section, inst);
+        const opCode = formatOpCode(section, inst);
         i += 1;
-        formatByte(section, (v) => `The block type is epsilon`);
+        const blockType = formatByte(section, (v) => `The block type is epsilon`);
+        opCode.rangeEnd = i;
+        blockType.rangeStart = opCode.rangeStart;
         break;
       }
       case 'End':{
@@ -408,9 +420,11 @@ function readInstruction(bytes, start, size){
       }
       case 'BrIf':{
         i += 1;
-        formatOpCode(section, inst);
+        const opCode = formatOpCode(section, inst);
         i += 1;
-        formatByte(section, (v) => `This branch will jump out of ${v} levels of block`);
+        const level = formatByte(section, (v) => `This branch will jump out of ${v} levels of block`);
+        opCode.rangeEnd = i;
+        level.rangeStart = opCode.rangeStart;
         break;
       }
       default: {
@@ -429,10 +443,11 @@ function formatByte(section, description) {
     rangeEnd: parsedBytes.length + 1,
     description: description(bytes[parsedBytes.length]),
   });
+  return parsedBytes[parsedBytes.length - 1];
 }
 
 function formatOpCode(section, inst){
-  formatByte(section, ()=>`The Opcode for ${inst}`)
+  return formatByte(section, ()=>`The Opcode for ${inst}`)
 }
 
 function formatI32Range(section, I32, description) {
@@ -446,18 +461,19 @@ function formatI32Range(section, I32, description) {
       description: description(I32),
     });
   }
+  return parsedBytes[parsedBytes.length - 1];
 }
 
 // parser utils
 
 function parseId(section) {
-  formatByte(section, () => `The id for ${section} section`);
+  return formatByte(section, () => `The id for ${section} section`);
 }
 
 function parseSize(section) {
   const I32 = readI32(bytes, parsedBytes.length);
   console.log(I32.start, I32.end);
-  formatI32Range(
+  return formatI32Range(
     section,
     I32,
     (I32) => `total number of bytes in the ${section} section is ${I32.result}`
