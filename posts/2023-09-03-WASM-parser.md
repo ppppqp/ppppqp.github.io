@@ -54,7 +54,7 @@ The first 4 bytes (i.e. `00 61 73 6d`) are magic bytes. They indicate that the f
 The next 4 bytes (i.e. `01 00 00 00`) are version numbers. They indicate that the file is encoded in WASM 1.0 specification.
 
 ## Sections
-Then it comes to the actual contents. A webassembly module can be divided into 10 sections: Types, Functions, Tables, Memories, Globals, Element Segments, Data Segments, Start Function, Exports and Imports.
+Then it comes to the actual contents. A webassembly module can be divided into 12 sections: Custom, Types, Functions, Tables, Memories, Globals, Element Segments, Data Segments, Start Function, Code, Exports and Imports. Some sections are optional.
 
 The structure for each section is:
 * 1 byte as section id
@@ -62,7 +62,9 @@ The structure for each section is:
 * N bytes of content
 
 ### Type
-The Type section contains the type information for all functions, i.e, it enumerates the "(parameter types, return type)" pairs of all functions in this module. When a function want to declare its type, it only need to specify an index into the Type section.
+The Type section contains the type information (a.k.a signature) for all functions, i.e, it enumerates the "(parameter types, return type)" pairs of all functions in this module. When a function want to declare its type, it only need to specify an index into the Type section.
+
+
 
 ```bash
 00000000 00 61 73 6d 01 00 00 00  01 8a 80 80 80 00 02 60  |.asm...........`|
@@ -95,6 +97,8 @@ Then we follow the same procedure and find the next function type is `void => i3
 
 ### Function
 The Function section contains all the function declarations in an array. The entries of the array is just indices to the Type section array.
+
+Type section store the signature, Code section stores the actual implementation, and Function section associates both together. 
 
 ```bash
 00000010  01 7f 01 7f 60 00 01 7f  03 83 80 80 80 00 02 00  |....`...........|
@@ -173,7 +177,7 @@ $$\begin{align*}exportdesc &::= \text{func}\ funcidx \\ &|\ \text{table}\ tablei
 
 Following the same rule to process the rest, we will get a function exported named `fib`, which points to the index 0 of the Function section, and the same with `main`.
 
-### Start Section
+### Start
 Start section is an optional section: it specifies the entry function for the whole wasm module. 
 
 $$ start ::= \{\text{func}\ funcidx\}$$
@@ -181,14 +185,14 @@ $$ start ::= \{\text{func}\ funcidx\}$$
 In the above example there's no entry function specified.
 
 
-### Element Section
+### Element
 The initial contents of a table is uninitialized. Element segments can be used to initialize a subrange of a table from a static vector of elements.
 
 $$ \begin{align*}elem &:= \{\text{type}\ reftype,\ \\ &\text{init}\ vec(expr),\ \text{mode}\ mode\}\end{align*}$$
 
 $$\begin{align*} elemmode &::= \text{passive} \\ &|\text{active}\{\text{table}~\text{tableidx},~\text{offset}~\text{expr}\} \\ &|\text{declarative}\end{align*}$$
 
-### Code Section
+### Code
 
 Code section consists of a vector of code entries that are pairs of value type vectors and expressions. They represent the locals and body field of the functions in the component of a module.
 
@@ -212,12 +216,12 @@ This whole bunch of bytes are all dedicated to the Code section, which has an id
 
 From the above example we see there is only two `i32` variables for the first function and no variable for the second function.
 
-# Epilogue
+## Epilogue
 So we have successfully parsed a wasm binary. Next blog we will introduce how the pieces come together in runtime.
 
 
-# Appendix
-## `Fib` in C++
+## Appendix
+### `Fib` in C++
 The source code of fib in c++ that I used to compile to wasm.
 ```cpp
 int fib(int n){

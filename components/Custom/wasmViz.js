@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import styles from "./wasmViz.module.css";
-import cls from 'classnames';
+import cls from "classnames";
 const bytes = [
   0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00, 0x01, 0x8a, 0x80, 0x80, 0x80,
   0x00, 0x02, 0x60, 0x01, 0x7f, 0x01, 0x7f, 0x60, 0x00, 0x01, 0x7f, 0x03, 0x83,
@@ -48,12 +48,12 @@ function parseHeader() {
   const magic = {
     start: 0,
     end: 4,
-  }
-  formatI32Range(section, magic, ()=>"Magic bytes");
+  };
+  formatI32Range(section, magic, () => "Magic bytes");
   const protocol = {
-    start: 5,
-    end: 9,
-  }
+    start: 4,
+    end: 8,
+  };
   formatI32Range(section, protocol, () => "WASM Protocol Version 1");
 }
 
@@ -79,7 +79,7 @@ function parseType() {
       // const type = bytes[parsedBytes.length] === '7f' ? 'i32'
       formatByte(
         section,
-        () => `The #${j + 1} parameter for the #${i} function type is i32`
+        () => `The #${j} parameter for the #${i} function type is i32`
       );
     }
     const resultCount = readI32(bytes, parsedBytes.length);
@@ -147,7 +147,11 @@ function parseMemory() {
   parseId(section);
   parseSize(section);
   const memoryCount = readI32(bytes, parsedBytes.length);
-  formatI32Range(section, memoryCount, (I32) => `There are ${I32.result} table`);
+  formatI32Range(
+    section,
+    memoryCount,
+    (I32) => `There are ${I32.result} table`
+  );
   for (let i = 0; i < memoryCount.result; i++) {
     formatByte(section, () => "The element does not have maximal size");
     const limitInitial = readI32(bytes, parsedBytes.length);
@@ -179,17 +183,21 @@ function parseGlobal() {
 }
 
 function parseExport() {
-  const section = 'Export';
+  const section = "Export";
   parseId(section);
   parseSize(section);
   const exportCount = readI32(bytes, parsedBytes.length);
-  formatI32Range(section, exportCount, (I32) => `There are ${I32.result} export variables in total`);
+  formatI32Range(
+    section,
+    exportCount,
+    (I32) => `There are ${I32.result} export variables in total`
+  );
   const exportDescription = (d) => {
-    if(d === 0) return 'Function';
-    if(d === 2) return 'Memory';
+    if (d === 0) return "Function";
+    if (d === 2) return "Memory";
     // TODO: other export description
-  }
-  for (let i = 0; i < exportCount.result; i++){
+  };
+  for (let i = 0; i < exportCount.result; i++) {
     const fieldLen = readI32(bytes, parsedBytes.length);
     formatI32Range(
       section,
@@ -197,13 +205,23 @@ function parseExport() {
       (I32) => `Field length for this export variable is ${I32.result}`
     );
     const fieldStr = readStr(bytes, parsedBytes.length, fieldLen.result);
-    formatI32Range(section, fieldStr, (str) => `The name for this export variable is '${str.result}'`);
-    formatByte(section, (d)=>`The type for this export is ${exportDescription(d)}`);
+    formatI32Range(
+      section,
+      fieldStr,
+      (str) => `The name for this export variable is '${str.result}'`
+    );
+    formatByte(
+      section,
+      (d) => `The type for this export is ${exportDescription(d)}`
+    );
     const index = readI32(bytes, parsedBytes.length);
-    formatI32Range(section, index, (I32) => `The index into of the value into its own section is ${I32.result}`);
+    formatI32Range(
+      section,
+      index,
+      (I32) =>
+        `The index into of the value into its own section is ${I32.result}`
+    );
   }
-
-
 }
 function parseCode() {
   const section = "Code";
@@ -241,7 +259,11 @@ function parseCode() {
       formatByte(section, () => `The type is i32`);
     }
     // the rest is body
-    readInstruction(bytes, parsedBytes.length, bodySize.result + startPos - parsedBytes.length);
+    readInstruction(
+      bytes,
+      parsedBytes.length,
+      bodySize.result + startPos - parsedBytes.length
+    );
   }
 }
 
@@ -270,165 +292,179 @@ function readI32(bytes, start) {
   };
 }
 
-function readStr(bytes, start, size){
-  let result = '';
-  for(let i = 0; i < size; i++){
+function readStr(bytes, start, size) {
+  let result = "";
+  for (let i = 0; i < size; i++) {
     // TODO: fix performance issue
     result += String.fromCharCode(bytes[start + i]);
   }
   return {
     start,
     end: start + size,
-    result
-  }
+    result,
+  };
 }
 
-function mapOpCode(code){
-  switch(code){
+function mapOpCode(code) {
+  switch (code) {
     case 0x00: {
-      return 'Unreachable';
+      return "Unreachable";
     }
     case 0x02: {
-      return 'Block';
+      return "Block";
     }
     case 0x03: {
-      return 'Loop';
+      return "Loop";
     }
     case 0x10: {
-      return 'Call';
+      return "Call";
     }
-    case 0x0D: {
-      return 'BrIf';
+    case 0x0d: {
+      return "BrIf";
     }
     case 0x20: {
-      return 'LocalGet';
+      return "LocalGet";
     }
     case 0x21: {
-      return 'LocalSet';
+      return "LocalSet";
     }
     case 0x22: {
-      return 'LocalTee';
+      return "LocalTee";
     }
     case 0x23: {
-      return 'GlobalGet';
+      return "GlobalGet";
     }
     case 0x24: {
-      return 'GlobalSet';
+      return "GlobalSet";
     }
     case 0x40: {
-      return 'BlockTypeE';
+      return "BlockTypeE";
     }
     case 0x41: {
-      return 'I32Const';
+      return "I32Const";
     }
     case 0x46: {
-      return 'I32Eq';
+      return "I32Eq";
     }
     case 0x47: {
-      return 'I32Ne';
+      return "I32Ne";
     }
     case 0x6a: {
-      return 'I32Add';
+      return "I32Add";
     }
     case 0x72: {
-      return 'I32Or';
+      return "I32Or";
     }
     case 0xb: {
-      return 'End';
+      return "End";
     }
     default: {
       console.log(code);
-      console.log('Command not recoginzed')
-      return 'Error';
+      console.log("Command not recoginzed");
+      return "Error";
     }
   }
 }
 
-
-function readInstruction(bytes, start, size){
+function readInstruction(bytes, start, size) {
   let i = start;
-  const section = 'Code';
-  console.log('read instruction start', start, size)
-  while(i < start + size){
-    const inst = mapOpCode(bytes[i])
-    if(inst === 'Error') break;
-    switch(inst){
-
-      case 'I32Const':{
+  const section = "Code";
+  console.log("read instruction start", start, size);
+  while (i < start + size) {
+    const inst = mapOpCode(bytes[i]);
+    if (inst === "Error") break;
+    switch (inst) {
+      case "I32Const": {
         i += 1;
         const opCode = formatOpCode(section, inst);
         const value = readI32(bytes, i);
         i = value.end;
-        formatI32Range(section, value, (I32) => `The specified I32 const value is ${I32.result}`);
+        formatI32Range(
+          section,
+          value,
+          (I32) => `The specified I32 const value is ${I32.result}`
+        );
         // some adjustment on generalRange
         // opCode.rangeStart = opCode.rangeStart;
         opCode.rangeEnd = i;
-        for(let j = value.start; j < value.end; j++){
-          parsedBytes[j].rangeStart = opCode.rangeStart;  
+        for (let j = value.start; j < value.end; j++) {
+          parsedBytes[j].rangeStart = opCode.rangeStart;
         }
         break;
       }
-      case 'Call':{
+      case "Call": {
         i += 1;
         const opCode = formatOpCode(section, inst);
         // function index
         i += 1;
-        const funIdx = formatByte(section, (v) => `The called function index is ${v}`);
+        const funIdx = formatByte(
+          section,
+          (v) => `The called function index is ${v}`
+        );
         opCode.rangeEnd = i;
         funIdx.rangeStart = opCode.rangeStart;
         break;
       }
-      case 'LocalSet':
-      case 'LocalGet': {
+      case "LocalSet":
+      case "LocalGet": {
         // local var index
         i += 1;
         const opCode = formatOpCode(section, inst);
         i += 1;
-        const varIdx = formatByte(section, (v) => `The index for the local variable to retrieve is ${v}`);
+        const varIdx = formatByte(
+          section,
+          (v) => `The index for the local variable to retrieve is ${v}`
+        );
         opCode.rangeEnd = i;
         varIdx.rangeStart = opCode.rangeStart;
         break;
       }
-      case 'Unreachable':
-      case 'Nop': {
+      case "Unreachable":
+      case "Nop": {
         i += 1;
         formatOpCode(section, inst);
         break;
       }
-      case 'Block':
-      case 'Loop': {
+      case "Block":
+      case "Loop": {
         i += 1;
         const opCode = formatOpCode(section, inst);
         i += 1;
-        const blockType = formatByte(section, (v) => `The block type is epsilon`);
+        const blockType = formatByte(
+          section,
+          (v) => `The block type is epsilon`
+        );
         opCode.rangeEnd = i;
         blockType.rangeStart = opCode.rangeStart;
         break;
       }
-      case 'End':{
+      case "End": {
         i += 1;
         formatOpCode(section, inst);
         break;
       }
-      case 'I32Eq':
-      case 'I32Ne':
-      case 'I32Or':
-      case 'I32Add':{
+      case "I32Eq":
+      case "I32Ne":
+      case "I32Or":
+      case "I32Add": {
         i += 1;
         formatOpCode(section, inst);
         break;
       }
-      case 'BrIf':{
+      case "BrIf": {
         i += 1;
         const opCode = formatOpCode(section, inst);
         i += 1;
-        const level = formatByte(section, (v) => `This branch will jump out of ${v} levels of block`);
+        const level = formatByte(
+          section,
+          (v) => `This branch will jump out of ${v} levels of block`
+        );
         opCode.rangeEnd = i;
         level.rangeStart = opCode.rangeStart;
         break;
       }
       default: {
-        console.log('Not recognized');
+        console.log("Not recognized");
       }
     }
   }
@@ -446,8 +482,8 @@ function formatByte(section, description) {
   return parsedBytes[parsedBytes.length - 1];
 }
 
-function formatOpCode(section, inst){
-  return formatByte(section, ()=>`The Opcode for ${inst}`)
+function formatOpCode(section, inst) {
+  return formatByte(section, () => `The Opcode for ${inst}`);
 }
 
 function formatI32Range(section, I32, description) {
@@ -480,20 +516,33 @@ function parseSize(section) {
   );
 }
 
-
-
 function Brick(props) {
-  const { id, data, highlight, tooltip, setTooltip, setHighlight} = props;
+  const { id, data, highlight, tooltip, setTooltip, setHighlight } = props;
   return (
     <div className={styles.brickContainer}>
-      {tooltip && <div className={styles.tooltip}>
-        <div><span className={styles.bold}> {data.section}</span></div>
-        <div> {data.description} </div>
-      </div>}
-      <div className={cls(styles.brick, tooltip && styles.selected, highlight && styles.highlight)} onClick={()=>{
-        setTooltip(id);
-        setHighlight( new Array(data.rangeEnd - data.rangeStart).fill().map((d, i) => i + data.rangeStart));
-      }}>
+      {tooltip && (
+        <div className={styles.tooltip}>
+          <div>
+            <span className={styles.bold}> {data.section}</span>
+          </div>
+          <div> {data.description} </div>
+        </div>
+      )}
+      <div
+        className={cls(
+          styles.brick,
+          tooltip && styles.selected,
+          highlight && styles.highlight
+        )}
+        onClick={() => {
+          setTooltip(id);
+          setHighlight(
+            new Array(data.rangeEnd - data.rangeStart)
+              .fill()
+              .map((d, i) => i + data.rangeStart)
+          );
+        }}
+      >
         {data.byte?.toString(16).padStart(2, "0")}
       </div>
     </div>
@@ -505,12 +554,12 @@ export default function wasmViz() {
   const [highlight, setHighlight] = useState([]);
   const [tooltip, setTooltip] = useState(-1);
   // const updateHighlight = useCallback(() => {
-    
+
   // }, []);
-  useEffect(()=>{
-    const id = window.addEventListener('click', (e)=>{
+  useEffect(() => {
+    const id = window.addEventListener("click", (e) => {
       const paths = e.composedPath();
-      if(paths.some(p => p.className=== styles.brickContainer)){
+      if (paths.some((p) => p.className === styles.brickContainer)) {
         return;
       }
       setTooltip(-1);
@@ -519,10 +568,20 @@ export default function wasmViz() {
     // return ()=>window.removeEventListener()
   }, []);
   return (
-    <div className={styles.container}>
-      {parsedBytes.map((b, i) => (
-        <Brick data={b} id={i} highlight={highlight.indexOf(i) > -1} tooltip={i === tooltip} setTooltip={setTooltip} setHighlight={setHighlight}/>
-      ))}
+    <div>
+      <div className={styles.container}>
+        {parsedBytes.map((b, i) => (
+          <Brick
+            data={b}
+            id={i}
+            highlight={highlight.indexOf(i) > -1}
+            tooltip={i === tooltip}
+            setTooltip={setTooltip}
+            setHighlight={setHighlight}
+          />
+        ))}
+      </div>
+      <span className={styles.words}>An interactive wasm parser</span>
     </div>
   );
 }

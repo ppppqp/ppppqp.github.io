@@ -6,7 +6,9 @@ export default function Custom(props){
   console.log(props.id)
   switch (props.id) { 
     case '2023-09-03-WASM-parser': {
-      console.log('here')
+      return <WasmViz />
+    }
+    case '2023-09-03-WASM-parser-cn': {
       return <WasmViz />
     }
     default: return null;
