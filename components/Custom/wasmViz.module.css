@@ -32,6 +32,8 @@
 .bold{
   font-weight: 700;
 }
+
+
 .tooltip{
   position: absolute;
   /* display: inline-block; */

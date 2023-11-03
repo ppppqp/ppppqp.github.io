@@ -9,7 +9,7 @@ noSSR: 0
 
 ## Meta-Intro
 
-WASM（WebAssembly）是一个虚拟指令集，具备了跨平台可移植性、简单性、出色的性能和安全性。
+WASM（WebAssembly）是一个虚拟指令集，具备了跨平台可移植性、简单性、出色的性能和安全性，在高性能/分布式计算/嵌入式中都有很大的前景（会取代Docker吗？）。
 
 ## Intro
 
@@ -229,13 +229,15 @@ Following the same rule to process the rest, we will get a function exported nam
 一旦元素被加载到表中，就可以使用"CALL_INDIRECT"操作来间接调用表中的函数。
 
 
-$$ \begin{align*}elem &:= \{\text{type}\ reftype,\ \\ &\text{init}\ vec(expr),\ \text{mode}\ mode\}\end{align*}$$
+### [Code](https://webassembly.github.io/spec/core/binary/modules.html#code-section)
 
-$$\begin{align*} elemmode &::= \text{passive} \\ &|\text{active}\{\text{table}~\text{tableidx},~\text{offset}~\text{expr}\} \\ &|\text{declarative}\end{align*}$$
+"Code section"（代码部分）包括一个代码条目的数组，这些条目是值类型数组和表达式的组合。它们表示模块组件中函数的局部变量和主体字段。
 
-### Code
+具体来说，每个函数在WebAssembly模块中都有一个与之相关的代码条目，其中包括：
 
-Code section consists of a vector of code entries that are pairs of value type vectors and expressions. They represent the locals and body field of the functions in the component of a module.
+- **局部变量**：局部变量是函数内部声明的变量，在函数体内部使用，存储函数计算中的临时数据。
+
+- **函数体**：函数体由一系列表达式组成，这些表达式是WebAssembly的指令(instruction)，用于实现函数的操作和逻辑。
 
 ```bash
 00000050  00 04 6d 61 69 6e 00 01  0a d7 80 80 80 00 02 c6  |..main..........|
@@ -254,26 +256,29 @@ Code section consists of a vector of code entries that are pairs of value type v
            ^  ^  ^  ^  ^
 ```
 
-This whole bunch of bytes are all dedicated to the Code section, which has an id of 10. `02` means there will be two function definitions. `c6 80 80 80 00` indicates the body size (70) of the first function definition. Then the local variables, grouped in (number, type), are specified. `01` means there will be only 1 type of variable, and `02 7f` represents two `i32` variables (which is all local variable we need since there is only 1 type of local variable). The rest of the bytes (body size - bytes taken by local variables) are instructions.
+"Code section"的ID为10。`02` 表示将有两个函数定义。`c6 80 80 80 00` 指示了第一个函数定义的体积大小（70）。然后，指定了局部变量，它们以（数量，类型）的方式进行分组。`01` 表示只有一种类型的变量，而 `02 7f` 表示两个 `i32` 类型的变量（这是唯一的局部变量类型，因为只有一个局部变量类型）。其余的字节（体积大小减去局部变量占用的字节）是指令。
 
-From the above example we see there is only two `i32` variables for the first function and no variable for the second function.
+上面的例子中，第一个函数有两个 i32 类型的局部变量，而第二个函数没有局部变量。
+
+<img src="/images/2023-11-02-WASM-parser-cn/code.png" style="margin-top: 2rem; margin-bottom: 2rem; margin-left: auto;
+    margin-right: auto; "></img>
 
 ## Epilogue
 
-So we have successfully parsed a wasm binary. Next blog we will introduce how the pieces come together in runtime.
+Yay, 我们成功解析了一个WebAssembly二进制文件的结构🎉！在下一个博客中，将介绍这些部分如何在运行时组合在一起，以实现WebAssembly模块的执行和功能。
 
 ## Appendix
 
-### `Fib` in C++
+### `Fib` in C
 
-The source code of fib in c++ that I used to compile to wasm.
+我用于编译wasm的C代码。
 
-```cpp
-int fib(int n){
+```c
+int fib(int n) {
   if(n == 0 || n == 1) return 1;
   return fib(n-1) + fib(n-2);
 }
-int main(){
+int main() {
   return fib(5);
 }
 ```
