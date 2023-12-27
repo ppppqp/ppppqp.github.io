@@ -7,6 +7,8 @@ language: "CN"
 noSSR: 0
 ---
 
+<div id="wasm-viz"></div>
+
 ## Meta-Intro
 
 WASM（WebAssembly）是一个虚拟指令集，具备了跨平台可移植性、简单性、出色的性能和安全性，在高性能/分布式计算/嵌入式中都有很大的前景（会取代Docker吗？）。

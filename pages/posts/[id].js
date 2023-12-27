@@ -4,12 +4,10 @@ import { getAllPostIds, getPostData } from '../../lib/posts';
 import Date from '../../components/date';
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
-import { IdentityContext } from '../_app';
-import {useContext} from 'react'
+import {useEffect} from 'react'
 import Script from 'next/script'
 import Custom from '../../components/Custom';
-
-
+// import '../../components/Custom/hello-world';
 export async function getStaticProps({ params }) {
   // Add the "await" keyword like this:
   const postData = await getPostData(params.id);
@@ -21,9 +19,13 @@ export async function getStaticProps({ params }) {
   };
 }
 export default function Post({ postData }) {
-  const {identity, toggleId} = useContext(IdentityContext);
   // if(postData.author === 'Retep' && identity) toggleId(!identity);
-  console.log(postData)
+  useEffect(() => {
+    import('../../components/Custom').then(({loadAll}) => {
+      loadAll();
+      // console.log(ret);
+    });
+  }, []);
   const scripts = (postData.scripts)
     ? postData.scripts.map(script => <Script src={script} key={script}/>)
     : <></>
@@ -38,7 +40,6 @@ export default function Post({ postData }) {
         <div className={utilStyles.lightText}>
           <Date dateString={postData.date} />
         </div>
-        <Custom id={postData.id}/>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>

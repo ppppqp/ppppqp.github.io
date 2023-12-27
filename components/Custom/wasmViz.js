@@ -369,7 +369,6 @@ function mapOpCode(code) {
 function readInstruction(bytes, start, size) {
   let i = start;
   const section = "Code";
-  console.log("read instruction start", start, size);
   while (i < start + size) {
     const inst = mapOpCode(bytes[i]);
     if (inst === "Error") break;
@@ -508,7 +507,6 @@ function parseId(section) {
 
 function parseSize(section) {
   const I32 = readI32(bytes, parsedBytes.length);
-  console.log(I32.start, I32.end);
   return formatI32Range(
     section,
     I32,
@@ -550,7 +548,7 @@ function Brick(props) {
 }
 
 const initialHighlight = bytes.map((b) => false);
-export default function wasmViz() {
+function WasmViz() {
   const [highlight, setHighlight] = useState([]);
   const [tooltip, setTooltip] = useState(-1);
   // const updateHighlight = useCallback(() => {
@@ -584,4 +582,13 @@ export default function wasmViz() {
       <span className={styles.words}>An interactive wasm parser</span>
     </div>
   );
+}
+
+
+import { render } from "react-dom";
+export function load(){
+  const domNode = document.getElementById('wasm-viz')
+  if(domNode){
+    render(<WasmViz />, domNode);
+  }
 }
