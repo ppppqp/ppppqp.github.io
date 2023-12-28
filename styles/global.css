@@ -171,6 +171,11 @@ base0F  #a3685a  Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php 
 
 code {
   font-size: 0.9rem;
+  color: rgb(199, 80, 159);
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  padding: 3px;
+  margin: 3px;
 }
 
 pre code.hljs {

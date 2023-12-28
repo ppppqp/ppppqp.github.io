@@ -16,7 +16,7 @@ export function load() {
           align-items: center;      
         }
         img {
-          width: ${width};
+          max-width: ${width};
           margin-left: auto;
           margin-right: auto; 
         }
@@ -24,11 +24,16 @@ export function load() {
           font-size: 0.8rem;
           color: #aaa;
         }
+        @media (max-width: 400px){
+          img {
+            max-width: calc(${width}*0.7); 
+          }
+        }
       </style>
       <div class="container">
         <img src=${src}></img>
         <div class="caption">${caption}</div>
-      <div>
+      </div>
     `;
       this.shadow.append(template.content.cloneNode(true));
     }

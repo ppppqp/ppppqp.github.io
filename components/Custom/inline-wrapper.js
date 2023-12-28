@@ -15,8 +15,7 @@ export function load() {
       </style>
       <div class="container">
         <slot></slot>
-      <div>
-    `;
+      </div>`;
       this.shadow.append(template.content.cloneNode(true));
     }
   }

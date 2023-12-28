@@ -173,7 +173,7 @@ export function load() {
       <div class="container">
         <img src=${src}></img>
         <div class="caption">${caption}</div>
-      <div>
+      </div>
     `;
       this.shadow.append(template.content.cloneNode(true));
     }
@@ -205,8 +205,8 @@ export function load() {
 ```
 
 <inline-wrapper>
-	<image-with-caption src="/images/2023-12-28-web-components/snoopy1.jpeg" caption="1" width="10rem"></image-with-caption>
-	<image-with-caption src="/images/2023-12-28-web-components/snoopy2.jpeg" caption="2" width="10rem"></image-with-caption>
-  <image-with-caption src="/images/2023-12-28-web-components/snoopy3.jpeg" caption="3" width="10rem"></image-with-caption>
+	<image-with-caption src="/images/2023-12-28-web-components/snoopy1.jpeg" caption="1" width="8rem"></image-with-caption>
+	<image-with-caption src="/images/2023-12-28-web-components/snoopy2.jpeg" caption="2" width="8rem"></image-with-caption>
+  <image-with-caption src="/images/2023-12-28-web-components/snoopy3.jpeg" caption="3" width="8rem"></image-with-caption>
 </inline-wrapper>
 
