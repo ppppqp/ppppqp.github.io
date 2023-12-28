@@ -169,6 +169,10 @@ base0E  #cc99cc  Keywords, Storage, Selector, Markup Italic, Diff Changed
 base0F  #a3685a  Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
 */
 
+code {
+  font-size: 0.9rem;
+}
+
 pre code.hljs {
   display: block;
   overflow-x: auto;
