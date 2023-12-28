@@ -5,7 +5,7 @@ export function load() {
       this.shadow = this.attachShadow({ mode: "open" });
       const src = this.getAttribute("src");
       const caption = this.getAttribute("caption");
-
+      const width = this.getAttribute('width') || '15rem';
       const template = document.createElement("template");
       template.innerHTML = `
       <style>
@@ -16,7 +16,7 @@ export function load() {
           align-items: center;      
         }
         img {
-          width:15rem; 
+          width: ${width};
           margin-left: auto;
           margin-right: auto; 
         }

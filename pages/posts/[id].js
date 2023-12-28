@@ -6,7 +6,6 @@ import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
 import {useEffect} from 'react'
 import Script from 'next/script'
-import Custom from '../../components/Custom';
 // import '../../components/Custom/hello-world';
 export async function getStaticProps({ params }) {
   // Add the "await" keyword like this:
