@@ -178,6 +178,10 @@ code {
   margin: 3px;
 }
 
+a>code {
+  color: rgb(146, 69, 201);
+}
+
 pre code.hljs {
   display: block;
   overflow-x: auto;

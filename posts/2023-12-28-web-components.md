@@ -8,21 +8,21 @@ noSSR: 0
 ---
 
 
-写博客的时候，遇到了一些定制化需求。我想在博客顶部加上一个可交互的组件；比如我想给图片加上自定义的注释；比如我想让图片并排排版。这些使用markdown实现都比较困难。
+写博客的时候，遇到了一些定制化需求。比如我想在博客顶部加上一个可交互的组件；比如我想给图片加上自定义的注释；比如我想让图片并排排版。这些使用markdown实现都比较困难。
 
 ## 前言：Markdown静态网页生成
 
-我的博客的方案是使用`markdown`格式输入内容，通过SSG(Static Site Generation)生成`html`文件。具体来说，在`lib/posts.js`中使用 [`remark`]([https://github.com/rehypejs/rehype](https://github.com/remarkjs/remark))将`markdown`字符串转化成对应的`html`字符串，再通过`dangerouslySetInnerHTML`注入到博客中。rehype也有丰富的[插件生态](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md#list-of-plugins)，可以满足绝大多数的需求（比如为图片加注释就可以通过[这个](https://github.com/josestg/rehype-figure)实现）。但仍然有一些问题，比如
+我的博客的方案是使用`markdown`格式输入内容，通过SSG(Static Site Generation)生成`html`文件。具体来说，在`lib/posts.js`中使用 [remark](https://github.com/remarkjs/remark)将`markdown`字符串转化成对应的`html`字符串，再通过`dangerouslySetInnerHTML`注入到博客中。[rehype](https://github.com/rehypejs/rehype?tab=readme-ov-file#plugins)也有丰富的[插件生态](https://github.com/rehypejs/rehype/blob/HEAD/doc/plugins.md#list-of-plugins)，可以满足绝大多数的需求（比如为图片加注释就可以通过[这个](https://github.com/josestg/rehype-figure)实现）。但仍然有一些问题，比如
 - 找到插件后很少能称心如意，还是需要调整样式。
 - 对于比较定制化的需求（比如并排图片，或者图片的收起展开），找不到对应的插件
-- 更极端一点，插入一个只用一次的高度定制化的组件，比如WASM101中，要如何最无痛地实现。
+- 更极端一点，插入一个只用一次的高度定制化的组件，比如[WASM101](/posts/2023-11-02-WASM-parser-cn)中顶部的可交互组件，要如何最无痛地实现。
 
 没错，这篇博客重点就是**灵活且无痛**。不用找插件，不用学习markdown parser的逻辑，不用试图在字符串中绞尽脑汁地匹配然后注入，实现**可以复用与组合，高度定制，随意插入的博文组件和排版**。
 
 
 ## 可能的解决方案
 ### 简单但受限的NextJS原生方案
-虽然是Markdown写作转换成html，但最终每一个页面在Nextjs中也是作为一个`Page`组件来实现的(`pages/posts/[id].js`)。所以一个简单的方案就是在这个组件内部加上一个`Custom`组件做对应的路由，匹配博文的标题然后渲染对应的组件。一开始我的WASM101就是这样实现的。
+虽然是Markdown写作转换成html，但最终每一个页面在Nextjs中也是作为一个`Page`组件来实现的(`pages/posts/[id].js`)。所以一个简单的方案就是在这个组件内部加上一个`Custom`组件做对应的路由，匹配博文的标题然后渲染对应的组件。一开始WASM101就是这样实现的。
 
 ```js
 // components/Custom/index.js
@@ -118,7 +118,7 @@ export default function Post({ postData }) {
 ```
 
 ### 可复用组件：Web Components
-DOM节点挂载React简单，开发体验也不错，可以实现大部分的需求。但问题是多处挂载React，性能较差。相比高度定制化的一次性组件，对于可复用组件通常我们并不需要用到React的状态管理，只需要像remark一样生成一个局部的样式和dom子树就够了。这个时候主角Web Components出场。Web Components可以允许我们定义自己的`html` tag，配合上`rehype-raw`，就实现了利用浏览器（而不是React）解释自定义组件的效果。
+DOM节点挂载React简单，开发体验也不错，可以实现大部分的需求。但问题是多处挂载React，性能较差。相比高度定制化的一次性组件，对于可复用组件通常我们并不需要用到React的状态管理，只需要像remark一样生成一个局部的样式和dom子树就够了。这个时候主角[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)出场🎸。Web Components可以允许我们定义自己的`html` tag，配合上`rehype-raw`，就实现了利用浏览器（而不是React）解释自定义组件的效果。
 
 比如我们想实现一个图片加注释的自定义组件。预期的效果是在markdown文件中加入这个标签：
 
@@ -140,7 +140,7 @@ DOM节点挂载React简单，开发体验也不错，可以实现大部分的需
 - 构造函数中初始化
 - 读取`src`和`caption`
 - 通过`innerHTML`来构造对应的`html`模版，注入对应属性
-- 注册
+- 注册`image-with-caption`
 
 ```js
 export function load() {
@@ -182,10 +182,10 @@ export function load() {
 }
 ```
 
-当然，我们也需要在客户端异步加载这个`load`函数，方式与*DOM节点挂载React*一致。Web Components的好处有很多
+当然，我们也需要在客户端异步加载这个`load`函数，方式与[DOM节点挂载React](/posts/2023-12-28-web-components#一次性组件dom节点挂载react)一致。Web Components的好处有很多
 - 首先是性能上由于使用了浏览器的原生能力，比React快很多。
-- 其次使用了shadow dom以后可以将样式局部化，心智负担相比安装plugin再魔改更少。
-- 最后，由于Web Components的`slot`特性，我们可以做多层嵌套，实现自定义组件的自由组合。比如两列排版和图片注释的组件组合起来也非常方便。
+- 其次使用了[shadow dom](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM)以后可以将样式局部化，心智负担相比安装plugin再魔改更少。
+- 最后，由于Web Components的[`slot`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot)特性，我们可以做多层嵌套，实现自定义组件的自由组合。比如多列排版和图片注释的组件组合起来也非常方便。
 
 ```html
 <inline-wrapper>
@@ -210,3 +210,5 @@ export function load() {
   <image-with-caption src="/images/2023-12-28-web-components/snoopy3.jpeg" caption="3" width="8rem"></image-with-caption>
 </inline-wrapper>
 
+## 结语
+可以探索的topic还有很多，比如可组合性，用了shadow dom后样式的继承问题，用Web Components来写可交互组件，博客的玩出花😈
