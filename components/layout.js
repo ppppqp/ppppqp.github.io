@@ -34,7 +34,9 @@ export default function Layout({ children, home }) {
           content={`/open_image.png`}
         />
         <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="/open_image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@QipingP"></meta>
+        <meta name="twitter:title" content="Retep's blog"></meta>   
       </Head>
       <header className={styles.header}>
         {home ? (

@@ -3,13 +3,12 @@ export function load() {
     constructor() {
       super();
       this.shadow = this.attachShadow({ mode: "open" });
-      const width = this.getAttribute('width') || '15rem';
+      const width = this.getAttribute("width") || "15rem";
       this.currentIndex = 0;
       const template = document.createElement("template");
       template.innerHTML = `
       <style>
       .swiper-container {
-        width: 300px;
         overflow: hidden;
         position: relative;
       }
@@ -20,10 +19,9 @@ export function load() {
       }
     
       .swiper-slide {
-        flex: 0 0 300px;
-        height: 200px;
+        flex: 0 0 100%;
         margin-right: 20px;
-        background-color: #f0f0f0;
+        background-color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -32,16 +30,29 @@ export function load() {
     
       .swiper-control {
         position: absolute;
+        border-radius: 2px;
         top: 50%;
         transform: translateY(-50%);
         width: 20px;
-        height: 20px;
-        background-color: rgba(0, 0, 0, 0.5);
+        height: 60%;
+        background-color: rgba(178, 178, 178, 0.5);
         color: white;
         text-align: center;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-    
+
+      .swiper-control:hover{
+        background-color: rgba(178, 178, 178, 0.8);
+      }
+
+      .swiper-control-disable{
+        cursor: not-allowed;
+      }
+
+
       .swiper-control.left {
         left: 0;
       }
@@ -49,51 +60,90 @@ export function load() {
       .swiper-control.right {
         right: 0;
       }
+
+      .left-arrow{
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent; /* half of the arrow height */
+        border-bottom: 10px solid transparent; /* half of the arrow height */
+        border-right: 7px solid #f5f5f5; /* arrow width and color */
+      }
+
+      .right-arrow{
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent; /* half of the arrow height */
+        border-bottom: 10px solid transparent; /* half of the arrow height */
+        border-left: 7px solid #f5f5f5; /* arrow width and color */
+      }
       </style>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">Slide 1</div>
-          <div class="swiper-slide">Slide 2</div>
-          <div class="swiper-slide">Slide 3</div>
-          <div class="swiper-slide">Slide 4</div>
+          <slot></slot>
         </div>
-        <div class="swiper-control left">&lt;</div>
-        <div class="swiper-control right">&gt;</div>
+        <div class="swiper-control left"><div class="left-arrow"></div></div>
+        <div class="swiper-control right"><div class="right-arrow"></div></div>
       </div>
     `;
       this.shadow.append(template.content.cloneNode(true));
     }
-    connectedCallback(){
-      this.leftControl = this.shadowRoot.querySelector('.swiper-control.left');
-      this.rightControl = this.shadowRoot.querySelector('.swiper-control.right');
-      this.swiperWrapper = this.shadowRoot.querySelector('.swiper-wrapper');
-      this.slides = this.shadowRoot.querySelectorAll('.swiper-slide');
-
-      console.log(this.leftControl)
-      this.leftControl.addEventListener('click', () => {
-
+    connectedCallback() {
+      this.leftControl = this.shadowRoot.querySelector(".swiper-control.left");
+      this.rightControl = this.shadowRoot.querySelector(
+        ".swiper-control.right"
+      );
+      this.swiperWrapper = this.shadowRoot.querySelector(".swiper-wrapper");
+      this.wrapSwiperSlide();
+      this.leftControl.addEventListener("click", () => {
         if (this.currentIndex > 0) {
           this.currentIndex--;
           this.moveSlider();
+          this.disableControl();
         }
       });
 
-      this.rightControl.addEventListener('click', () => {
-        console.log('click', this.slides.length)
+      this.rightControl.addEventListener("click", () => {
         if (this.currentIndex < this.slides.length - 1) {
           this.currentIndex++;
-          console.log(this.currentIndex)
+          console.log(this.currentIndex);
           this.moveSlider();
+          this.disableControl();
         }
       });
+      this.disableControl();
     }
+    wrapSwiperSlide() {
+      this.slides = [...this.children].map((child) => {
+        const slide = document.createElement("div");
+        slide.className = "swiper-slide";
+        slide.appendChild(child.cloneNode(true));
+        this.removeChild(child);
+        return slide;
+      });
 
+      // Append the wrapped slides to the swiperWrapper
+      this.slides.forEach((slide) => this.swiperWrapper.appendChild(slide));
+    }
+    disableControl() {
+      // reset
+      this.leftControl.classList.remove("swiper-control-disable");
+      this.rightControl.classList.remove("swiper-control-disable");
+
+      if (this.currentIndex === 0) {
+        this.leftControl.classList.add("swiper-control-disable");
+      } else if (this.currentIndex === this.slides.length - 1) {
+        this.rightControl.classList.add("swiper-control-disable");
+      }
+    }
     moveSlider() {
-      console.log('click')
-      this.swiperWrapper.style.transform = `translateX(-${this.currentIndex * 320}px)`; // 320 = slide width (300) + margin (20)
+      const offset = this.swiperWrapper.clientWidth + 20;
+      // 20 is the gap between slides
+      this.swiperWrapper.style.transform = `translateX(-${
+        this.currentIndex * offset
+      }px)`;
     }
   }
-  if(!customElements.get("swiper-container")){
+  if (!customElements.get("swiper-container")) {
     customElements.define("swiper-container", Swiper);
   }
 }

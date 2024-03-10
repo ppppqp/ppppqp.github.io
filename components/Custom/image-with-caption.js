@@ -5,7 +5,7 @@ export function load() {
       this.shadow = this.attachShadow({ mode: "open" });
       const src = this.getAttribute("src");
       const caption = this.getAttribute("caption");
-      const width = this.getAttribute('width') || '15rem';
+      const width = this.getAttribute('width') || '100%';
       const template = document.createElement("template");
       template.innerHTML = `
       <style>
@@ -23,11 +23,6 @@ export function load() {
         .caption {
           font-size: 0.8rem;
           color: #aaa;
-        }
-        @media (max-width: 400px){
-          img {
-            max-width: calc(${width}*0.7); 
-          }
         }
       </style>
       <div class="container">
