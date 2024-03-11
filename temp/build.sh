@@ -1,3 +1,0 @@
-#!/bin/bash
-# emcc export.cpp mcts.cpp --no-entry -gsource-map  --source-map-base='./' -o web/mcts.js -sEXPORTED_FUNCTIONS=_cpp_run,_cpp_get_actions_ptr,_cpp_get_path_ptr,_cpp_get_actions_len,_cpp_get_path_len,_cpp_set_path_len,_cpp_update_actions,_cpp_get_board  -sNO_EXIT_RUNTIME=1 -sEXPORTED_RUNTIME_METHODS=ccall,cwrap,getValue,setValue || exit 1
-emcc export.cpp mcts.cpp --no-entry -O3 -o web/mcts.js -sEXPORTED_FUNCTIONS=_cpp_run,_cpp_get_actions_ptr,_cpp_get_path_ptr,_cpp_get_actions_len,_cpp_get_path_len,_cpp_set_path_len,_cpp_update_actions,_cpp_get_board  -sNO_EXIT_RUNTIME=1 -sEXPORTED_RUNTIME_METHODS=ccall,cwrap,getValue,setValue || exit 1
