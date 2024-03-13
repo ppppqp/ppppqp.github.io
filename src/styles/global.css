@@ -5,6 +5,7 @@
  */
 
 :root {
+  --dark: #1b1b1b;
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
@@ -79,6 +80,7 @@ b {
 }
 a {
 	color: var(--accent);
+  text-decoration: none;
 }
 a:hover {
 	color: var(--accent);
@@ -88,6 +90,12 @@ p {
 }
 .prose p {
 	margin-bottom: 2em;
+}
+ul{
+  list-style-type: none;
+}
+ul li * {
+  text-decoration: none;
 }
 textarea {
 	width: 100%;
