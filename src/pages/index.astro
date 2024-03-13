@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import BlogList from "../components/BlogList.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
@@ -11,9 +12,6 @@ const posts = (await getCollection("blog")).sort(
 );
 
 const techPosts = posts.filter((p) => p.data.tag === "Tech");
-const randomPosts = posts.filter((p) => p.data.tag === "Random");
-const selectedTab = Astro.url.pathname;
-
 ---
 
 <!doctype html>
@@ -40,30 +38,7 @@ const selectedTab = Astro.url.pathname;
         font-weight: 700;
         color: var(--gray-dark);
       }
-      h4 {
-        font-size: 24px;
-        font-weight: 400;
-        color: rgb(0, 112, 243);
-      }
-      .blog-card {
-        display: flex;
-      }
-      .heroimage {
-        object-fit: cover;
-      }
-      .tabs{
-        margin-top: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-      }
-      .tab h3{
-        font-size: 24px;
-        font-weight: 400;
-      }
-      .tab.selected{
-        border-bottom: 1px solid #999;
-      }
+     
     </style>
   </head>
   <body>
@@ -73,33 +48,7 @@ const selectedTab = Astro.url.pathname;
         <img class="avatar-image" src="/profile_retep.png" />
       </div>
       <h2>Retep</h2>
-      <div class="blogs-container">
-        <div class="tabs">
-          <div class="tab"><h3>Tech</h3></div>
-          <div class="tab"><h3>Random</h3></div>
-        </div>
-        <ul>
-          {
-            posts.map((post) => (
-              <li>
-                <a href={`/blog/${post.slug}/`} class="blog-card">
-                  <img
-                    width={100}
-                    height={100}
-                    class="heroimage"
-                    src={post.data.heroImage}
-                    alt=""
-                  />
-                  <h4 class="title">{post.data.title}</h4>
-                  <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <BlogList posts={techPosts}/>
     </main>
     <Footer />
   </body>

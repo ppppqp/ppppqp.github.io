@@ -86,6 +86,7 @@ a:hover {
 	color: var(--accent);
 }
 p {
+  margin: 0;
 	margin-bottom: 1em;
 }
 .prose p {
@@ -110,7 +111,6 @@ table {
 img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 8px;
 }
 code {
 	padding: 2px 5px;
