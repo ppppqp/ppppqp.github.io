@@ -1,0 +1,138 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BlogList from "../components/BlogList.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).sort(
+    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+  );
+  return [
+    { params: { tag: "tech" }, props: { posts } },
+    { params: { tag: "rand" }, props: { posts } },
+  ];
+}
+
+const { tag } = Astro.params;
+
+const { posts } = Astro.props;
+const techPosts = posts.filter((p) => p.data.tag === "Tech");
+const randPosts = posts.filter((p) => p.data.tag === "Rand");
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .avatar-wrapper {
+        margin-top: 50px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .avatar-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 100px;
+        object-fit: cover;
+      }
+
+      h2 {
+        text-align: center;
+        font-weight: 700;
+        color: var(--gray-dark);
+      }
+      .columns-overflow-wrapper {
+        overflow: hidden;
+      }
+      .columns {
+        display: flex;
+        transition: transform 0.4s ease;
+      }
+      .columns.left{
+        transform: translateX(0px);
+      }
+      .columns.right{
+        transform: translateX(-720px);
+      }
+
+      .column {
+        flex: 0 0 100%;
+
+      }
+
+      .tabs {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 24px;
+      }
+      .tab {
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        color: #999;
+      }
+      .tab.selected {
+        border-bottom: 2px solid #999;
+        color: var(--gray-dark);
+      }
+    </style>
+    <script>
+      function popLastSubpath(url: string) {
+        const pathSegments = url.split("/");
+        pathSegments.pop();
+        const newPath = pathSegments.join("/");
+        return newPath;
+      }
+      function popAndPush(subpath: string) {
+        const newURL = new URL(popLastSubpath(window.location.href));
+        newURL.pathname += subpath;
+        return newURL.href;
+      }
+      const columns = document.querySelector(".columns") as HTMLElement;
+      document.querySelector(".tab-tech")?.addEventListener("click", () => {
+        columns.classList.replace('right', 'left');
+        document.querySelector(".tab-tech")?.classList.add("selected");
+        document.querySelector(".tab-rand")?.classList.remove("selected");
+        const newURL = popAndPush("tech");
+        window.history.pushState({ path: newURL }, "", newURL);
+      });
+      document.querySelector(".tab-rand")?.addEventListener("click", () => {
+        columns.classList.replace('left', 'right');
+        document.querySelector(".tab-rand")?.classList.add("selected");
+        document.querySelector(".tab-tech")?.classList.remove("selected");
+        const newURL = popAndPush("rand");
+        window.history.pushState({ path: newURL }, "", newURL);
+      });
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="avatar-wrapper">
+        <img class="avatar-image" src="/profile_retep.png" />
+      </div>
+      <h2>Retep</h2>
+      <div class="tabs">
+        <div class=`tab tab-tech ${tag==='tech' ? 'selected': ''}`>Tech</div>
+        <div class=`tab tab-rand ${tag==='rand' ? 'selected': ''}`>Random</div>
+      </div>
+      <div class="columns-overflow-wrapper">
+        <div class=`columns ${tag==='tech' ? 'left' : 'right'}`>
+          <div class=`column ${tag==='tech' ? 'selected': ''}`>
+            <BlogList posts={techPosts} />
+          </div>
+          <div class=`column ${tag==='rand' ? 'selected': ''}`>
+            <BlogList posts={randPosts} />
+          </div>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
