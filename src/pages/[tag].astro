@@ -5,9 +5,10 @@ import Footer from "../components/Footer.astro";
 import BlogList from "../components/BlogList.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
+import Avatar from "../components/Avatar.astro";
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).sort(
-    (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
   );
   return [
     { params: { tag: "tech" }, props: { posts } },
@@ -19,7 +20,7 @@ const { tag } = Astro.params;
 
 const { posts } = Astro.props;
 const techPosts = posts.filter((p) => p.data.tag === "Tech");
-const randPosts = posts.filter((p) => p.data.tag === "Rand");
+const randPosts = posts.filter((p) => p.data.tag === "Random");
 
 ---
 
@@ -28,25 +29,6 @@ const randPosts = posts.filter((p) => p.data.tag === "Rand");
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      .avatar-wrapper {
-        margin-top: 50px;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .avatar-image {
-        width: 150px;
-        height: 150px;
-        border-radius: 100px;
-        object-fit: cover;
-      }
-
-      h2 {
-        text-align: center;
-        font-weight: 700;
-        color: var(--gray-dark);
-      }
       .columns-overflow-wrapper {
         overflow: hidden;
       }
@@ -76,9 +58,15 @@ const randPosts = posts.filter((p) => p.data.tag === "Rand");
         cursor: pointer;
         border-bottom: 2px solid transparent;
         color: #999;
+        transition: all 0.4s ease;
+        width: 100%;
+        text-align: center;
+      }
+      .tab:hover{
+        color: var(--gray-dark);
       }
       .tab.selected {
-        border-bottom: 2px solid #999;
+        border-bottom: 2px solid #ccc ;
         color: var(--gray-dark);
       }
     </style>
@@ -114,10 +102,8 @@ const randPosts = posts.filter((p) => p.data.tag === "Rand");
   <body>
     <Header />
     <main>
-      <div class="avatar-wrapper">
-        <img class="avatar-image" src="/profile_retep.png" />
-      </div>
-      <h2>Retep</h2>
+      <Avatar />
+
       <div class="tabs">
         <div class=`tab tab-tech ${tag==='tech' ? 'selected': ''}`>Tech</div>
         <div class=`tab tab-rand ${tag==='rand' ? 'selected': ''}`>Random</div>
