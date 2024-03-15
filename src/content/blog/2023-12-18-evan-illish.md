@@ -1,6 +1,6 @@
 ---
 title: "伊万 · 伊利奇之死"
-date: "2023-12-18"
+pubDate: "2023-12-18"
 author: "Retep"
 tag: "Random"
 language: "CN"

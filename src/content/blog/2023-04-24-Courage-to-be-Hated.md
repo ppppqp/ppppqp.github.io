@@ -1,7 +1,7 @@
 ---
 title: "被讨厌的勇气"
 description: ''
-date: '2023-04-24'
+pubDate: '2023-04-24'
 heroImage: '/blog-placeholder-3.jpg'
 tag: 'Random'
 ---

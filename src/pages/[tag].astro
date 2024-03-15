@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 import Avatar from "../components/Avatar.astro";
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
   return [
     { params: { tag: "tech" }, props: { posts } },

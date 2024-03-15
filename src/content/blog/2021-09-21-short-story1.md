@@ -1,7 +1,7 @@
 ---
 
 title:  "Mississippi Almond Tree"
-date:   '2021-09-22' 
+pubDate:   '2021-09-22' 
 author: 'Retep'
 description: 'Another short story that I wrote in sophomore year.'
 tag: 'Random'

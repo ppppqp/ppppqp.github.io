@@ -1,7 +1,7 @@
 ---
 title: "Web Components定制博客"
 description: "Lorem ipsum dolor sit amet"
-date: "Jul 08 2022"
+pubDate: "Jul 08 2022"
 heroImage: "/blog-placeholder-3.jpg"
 tag: "Tech"
 ---
@@ -52,7 +52,7 @@ export default function Post({ postData }) {
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
+          <Date dateString={postData.pubDate} />
         </div>
         // insert custom component between the article title and body
         <Custom id={postData.id} />
@@ -73,7 +73,7 @@ export default function Post({ postData }) {
 ```markdown
 ---
 title: "WASM 101 | 二进制格式"
-date: "2023-11-02"
+pubDate: "2023-11-02"
 author: "Retep"
 tag: "Tech"
 language: "CN"

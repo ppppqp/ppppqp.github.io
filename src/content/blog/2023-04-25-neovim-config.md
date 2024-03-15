@@ -1,6 +1,6 @@
 ---
 title:  'Minimal Neovim Configuration'
-date:   '2023-04-25'
+pubDate:   '2023-04-25'
 author: 'Retep' 
 tag: 'Tech'
 language: 'EN'

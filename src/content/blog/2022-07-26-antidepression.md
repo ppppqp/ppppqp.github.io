@@ -1,6 +1,6 @@
 ---
 title:  "对抗抑郁实用手册"
-date:   '2022-07-26'
+pubDate:   '2022-07-26'
 author: 'Retep'
 description: '开个玩笑'
 tag: 'draft'

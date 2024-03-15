@@ -1,6 +1,6 @@
 ---
 title:  '再见，安娜堡'
-date:   '2023-05-02'
+pubDate:   '2023-05-02'
 author: 'Retep' 
 tag: 'Random'
 language: 'CN'

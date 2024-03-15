@@ -1,6 +1,6 @@
 ---
 title:  "世界尽头与冷酷仙境"
-date:   '2023-02-26'
+pubDate:   '2023-02-26'
 author: 'Retep' 
 tag: 'Random'
 language: 'CN'

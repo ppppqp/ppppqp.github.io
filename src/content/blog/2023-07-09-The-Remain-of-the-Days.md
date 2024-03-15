@@ -1,6 +1,6 @@
 ---
 title:  '长日将尽'
-date:   '2023-07-09'
+pubDate:   '2023-07-09'
 author: 'Retep' 
 tag: 'Random'
 language: 'CN'
