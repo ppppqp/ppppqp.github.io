@@ -72,8 +72,9 @@ const randPosts = posts.filter((p) => p.data.tag === "Random");
     <script>
       function popLastSubpath(url: string) {
         const pathSegments = url.split("/");
-        pathSegments.pop();
+        while(!pathSegments.pop());
         const newPath = pathSegments.join("/");
+        console.log(newPath)
         return newPath;
       }
       function popAndPush(subpath: string) {
