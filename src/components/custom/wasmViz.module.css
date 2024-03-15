@@ -1,0 +1,53 @@
+.container{
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  .title{
+    color: #333;
+  }
+}
+
+.brickContainer{
+  position:relative;
+}
+.brick{
+  width: 30px;
+  height: 30px;
+  /* font-weight: 500; */
+  text-align: center;
+  color: #666;
+  background-color: rgb(236, 236, 236);
+  &.selected{
+    font-weight: 500;
+    color: #000;
+  }
+  cursor: pointer;
+  &.highlight{
+    background-color: rgb(228, 240, 255);
+    border: 2px solid rgb(0, 72, 160);
+  }
+}
+.bold{
+  font-weight: 700;
+}
+
+
+.tooltip{
+  position: absolute;
+  /* display: inline-block; */
+  /* width: fit-content; */
+  min-width: 200px;
+  max-width: 300px;
+  bottom: 35px;
+  padding: 10px;
+  color: rgb(15, 37, 55);
+  background-color: rgba(246, 251, 255, 0.9);
+
+  /* z-index: 50; */
+}
+.words{
+  font-size: 16px;
+  font-style: italic;
+}

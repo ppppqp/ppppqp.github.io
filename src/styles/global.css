@@ -93,9 +93,7 @@ p {
 .prose p {
 	margin-bottom: 1em;
 }
-ul{
-  list-style-type: none;
-}
+
 ul li * {
   text-decoration: none;
 }
@@ -257,4 +255,16 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+
+/* swiper-slide moved to global because it is added in runtime */
+.swiper-slide {
+  flex: 0 0 100%;
+  margin-right: 20px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
 }
