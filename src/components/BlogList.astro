@@ -15,6 +15,9 @@ const { posts } = Astro.props;
           <a href={`/blog/${post.slug}/`} class="blog-card">
             <div class="blog-info">
               <h4 class="title">{post.data.title}</h4>
+              <div class="description-wrapper">
+                <span class="description">{post.data.description}</span>
+              </div>
               <p class="date">
                 <FormattedDate date={post.data.date} />
               </p>
@@ -31,18 +34,42 @@ const { posts } = Astro.props;
     font-size: 24px;
     font-weight: 400;
     color: rgb(0, 112, 243);
+    display: inline;
+    margin-bottom: 5px;
   }
   .blog-card {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    padding: 5px;
     gap: 16px;
+    transition: all ease 0.5s;
   }
+  .description-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    opacity: 0;
+    transition: all ease 0.5s;
+  }
+
+  .description {
+    color: #999;
+    opacity: 1;
+    min-height: 0;
+  }
+  .blog-card:hover .description-wrapper {
+    opacity: 1;
+    grid-template-rows: 1fr;
+  }
+  .blog-card:hover {
+    background-color: rgb(240, 240, 240);
+  }
+
   p {
     margin: unset;
     color: #333;
   }
-  ul{
+  ul {
     list-style: none;
   }
   .tabs {

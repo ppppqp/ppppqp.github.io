@@ -1,6 +1,6 @@
 ---
 title: "被讨厌的勇气"
-description: 'Lorem ipsum dolor sit amet'
+description: ''
 date: '2023-04-24'
 heroImage: '/blog-placeholder-3.jpg'
 tag: 'Random'

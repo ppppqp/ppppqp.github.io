@@ -3,9 +3,9 @@
     shadow: ShadowRoot;
     currentIndex: number;
     slides: Element[];
-    leftControl: HTMLElement;
-    rightControl: HTMLElement;
-    swiperWrapper: HTMLElement;
+    leftControl?: HTMLElement;
+    rightControl?: HTMLElement;
+    swiperWrapper?: HTMLElement;
     constructor() {
       super();
       this.shadow = this.attachShadow({ mode: "open" });
@@ -119,6 +119,7 @@
       this.disableControl();
     }
     wrapSwiperSlide() {
+      // @ts-ignore
       this.slides = [...this.children].map((child) => {
         const slide = document.createElement("div");
         slide.className = "swiper-slide";
@@ -128,23 +129,23 @@
       });
 
       // Append the wrapped slides to the swiperWrapper
-      this.slides.forEach((slide) => this.swiperWrapper.appendChild(slide));
+      this.slides.forEach((slide) => this.swiperWrapper?.appendChild(slide));
     }
     disableControl() {
       // reset
-      this.leftControl.classList.remove("swiper-control-disable");
-      this.rightControl.classList.remove("swiper-control-disable");
+      this.leftControl?.classList.remove("swiper-control-disable");
+      this.rightControl?.classList.remove("swiper-control-disable");
 
       if (this.currentIndex === 0) {
-        this.leftControl.classList.add("swiper-control-disable");
+        this.leftControl?.classList.add("swiper-control-disable");
       } else if (this.currentIndex === this.slides.length - 1) {
-        this.rightControl.classList.add("swiper-control-disable");
+        this.rightControl?.classList.add("swiper-control-disable");
       }
     }
     moveSlider() {
-      const offset = this.swiperWrapper.clientWidth + 20;
+      const offset = this.swiperWrapper!.clientWidth + 20;
       // 20 is the gap between slides
-      this.swiperWrapper.style.transform = `translateX(-${
+      this.swiperWrapper!.style.transform = `translateX(-${
         this.currentIndex * offset
       }px)`;
     }
