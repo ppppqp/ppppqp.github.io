@@ -20,6 +20,7 @@ const { posts } = Astro.props;
               </div>
               <p class="date">
                 <FormattedDate date={post.data.pubDate} />
+                <span class="language">{post.data.language === 'EN' ? 'English' : 'Chinese'}</span>
               </p>
             </div>
           </a>
@@ -64,7 +65,10 @@ const { posts } = Astro.props;
   .blog-card:hover {
     background-color: rgb(240, 240, 240);
   }
-
+  .language{
+    font-style: italic;
+    color: #999;
+  }
   p {
     margin: unset;
     color: #333;

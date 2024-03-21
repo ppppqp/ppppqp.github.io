@@ -19,6 +19,13 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat],
+  },
+  i18n: {
+    defaultLocale: "zh",
+    locales: ["en", "zh"],
+    routing: {
+      prefixDefaultLocale: false
+    }
   }
 
 });
