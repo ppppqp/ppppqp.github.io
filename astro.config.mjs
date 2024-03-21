@@ -8,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
 import rehypeFormat from "rehype-format";
 import react from "@astrojs/react";
+import callouts from 'remark-callouts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +18,7 @@ export default defineConfig({
     "/": "/tech",
   },
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, callouts],
     rehypePlugins: [rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat],
   },
   i18n: {
