@@ -1,0 +1,29 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Avatar from "../components/Avatar.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+---
+<style>
+  .italic{
+    font-style: italic;
+  }
+</style>
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <Avatar />
+      <p>Male. 24. Bred & born in Shanghai, China. Currently living in California, USA.</p>
+      <p class="italic">To live is to experience things, not sit around pondering the meaning of life. --Paulo Coelho</p>
+    </main>
+    <Footer />
+  </body>
+</html>
