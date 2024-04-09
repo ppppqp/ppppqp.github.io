@@ -125,10 +125,11 @@ pre > code {
 }
 
 blockquote{
-  color: rgb(74, 190, 198);
+  color: rgb(168, 182, 188);
   font-style: italic;
   border-left: 3px solid #ccc;
   padding: 0 0.8rem;
+	margin: 0 0.5rem;
 }
 
 blockquote.callout{
