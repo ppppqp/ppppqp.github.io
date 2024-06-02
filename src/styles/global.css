@@ -125,7 +125,8 @@ pre > code {
 }
 
 blockquote{
-  color: rgb(168, 182, 188);
+  color: rgb(98, 124, 136);
+  font-weight: 300;
   font-style: italic;
   border-left: 3px solid #ccc;
   padding: 0 0.8rem;
