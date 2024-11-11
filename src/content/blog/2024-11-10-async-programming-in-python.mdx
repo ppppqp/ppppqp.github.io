@@ -10,7 +10,7 @@ import ImageWithCaption from '../../components/ImageWithCaption.astro';
 
 Python's async programming model is a little bit complex and is constantly evolving. It is not easy to decide which programming model to choose without deep knowledge of python internals.
 
-Python provide three async programming models: multithread, multiprocess libraries and async-await syntax.
+Python provide three async programming models: multithread, multiprocess libraries and coroutine.
 
 When we consider async programming, we should always keep in mind what is the bottleneck of our syncronous system, which means it is necessary to distinguish between "Blocking IO" and "Computation Resource".
 *Blocking IO* is the case when we need to wait for the external system to respond. For example, when reading/writing a file we need to access disk memory, and that can take many CPU cycles. RPC call is another great example.
@@ -39,7 +39,7 @@ We can run the profiler to check the performance:
 from pstats import Stats
 from cProfile import Profile
 
-def print_stats(fn):
+def profile_cpu(fn):
   profiler = Profile()
   profiler.runcall(fn)
   stats = Stats(profiler)
@@ -48,7 +48,7 @@ def print_stats(fn):
   stats.sort_stats('cumulative')
   stats.print_stats()
   
-print_stats(main)
+profile_cpu(main)
 ```
 
 
@@ -81,7 +81,7 @@ def rpc_with_thread_class():
   for thread in threads:
     thread.join()
     
-print_stats(rpc_with_thread_class)
+profile_cpu(rpc_with_thread_class)
 ```
 
 
@@ -184,8 +184,8 @@ def benchmark_fixed_thread():
     # busy waiting while the events have not finished
     time.sleep(0.1)
 
-# profile_cpu(benchmark_fixed_thread)
-profile_memory(benchmark_fixed_thread)
+profile_cpu(benchmark_fixed_thread)
+# profile_memory(benchmark_fixed_thread)
 ```
 In the approach above we did two modifications:
 1. We let the thread itself fetch from the queue, so that the thread can be reused.
