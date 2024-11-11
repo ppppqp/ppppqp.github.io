@@ -30,7 +30,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
     rootMargin: "-20% 0px -60% 0px",
   });
 
-  document.querySelectorAll("h2, h3, h4").forEach((section) => {
+  document.querySelectorAll("h1, h2, h3, h4").forEach((section) => {
     observer.observe(section);
   });
 
