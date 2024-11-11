@@ -44,7 +44,7 @@ Ideally, event time equals processing time, in which case the process order is t
 ### Triggers
 
 In stream processing, data continuously enters windows. The role of triggers is to determine when to send the state (local state) of the window downstream while maintaining the state of the stream. Without triggers, the result would accumulate indefinitely, equivalent to a batch processing system.
-<ImageWithCaption image="/images/2024-10-20-Flink/window.png" width='400px' caption="Event Time vs Processing Time" />
+<ImageWithCaption image="/images/2024-10-20-Flink/window.png" width='300px' caption="Event Time vs Processing Time" />
 
 Triggers can send results at any time or multiple times.
 
@@ -72,7 +72,7 @@ Using triggers to periodically update window states and send results downstream 
 The purpose of **Watermarks/completeness trigger** is to provide a signal that a window is complete. Watermarks can be seen as a function: $$F(p) → E$$
 
 Where `p` is processing time, and `E` is the event time. A watermark indicates that all events with event times less than `E` have been processed.
-<ImageWithCaption image="/images/2024-10-20-Flink/watermark.png" width='400px' caption="Watermark function" />
+<ImageWithCaption image="/images/2024-10-20-Flink/watermark.png" width='350px' caption="Watermark function" />
 
 
 

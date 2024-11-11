@@ -1,79 +1,115 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Avatar from '../components/Avatar.astro';
-type Props = CollectionEntry<'blog'>['data'];
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Avatar from "../components/Avatar.astro";
+type Props = CollectionEntry<"blog">["data"];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} image={heroImage} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 660px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin: 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<script>
+  const callback = (entries: any[]) => {
+    entries.forEach((entry) => {
+      // Get the corresponding link for the section
+      const id = entry.target.getAttribute("id");
+      const link = document.querySelector(`.toc-link[href="#${id}"]`);
+      if (entry.isIntersecting) {
+        // Remove active class from all links
+        document.querySelectorAll(".toc-link").forEach((link) => {
+          link.classList.remove("active");
+        });
+        // Add active class to current section's link
+        link?.classList.add("active");
+      }
+    });
+  };
+  const observer = new IntersectionObserver(callback, {
+    rootMargin: "-20% 0px -60% 0px",
+  });
 
-	<body>
-		<Header />
-		<main>
-			<article>
-        <Avatar size="150"/>
-				<div class="hero-image">
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
+  document.querySelectorAll("h2, h3, h4").forEach((section) => {
+    observer.observe(section);
+  });
+
+  // Smooth scroll to sections when clicking TOC links
+  document.querySelectorAll(".toc-link").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const id = link.getAttribute("href");
+      if (id) {
+        document.querySelector(id)?.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+</script>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={heroImage} />
+    <style>
+      main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
+      }
+      .hero-image {
+        width: 100%;
+      }
+      .hero-image img {
+        display: block;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+      }
+      .prose {
+        width: 660px;
+        max-width: calc(100% - 2em);
+        margin: auto;
+        padding: 1em;
+        color: rgb(var(--gray-dark));
+      }
+      .title {
+        margin: 0;
+      }
+      .date {
+        margin-bottom: 0.5em;
+        color: rgb(var(--gray));
+      }
+      .last-updated-on {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+    <main>
+      <article>
+        <Avatar size="150" />
+        <div class="hero-image"></div>
+        <div class="prose">
+          <div class="title">
+            <div class="date">
               <h1>{title}</h1>
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+              <FormattedDate date={pubDate} />
+              {
+                updatedDate && (
+                  <div class="last-updated-on">
+                    Last updated on <FormattedDate date={updatedDate} />
+                  </div>
+                )
+              }
+            </div>
+            <hr />
+          </div>
+          <slot />
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
