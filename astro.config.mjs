@@ -18,6 +18,9 @@ export default defineConfig({
     "/": "/tech",
   },
   markdown: {
+    shikiConfig: {
+      theme: 'github-light',
+    },
     remarkPlugins: [remarkMath, callouts],
     rehypePlugins: [rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat],
   },

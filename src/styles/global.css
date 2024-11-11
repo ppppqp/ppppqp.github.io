@@ -114,6 +114,11 @@ pre {
 	padding: 1.5em;
 	border-radius: 8px;
 }
+
+pre.astro-code {
+  line-height: 1.4;
+  font-size: 0.9em;
+}
 pre > code {
 	all: unset;
 }
