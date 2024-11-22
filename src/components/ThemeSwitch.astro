@@ -1,0 +1,16 @@
+<script>
+  const toggleTheme = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
+  document.querySelector('#theme-botton')?.addEventListener('click', toggleTheme);
+  // Load the saved theme on page load
+  if (typeof window !== 'undefined') {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }
+</script>
+
+<button id='theme-botton'>Toggle Theme</button>
