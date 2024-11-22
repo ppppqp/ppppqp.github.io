@@ -1,6 +1,14 @@
+@font-face {
+  font-family: 'Monoton';
+  src: url('/fonts/monoton-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+	font-display: swap;
+}
+
 :root {
   --brand-primary: #44D688;
-  --font-family-display: Monoton, Arial, sans-serif;
+  --font-family-display: 'Monoton', Arial, sans-serif;
   --neon-effect-dark: 0 0 0 transparent,
     0 0 20px rgb(255, 0, 0, .8),
     0 0 50px rgba(255, 0, 0,.5),
