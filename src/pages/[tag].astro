@@ -21,7 +21,6 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 const techPosts = posts.filter((p) => p.data.tag === "Tech");
 const randPosts = posts.filter((p) => p.data.tag === "Random");
-
 ---
 
 <!doctype html>
@@ -36,10 +35,10 @@ const randPosts = posts.filter((p) => p.data.tag === "Random");
         display: flex;
         transition: transform 0.4s ease;
       }
-      .columns.left{
+      .columns.left {
         transform: translateX(0px);
       }
-      .columns.right{
+      .columns.right {
         transform: translateX(-100%);
       }
 
@@ -61,20 +60,20 @@ const randPosts = posts.filter((p) => p.data.tag === "Random");
         width: 100%;
         text-align: center;
       }
-      .tab:hover{
+      .tab:hover {
         color: var(--gray-dark);
       }
       .tab.selected {
-        border-bottom: 2px solid #ccc ;
+        border-bottom: 2px solid #ccc;
         color: var(--gray-dark);
       }
     </style>
     <script>
       function popLastSubpath(url: string) {
         const pathSegments = url.split("/");
-        while(!pathSegments.pop());
+        while (!pathSegments.pop());
         const newPath = pathSegments.join("/");
-        console.log(newPath)
+        console.log(newPath);
         return newPath;
       }
       function popAndPush(subpath: string) {
@@ -82,20 +81,22 @@ const randPosts = posts.filter((p) => p.data.tag === "Random");
         newURL.pathname += subpath;
         return newURL.href;
       }
-      const columns = document.querySelector(".columns") as HTMLElement;
-      document.querySelector(".tab-tech")?.addEventListener("click", () => {
-        columns.classList.replace('right', 'left');
-        document.querySelector(".tab-tech")?.classList.add("selected");
-        document.querySelector(".tab-rand")?.classList.remove("selected");
-        const newURL = popAndPush("tech");
-        window.history.pushState({ path: newURL }, "", newURL);
-      });
-      document.querySelector(".tab-rand")?.addEventListener("click", () => {
-        columns.classList.replace('left', 'right');
-        document.querySelector(".tab-rand")?.classList.add("selected");
-        document.querySelector(".tab-tech")?.classList.remove("selected");
-        const newURL = popAndPush("rand");
-        window.history.pushState({ path: newURL }, "", newURL);
+      document.addEventListener("astro:page-load", () => {
+        const columns = document.querySelector(".columns") as HTMLElement;
+        document.querySelector(".tab-tech")?.addEventListener("click", () => {
+          columns.classList.replace("right", "left");
+          document.querySelector(".tab-tech")?.classList.add("selected");
+          document.querySelector(".tab-rand")?.classList.remove("selected");
+          const newURL = popAndPush("tech");
+          window.history.pushState({ path: newURL }, "", newURL);
+        });
+        document.querySelector(".tab-rand")?.addEventListener("click", () => {
+          columns.classList.replace("left", "right");
+          document.querySelector(".tab-rand")?.classList.add("selected");
+          document.querySelector(".tab-tech")?.classList.remove("selected");
+          const newURL = popAndPush("rand");
+          window.history.pushState({ path: newURL }, "", newURL);
+        });
       });
     </script>
   </head>
