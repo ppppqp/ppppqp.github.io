@@ -8,103 +8,101 @@ language: 'EN'
 ---
 import ImageWithCaption from '../../components/ImageWithCaption.astro';
 
+One common question programmers have is "Why functional programming (FP)?" We are taught Object Oriented Programming (OOP) in college and primarily work with OOP in our professional lives. You may have learned functional programming in languages like Haskell or OCaml and found it too demanding to use in practice. This blog will show you how functional programming is closely related to the design of modern programming languages and how to apply it to your day-to-day work.
 
-Very commonly, programmers have the doubt on *Why functional programming(FP)*? We are taught Object Oriented Programming(OOP) in college and we mostly program in OOP at work. You may have learned functional programming in like Haskell, OCaml, etc, and found it too demanding to actually use it. This blog will show you how functional programming is closely related to the design of modern programming language and how to apply it to day-to-day work.
-
-> This blog is heavily based on the book "Functional Programming in Scala" (referenced as "the book" below) by Paul Chiusano and Runar Bjarnason, which I found extremely enlightening. Thank you for writing this awesome work.
+> This blog is heavily based on the book "Functional Programming in Scala" (referenced as "the book" below) by Paul Chiusano and Runar Bjarnason. I found their work extremely enlightening and am grateful for their contribution.
 
 # What is Functional Programming?
 
 ## A Taste of FP
 
-First and foremost, since the reader may not be very familiar with FP, we will do a quick recap here. FP basically means we construct our program based on *pure functions*. Pure function are function with no *side effects*. Side effects are anything the function does other than returning the result, like modifying an global variable, writing a file, etc. However, most programs are bound to have a side effect(when they interact with real world), so what FP basically does is to **postpone the side effect as much as possible**. We want the structure (or skeleton) of project to be side-effect free, and only produce side effect at the very end.
+Let's start with a quick overview of FP for those who might be unfamiliar with it. At its core, FP means constructing programs based on *pure functions*. Pure functions are functions with no *side effects*. Side effects are anything the function does other than returning the result, such as modifying a global variable or writing to a file. However, most programs need to have some side effects when they interact with the real world. What FP does is **postpone side effects as much as possible**. We want the structure (or skeleton) of our project to be side-effect free, only producing side effects when absolutely necessary.
 
-The next question is why we hate side effects. After all, OOP is full of side effects and it seems to work well. To illustrate this I would borrow the example from the book.
+You might wonder why we're so concerned about side effects, given that OOP is full of them and seems to work well. Let me borrow an example from the book to illustrate this.
 
-Suppose we are modeling a Cafe.
+Suppose we are modeling a Cafe:
 
 ```python
 class Cafe {
-	def buyCoffee(cc: CreditCard) -> Coffee:
-		cup = new Coffee()
-		cc.charge(cup.price)
-		return cup
+    def buyCoffee(cc: CreditCard) -> Coffee:
+        cup = new Coffee()
+        cc.charge(cup.price)
+        return cup
 }
 ```
 
-This program looks fine for OOP programmers: when buying the coffee, we initiate a charge on a credit card instance, and return the coffee produced. `cc.charge` is what we call "side effects" here. The function mutates the `CreditCard` instance passed into it.
+This program looks natural to OOP programmers: when buying coffee, we initiate a charge on a credit card instance and return the produced coffee. Here, `cc.charge` is what we call a "side effect" because it mutates the `CreditCard` instance passed into it.
 
 There are two issues with this interface:
-1. It violates *Separation of Concern*. `buyCoffee` method should not be concerned with how the payment is actually implemented. Say, we want to make some change to `cc.charge` signature, we need to modify `buyCoffee` method as well. The coupling of `Cafe` and `CreditCard` is painful, making it untestable.
-2. The coupling prevents it from being composable. For example, our customer wants to buy two cups of coffee. With `cc.charge` baked into the `buyCoffee` method (as side effect), we have to issue **two separate payment requests to the credit card service**, which is not ideal.
+1. It violates *Separation of Concerns*. The `buyCoffee` method shouldn't need to know how the payment is implemented. If we need to change the `cc.charge` signature, we also have to modify the `buyCoffee` method. This tight coupling between `Cafe` and `CreditCard` makes the code difficult to test.
+2. The coupling prevents composition. For example, if a customer wants to buy two cups of coffee, the current implementation would force us to issue **two separate payment requests to the credit card service**, which is inefficient.
 
 In contrast, the FP style eliminates the side effect by returning a `Charge` object:
 
 ```python
 class Cafe {
-	def buyCoffee(cc: CreditCard) -> (Coffee, Charge):
-		cup = new Coffee()
-		return cup, Charge(cc, cup.price)
+    def buyCoffee(cc: CreditCard) -> (Coffee, Charge):
+        cup = new Coffee()
+        return cup, Charge(cc, cup.price)
 }
 ```
 
-Note that we add a level of abstraction between `Cafe` and `CreditCard`: the `Charge` class, thus postponing the side effects. Rather than instantaneously issuing a real payment request, we use `Charge` to represent a payment request and return it. That way, we can easily combine two payment requests by extending our `Charge` class:
+Notice how we've added a layer of abstraction between `Cafe` and `CreditCard` with the `Charge` class, effectively postponing the side effects. Instead of immediately issuing a payment request, we return a `Charge` object that represents the payment request. This allows us to easily combine multiple payment requests by extending our `Charge` class:
 
 ```python
 @dataclass
 class Charge:
-	cc: CreditCard
-	amount: Double
-	def combine(other: Charge) -> Charge:
-		if cc == other.cc:
-			Charge(cc, amount + other.amount)
+    cc: CreditCard
+    amount: Double
+    def combine(other: Charge) -> Charge:
+        if cc == other.cc:
+            Charge(cc, amount + other.amount)
 ```
 
-With `Charge`, buying coffees is easier to implement:
+With `Charge`, buying multiple coffees becomes straightforward:
 
 ```python
 class Cafe {
-	def buyCoffee(cc: CreditCard) -> (Coffee, Charge):
-		#...
-	def buyCoffees(cc: CreditCard, n: int) -> (List[Coffee], Charge):
-		# leverage buyCoffee 
-		purchases = [buyCoffee(cc) for i in range(n)]
-		coffees, charges = purchases.unzip()
-		
-		# combining charges is very easy to implement
-		combinedCharge = charges.reduce(lambda c1, c2: c1.combine(c2))
+    def buyCoffee(cc: CreditCard) -> (Coffee, Charge):
+        #...
+    def buyCoffees(cc: CreditCard, n: int) -> (List[Coffee], Charge):
+        # leverage buyCoffee 
+        purchases = [buyCoffee(cc) for i in range(n)]
+        coffees, charges = purchases.unzip()
+        
+        # combining charges is simple
+        combinedCharge = charges.reduce(lambda c1, c2: c1.combine(c2))
 
-		# returns a list of coffee, but only a single charge
-		return coffees, combinedCharge
+        # returns a list of coffee, but only a single charge
+        return coffees, combinedCharge
 }
 ```
 
-It is a simple example, but it should give you some taste how FP can greatly improve code quality and exercise *Separation of Concern*. In my case, this kind of deep coupled code appears  frequently and code quality degenerates fast. It's interesting to keep the idea of "side effects" in mind when programming or doing code review.
+While this is a simple example, it demonstrates how FP can improve code quality and maintain *Separation of Concerns*. In my experience, tightly coupled code appears frequently, and code quality can deteriorate quickly. It's valuable to keep the concept of "side effects" in mind when programming or conducting code reviews.
 
-## Pure Function
+## Pure Functions
 
-The notion of "pure function is function without side effect" is good enough, but the formal definition of pure function is *function whose output is solely determined by the input, regardless of any external states*. The output is literally equivalent to the function called with the input, so it makes no difference to directly replacing the function call with the output. This property is called **Referential Transparency**. 
+While "pure functions are functions without side effects" is a good working definition, the formal definition is that a pure function's output is solely determined by its input, regardless of any external states. The output is literally equivalent to the function called with the input, so you can directly replace the function call with the output. This property is called **Referential Transparency**. 
 
-Our first `buyCoffee` implementation breaks referential transparency because we can't replace `Cafe.buyCoffee` with a `Coffee` instance, since `Cafe.buyCoffee` also issues a payment request. The second `buyCoffee` implementation follows the referential transparency.
+Our first `buyCoffee` implementation breaks referential transparency because we can't replace `Cafe.buyCoffee` with a `Coffee` instance, since `Cafe.buyCoffee` also issues a payment request. The second `buyCoffee` implementation maintains referential transparency.
 
-To achieve referential transparency, we probably want to avoid mutating data in-place, because that would be a side effect. To illustrate here's a simple example is list pop in python:
+To achieve referential transparency, we typically avoid mutating data in-place since that would be a side effect. Here's a simple example using Python's list operations:
 
 ```python
 a = [1, 2, 3]
-# approach 1, using List.pop() to pop in-place
+# approach 1, using List.pop() to modify in-place
 def list_pop_1(a):
-	a.pop()
+    a.pop()
 print(a) # [1, 2]
 
-# approach 2, using 
-
-def list_pop_2(a)
-	return a[:-1]
-a = list_reverse_2(a)
+# approach 2, creating a new list
+def list_pop_2(a):
+    return a[:-1]
+a = list_pop_2(a)
 print(a) # [1, 2]
 ```
 
-Notice how `list_pop_1` is not referential transparent by mutating external state. Note that the list returned by the `list_pop_2` **is a new list**. We can check using `id()` global function in python, which prints the memory address.
+Notice that `list_pop_1` breaks referential transparency by mutating external state. The list returned by `list_pop_2` **is a new list**. We can verify this using Python's `id()` function, which returns the memory address:
 
 ```python
 id(a) # 4365453504
@@ -112,23 +110,22 @@ b = list_pop_2(a)
 id(b) # 4365452224
 ```
 
-Apparently approach 2 is preferred in FP world. However, since approach 2 returns a new list, it means that the program **requires more memory**... or is it?
+The second approach aligns with FP principles. However, since it returns a new list, you might wonder if this means the program **requires more memory**. The answer is interesting...
 
 # Data Sharing
 
-> [!question] Do pure functions requires more memory?
+> [!question] Do pure functions require more memory?
 
-Actually yes and no. When we call `a[:-1]`, we are not creating a new list every time. Instead, the immutable list is created once and *reused* afterwards. In the code below, you can see calling `a[:-1]` multiple times yield the same memory address:
+The answer is both yes and no. When we call `a[:-1]`, we're not creating a new list every time. Instead, the immutable list is created once and *reused* afterward. In the code below, you can see that calling `a[:-1]` multiple times yields the same memory address:
 
 ```python
 a = [1, 2, 3]
 print(id(a)) # 4365453504
 print(id(a[:-1])) # 4365452224
 print(id(a[:-1])) # 4365452224 same id.
-
 ```
 
-Interestingly, when `a[:-1]` is assigned to a variable (which means there's potential for mutation), a new immutable list will be created afterwards. It's like `b` occupies the original list slice and turn it into mutable, so python has to create a new immutable one for reading.
+Interestingly, when `a[:-1]` is assigned to a variable (indicating potential mutation), Python creates a new immutable list. It's as if `b` claims the original list slice and makes it mutable, so Python needs to create a new immutable one for reading.
 
 ```python
 b = a[:-1] 
@@ -136,16 +133,15 @@ print(id(b)) # 4365452224 still the same id!
 print(id(a[:-1])) # 4365452992 wow! new id
 ```
 
-This kind of behavior is called **data sharing**, which is essentially reusing the same object for reading before the mutation happens. A more specific name for this technique is **Copy on Write**(CoW). The pattern is widely used in Computer Science world. I remember the first time I encountered it is when I was a college student learning the mechanism of `fork()`.
+This behavior is called **data sharing**, specifically **Copy on Write** (CoW). This pattern is widely used in computer science. I first encountered it while learning about the `fork()` system call in college.
 
-With data sharing, calling `list_pop_2(a)` multiple times would take only **constant memory**, as long as the result is only read but not written to.
+With data sharing, calling `list_pop_2(a)` multiple times takes only **constant memory**, as long as the result is only read and not written to.
 
 # Error Handling
 
 > [!question] Is try/catch the best way of error handling?
-> 
 
-In late programming languages like Go and Rust, the standard way of handling error is **returning the error**, as appose to earlier programming languages like C++, JavaScript and Python, where **try/catch the error** is the common way.
+In later programming languages like Go and Rust, the standard approach to error handling is **returning the error**, as opposed to earlier programming languages like C++, JavaScript, and Python, where **try/catch** is the common pattern.
 
 ```go
 // Golang
@@ -181,101 +177,93 @@ except ValueError as e:
     print("Error:", e)
 ```
 
-My deal with Go code on daily basis at work. I am pretty annoyed by this return-based error handling, because I see this pattern A LOT:
+I deal with Go code on a daily basis at work, and I'm often frustrated by this return-based error handling because I frequently encounter this pattern:
 
 ```go
 func doThis():
-	res1, err := firstDoThis()
-	if err != nil {
-		return nil, err
-	}
-	res2, err := thenDoThis()
-	if err != nil {
-		return nil, err
-	}
-	res3, ... you get the idea
+    res1, err := firstDoThis()
+    if err != nil {
+        return nil, err
+    }
+    res2, err := thenDoThis()
+    if err != nil {
+        return nil, err
+    }
+    res3, ... you get the idea
 ```
 
-Sometimes I just wondering why Golang/Rust chose this pattern. Well, here's the reason why.
+You might wonder why Go and Rust chose this pattern. Here's the reasoning:
 
 ## Referential Transparency
 
-First of all, throwing an error breaks referential transparency, making the function impure. Consider the code below:
+First, throwing an error breaks referential transparency, making the function impure. Consider this code:
 
 ```python
 def failingFn():
-	result = divide(10, 0)
-	try:
-	    return result
-	except Exception as e:
-	    return 42
+    result = divide(10, 0)
+    try:
+        return result
+    except Exception as e:
+        return 42
 ```
 
-The function should throw the `ValueError` by `divide`. However, we can try substituting `result` for `divide(10,0)` to see if this function is referential transparent:
+The function should throw the `ValueError` from `divide`. However, let's try substituting `result` for `divide(10,0)` to test referential transparency:
+
 ```python
 def failingFn():
-	try:
-		return divide(10, 0)
-	except Exception as e:
-		return 42
+    try:
+        return divide(10, 0)
+    except Exception as e:
+        return 42
 ```
 
-Note now the function should return `42`. The effect is different, so it is not referential transparent. The key point here is throwing an exception is **context-dependent** (i.e. whether it is inside a `try` block.)  Therefore, `divide` is not pure because with the same output, the effect of the function changes based on the context.
+Now the function returns `42`. The effect is different, so it's not referentially transparent. The key point is that throwing an exception is **context-dependent** (i.e., whether it's inside a `try` block). Therefore, `divide` isn't pure because the effect of the function changes based on the context, even with the same input.
 
-## Type Security
+## Type Safety
 
-Another more obvious drawback with exception-based error handling is type safety. The function in signature in Golang explicitly tells what kind of error the caller should expect, while for Python you have to read the doc string (which is not unreliable) or the implementation of the function. It is really not clear what kind of error the caller should expect, and there's no way for the compiler to help because exception is not a part of the type checking system. The error can only be detected at runtime.
+Another clear drawback of exception-based error handling is type safety. The function signature in Go explicitly tells what kind of error the caller should expect, while in Python you have to read the docstring (which is not reliable) or the implementation of the function. It's unclear what errors the caller should expect, and there's no way for the compiler to help because exceptions aren't part of the type checking system. Errors can only be detected at runtime.
 
-## Total Function vs Partial Function
+## Total Functions vs Partial Functions
 
-Revisiting the `divide` function, we can see that for some instances of the input type, the return value of the function is undefined. Specifically, even though number `0` is a valid input for the denominator (since it is a `float`), the function does not return a `float` as expected (therefore breaking the type system). This makes the function *partial function.
+Looking back at the `divide` function, we can see that for some valid inputs, the return value is undefined. Specifically, even though `0` is a valid input for the denominator (since it's a `float`), the function doesn't return a `float` as expected (thus breaking the type system). This makes it a *partial function*.
 
-**Partial functions** are functions that are not defined for some inputs. By contrast, **total functions** are functions that works on every input. The Golang version of `divide` is an example of total function because for all instances of `float`, the function always returns a `(float, err)` tuple.
+**Partial functions** are functions that aren't defined for all inputs. By contrast, **total functions** work for every input. The Go version of `divide` is a total function because for all `float` inputs, it always returns a `(float, error)` tuple.
 
+## Lifting and Fall Through
 
+Returning errors can fully replicate the process of throwing exceptions while making the process more explicit. If you don't want to handle an error immediately, you can let it fall through to the next level by returning it.
 
-
-## Lifting and Fall through
-
-Returning the error can fully imitate the process of throwing an exception: it just makes the process more explicit. If you don't want to handle the error ad hoc, you can let it fall through to the next level by returning the error.
 <ImageWithCaption image="/images/2024-12-27-functional-programming-in-python-1/throw-vs-return.png" caption="Exception based vs return based" />
-
-
 
 # Laziness
 
-
-Consider the following function:
+Consider this function:
 
 ```python
-
 li = [1, 2, 3, 4]
 plus_10 = list(map(lambda x: x + 10, li))
-even = list(filter(lambda: x: x % 2 == 0, plus_10))
+even = list(filter(lambda x: x % 2 == 0, plus_10))
 times_3 = list(map(lambda x: x * 3, even))
-
 ```
 
-It pluses 10 to each of the element of the array, excludes the odd numbers and times three. We can represent the pipeline in a DAG:
+It adds 10 to each element, filters out odd numbers, and multiplies by three. We can represent the pipeline in a DAG:
 
 <ImageWithCaption image="/images/2024-12-27-functional-programming-in-python-1/blocking.png" caption="Blocking DAG" />
 
-For each step, there are three things happening:
-1. The list is broken into element for computation, via iterator
-2. Each element is processed and yield a new element
-3. The element is then collected into a list
+For each step, three things happen:
+1. The list is broken into elements for computation via iterator
+2. Each element is processed and yields a new element
+3. The elements are collected into a list
 
-The "collecting into list" introduces a kind of blocking stage. In other words, we have to wait for all elements to be processed and collect into a temporary list for next step, even though the list is broken into elements right away.
+The "collecting into list" step creates a blocking stage. We have to wait for all elements to be processed and collected into a temporary list for the next step, even though the list is broken into elements immediately.
 
-Is it possible to avoid creating those temporary list?
-
+Can we avoid creating these temporary lists?
 
 ## Iterators
 
-
 <ImageWithCaption image="/images/2024-12-27-functional-programming-in-python-1/streaming.png" caption="Streaming DAG" width="80%"/>
 
-With Python you can elegantly achieve this. `map` and `filter` can accept and return iterators, which means we can avoid building temporary lists.
+Python provides an elegant solution. `map` and `filter` can accept and return iterators, allowing us to avoid building temporary lists.
 
 ```python
 def add_10(x):
@@ -300,7 +288,7 @@ print("About to compute results...")
 result = list(times_3)  # Now you'll see the print statements
 ```
 
-The program yields output:
+The program outputs:
 
 ```plaintext
 About to compute results...
@@ -316,40 +304,40 @@ Checking if 14 is even
 Multiplying 14 by 3
 ```
 
-As you can tell from the output, `map` and `filter` function **does not do the actual computation, but only creates the description of the computation**. Only when the iterators get materialized into list does the actual computation happen. With this feature we avoid the intermediate temporary data structures, essentially boosting the performance.
+As you can see from the output, `map` and `filter` functions **don't perform the actual computation, but only create a description of the computation**. The actual computation happens only when the iterators are materialized into a list. This feature helps us avoid intermediate temporary data structures, improving performance.
 
-## First-class Loop
+## First-class Loops
 
-With iterators we can build loop-like logic in a functional programming way, with out loss of performance. The above program is the same as a loop-based program:
+With iterators, we can build loop-like logic in a functional programming way without sacrificing performance. The above program is equivalent to this loop-based version:
 
 ```python
 ret = []
 for ele in li:
-	ele += 10
-	if ele % 2 != 0:
-		continue
-	ele *= 3
-	ret.append(ele)
+    ele += 10
+    if ele % 2 != 0:
+        continue
+    ele *= 3
+    ret.append(ele)
 ```
 
-However, the loop-based program is not composable. i.e. it is a huge chunk of program that can not be used elsewhere. It is also less easy to reason compared to `map` and `filter`. Therefore, we sometimes describe iterators (or streams) as "first-class loops" since they enable us to interleave/compose `map` and `filter` operations. It hits right at the philosophy of functional programming: using small, composable building blocks to create complex systems.
+However, the loop-based program isn't composable—it's a large chunk of code that can't be easily reused elsewhere. It's also harder to reason about compared to `map` and `filter`. That's why we sometimes describe iterators (or streams) as "first-class loops" since they let us interleave and compose `map` and `filter` operations. This exemplifies the philosophy of functional programming: using small, composable building blocks to create complex systems.
 
 ## Generators
 
-Ah, another great topic. 
+Here's another fascinating topic.
 
-`List` in python can create a finite list of elements. 
+Python's `list` can create a finite list of elements:
 ```python
 list = [1, 2, 3, 4]
 ```
 
-What if we want to create an list for **infinite** number of elements (e.g. all natural numbers)? Is that even possible?
+But what if we want to create a list with an **infinite** number of elements (e.g., all natural numbers)? Is that possible?
 
 ```python
 list = [1, 2, 3, 4, 5 ...]
 ```
 
-For sure, because it doesn't mean we need to *materialize* an infinite list, we just need to be able to *describe* it. This is what generator does. It describes a sequence of elements and materialize on demand.
+Actually, yes! We don't need to *materialize* an infinite list; we just need to *describe* it. This is what generators do. They describe a sequence of elements and materialize them on demand:
 
 ```python
 def natural_numbers():
@@ -366,35 +354,33 @@ for n in numbers:
         break
 ```
 
-
-Imagine you want to assign an id for each instance you create. A simple implementation can be using a global variable.
+Let's look at a practical example. Imagine you need to assign a unique ID to each instance you create. A simple implementation might use a global variable:
 
 ```python
 id = 1
 
 class A:
-	def __init__(self):
-		self.id = id
-		id += 1
+    def __init__(self):
+        self.id = id
+        id += 1
 ```
 
-This is definitely doable, but least preferred, because you have no constrained behavior of `id`. Any one can reset `id` to 0 and mess up the system.
- A better way is to create an infinite sequence and generator, and we pick one element from the sequence in order for each instance. 
+While this works, it's not ideal because the behavior of `id` isn't constrained. Anyone can reset `id` to 0 and disrupt the system. A better approach is to create an infinite sequence using a generator and assign IDs by taking elements from this sequence in order:
 
 ```python
 def idGenerator():
     n = 1
     while True: 
-    # notice that the infinite loop is lazily evaluated, so we will be fine
+    # The infinite loop is lazily evaluated, so it's safe
         yield n
         n += 1
 
 
 generator = idGenerator()
 class A:
-	def __init__(self):
-		# get the next element from the sequence
-		self.id = generator.__next__()
+    def __init__(self):
+        # get the next element from the sequence
+        self.id = generator.__next__()
             
 
 a = A()
@@ -403,15 +389,12 @@ b = A()
 print(b.id) # 2
 ```
 
-You might know PRG (pseudorandom generator)in cryptography, and that's the same vibe as here. PRG generates a sequence of numbers that any differentiator can not distinguish it from a truly random sequence. For the choice of id (especially in distributed scenario), you can also use a random generator, which is essentially an implementation of PRG.
+This concept might remind you of PRG (pseudorandom generator) in cryptography, which generates a sequence of numbers that no differentiator can distinguish from a truly random sequence. For generating IDs (especially in distributed systems), you could also use a random generator, which is essentially an implementation of PRG.
 
-I guess the name "generator" is carefully picked.
-
-
-
+The term "generator" is quite fitting, as it truly generates a sequence of values on demand.
 
 # Epilogue
 
-This is really, really the fundamentals of functional programming. You can expect more about how FP shapes proper interface design, testing, etc from my future blogs.
+We've covered the fundamental concepts of functional programming here. In future blog posts, you can expect to learn more about how FP influences interface design, testing, and other aspects of software development.
 
-The book is totally worthy and inspiring.
+I highly recommend reading "Functional Programming in Scala" - it's truly insightful and inspiring.
