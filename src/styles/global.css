@@ -111,6 +111,7 @@ code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
+	font-size: 0.9rem;
 }
 pre {
 	padding: 1.5em;
@@ -132,6 +133,10 @@ blockquote{
   border-left: 3px solid #ccc;
   padding: 0 0.8rem;
 	margin: 0 0.5rem;
+}
+
+blockquote strong {
+	color: rgb(98, 124, 136);
 }
 
 blockquote.callout{
@@ -281,4 +286,12 @@ hr {
   justify-content: center;
   align-items: center;
   font-size: 24px;
+}
+
+em {
+	color: #75afdb
+}
+
+strong {
+	color: #3634a9;
 }
