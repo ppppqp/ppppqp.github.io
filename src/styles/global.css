@@ -138,6 +138,10 @@ blockquote.callout{
   font-style: normal;
 }
 
+blockquote div {
+	padding: 0 0.5rem 0 0.5rem;
+}
+
 table {
   border-collapse: collapse;
   /* overflow-x: auto; */
