@@ -28,6 +28,8 @@
     "rehype-toc": "^3.0.2",
     "remark-callouts": "^2.0.0",
     "remark-math": "^6.0.0",
+    "rehype-katex": "^6.0.0",
+    "katex": "^0.16.8",
     "remark-toc": "^9.0.0",
     "typescript": "^5.4.2"
   }

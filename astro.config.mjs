@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import rehypeToc from "rehype-toc";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeRaw from "rehype-raw";
+import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
 import rehypeFormat from "rehype-format";
@@ -22,7 +23,7 @@ export default defineConfig({
       theme: 'github-light',
     },
     remarkPlugins: [remarkMath, callouts],
-    rehypePlugins: [rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat],
+    rehypePlugins: [rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat, rehypeKatex,],
   },
   i18n: {
     defaultLocale: "zh",
