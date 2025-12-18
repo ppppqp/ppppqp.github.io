@@ -3,6 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import '../styles/theme.css';
+import 'katex/dist/katex.min.css';
 import {ViewTransitions} from 'astro:transitions';
 interface Props {
 	title: string;
@@ -22,7 +23,7 @@ const { title, description, image = '/default_cover.png' } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 
 <!-- KaTeX stylesheet for rendering LaTeX math -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+
 
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />

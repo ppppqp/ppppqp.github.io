@@ -23,7 +23,10 @@ export default defineConfig({
       theme: 'github-light',
     },
     remarkPlugins: [remarkMath, callouts],
-    rehypePlugins: [rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat, rehypeKatex,],
+    // rehype-katex must run before rehype-raw so that the HTML
+    // produced by rehype-katex is parsed into HAST nodes and not
+    // left as an escaped string during server-side render.
+    rehypePlugins: [rehypeKatex, rehypeRaw, rehypeSlug, rehypeAutolinkHeadings, rehypeToc, rehypeFormat],
   },
   i18n: {
     defaultLocale: "zh",
