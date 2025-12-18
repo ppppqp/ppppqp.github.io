@@ -12,6 +12,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# macos junk
+*/**/._*
+._*
 
 # environment variables
 .env
