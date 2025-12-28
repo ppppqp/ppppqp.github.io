@@ -1,0 +1,122 @@
+---
+title:  "First Contribution to vLLM"
+pubDate:   '2025-12-28'
+author: 'Retep' 
+tag: 'Tech'
+language: 'EN'
+description: 'Things I learned'
+---
+import ImageWithCaption from '../../components/ImageWithCaption.astro';
+
+
+I've spent my entire Christmas holiday working on a PR for vLLM and learned so much that I think maybe writing a blog post about it.
+
+On Christmas Eve, I started reading the paper on **Paged Attention**. The idea of a memory management layer specially designed for attention system is pretty cool, although I think the system's performance (not latency/throughput wise, but the output quality) might degrade a bit because the attention is now done locally. I might be wrong, but to me it seems like blocked attention score is less optimal than global attention score. It shouldn't hurt a lot though, as long as the block size is not too small.
+
+
+<ImageWithCaption image="/images/2025-12-28-vllm/attention.png" caption="Attention" />
+
+<ImageWithCaption image="/images/2025-12-28-vllm/blocked-attention.png" caption="Blocked Attention" />
+
+
+The other day I started reading the source code for core scheduler/KV cache. The code is really clear, with abundant documentation. I impelemnted the feature mentioned as a onboarding task. Everything was pretty smooth so far.
+
+And then I tried to benchmark my change. I don't have a NVIDIA GPU so I went to [RunPod](https://console.runpod.io/) and rented one, by hours. Basically I sshed into the pod and created an ssh key to pull my code from GitHub. The first pitfall: **I should pull the code to `/workspace`, which corresponds to the persistent volume of the pod.** Why persistent? Because in case you need to edit the config of your pod, the pod needs to be restarted and the code is lost if it's not on persistent volume. I had to enlarge the disk volume a couple of times because I had to pull the model from huggingface later(which is pretty big).
+
+```bash
+cd .ssh
+ssh-keygen -t ed25519 -C "your_email@example.com"
+cat id_ed25519.pub
+
+cd ../../workspace
+git clone git@github.com:ppppqp/vllm.git
+```
+
+Next, it's basically following the vLLM's official documented recommended way to build it. In the [official document](https://docs.vllm.ai/en/latest/getting_started/installation/gpu/). Note that in order to test the local branch, we need to build from source. Since my PR doesn't include cpp code change, I use a pre-compiled cpp binary, but I still need to build the python package locally. `--editable` flag is enabled so that if I decide to tweak some python code, I don't need to recompile everything.
+
+```bash
+# install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+# virtual environment
+uv venv --python 3.12 --seed
+source .venv/bin/activate
+
+# build vllm
+export VLLM_USE_PRECOMPILED=1
+uv pip install --editable .
+```
+
+Then I try to run `vllm serve`, but it gives me this error:
+
+```
+(EngineCore_DP0 pid=4810) torch.AcceleratorError: CUDA error: the provided PTX was compiled with an unsupported toolchain.
+```
+This is due to the CUDA version of the toolchain is not compatible with the vllm code. We need to install a [forward compatiblilty package](https://docs.nvidia.com/deploy/cuda-compatibility/forward-compatibility.html) to bump the CUDA version.
+
+```bash
+sudo apt update
+sudo apt-get install cuda-compat-12-9
+export LD_LIBRARY_PATH=/usr/local/cuda-12.9/compat:$LD_LIBRARY_PATH
+```
+
+But now I got this error:
+```
+RuntimeError: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 804: forward compatibility was attempted on non supported HW
+```
+
+After some investigation it's due to the cuda driver not compatible with the hardware. I was using a RTX5090 and the driver is 570.x, and there's no work around because obviously I can not uninstall and driver and reboot the pod. So I have to choose a different machine (with a matching GPU and driver).
+After using 4090, the binary runs, but it ran out of RAM. So I finally chose A40.
+
+RunPod is also not great, because if I pause my pod and restart it the other day, it tells me that someone else has occupied my machine and I need to migrate my data to a new pod (which never worked) if I need to use it right away. So every other day I need to use the GPU, I have to go through the setup process all over again on the new pod.
+
+
+Finally I can run vllm benchmark by first starting a vllm server:
+
+```bash
+vllm serve NousResearch/Hermes-3-Llama-3.1-8B
+```
+
+and run the benchmark on anthoer process:
+```bash
+vllm bench serve \
+      --model NousResearch/Hermes-3-Llama-3.1-8B \
+      --dataset-name custom \
+      --dataset-path benchmark.jsonl \
+      --num-prompts -1 \
+      --metric-percentiles 80,85,90,95,99 \
+      --request-rate 12 \
+      --disable_shuffle \
+```
+
+It gives you a nice report of things I care about.
+
+
+
+```
+============ Serving Benchmark Result ============
+Successful requests:                     683       
+Failed requests:                         1         
+Benchmark duration (s):                  142.27    
+Total input tokens:                      382083    
+Total generated tokens:                  137146    
+Request throughput (req/s):              4.80      
+Output token throughput (tok/s):         963.97    
+Peak output token throughput (tok/s):    2518.00   
+Peak concurrent requests:                683.00    
+Total token throughput (tok/s):          3649.54   
+---------------Time to First Token----------------
+Mean TTFT (ms):                          52678.73  
+Median TTFT (ms):                        51361.02  
+P99 TTFT (ms):                           124106.80 
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          242.74    
+Median TPOT (ms):                        253.00    
+P99 TPOT (ms):                           425.20    
+---------------Inter-token Latency----------------
+Mean ITL (ms):                           228.25    
+Median ITL (ms):                         110.72    
+P99 ITL (ms):                            523.77    
+==================================================
+```
