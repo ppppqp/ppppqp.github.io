@@ -1,10 +1,10 @@
 ---
-title:  "Learning PagedAttention with VLLM"
+title:  "Kernel EP-03 - PagedAttention"
 pubDate:   '2025-12-29'
 author: 'Retep' 
 tag: 'Tech'
 language: 'EN'
-description: ''
+description: 'vLLM'
 ---
 import ImageWithCaption from '../../components/ImageWithCaption.astro';
 
@@ -207,7 +207,8 @@ class Scheduler(SchedulerInterface)
         return scheduler_output
 ```
 
-`KVCacheManager` does some optimization by removing blocks that will not be used, and calls `coordinator.allocate_new_blocks` to get new `KVCacheBlock`. 
+`KVCacheManager` does some optimization by removing blocks that will not be used, and calls `coordinator.allocate_new_blocks` to get new `KVCacheBlock`. It also exposes the scheduler-facing API `get_computed_blocks` that fetches prefix hit before prefill.
+
 
 
 ```python
@@ -248,7 +249,8 @@ class KVCacheManager:
 
 ```
 
-`KVCacheBlock` is a data structure that stores block information (`block_id`, `ref_cnt` and hash). Note that it also stores the previous free block and next free block. This is because 
+`KVCacheBlock` is a data structure that stores block information (`block_id`, `ref_cnt` and hash). Note that it also stores the previous free block and next free block.
+
 ```py
 @dataclass
 class KVCacheBlock:
@@ -272,6 +274,9 @@ class KVCacheBlock:
 ```
 
 `KVCacheCorrdinator` basically just calls `SingleTypeKVCacheManager`, which delegates the block allocation request to `BlockPool`.
+`SingleTypeKVCacheManager` keeps per-request block lists for one attention spec. It decides how many new blocks a request needs (`get_num_blocks_to_allocate`), records cached prefix hits (`save_new_computed_blocks`), allocates growth (`allocate_new_blocks`), commits full blocks to the prefix cache (`cache_blocks`), frees finished requests (`free`), and trims sliding-window/cross-attn history by swapping blocks with the null_block (remove_skipped_blocks). It looks up the prefix hits by walking though request's blocks and asks the `BlockPool` for cached blocks (see `SingleTypeKVCacheManager.find_longest_cache_hit`, which is not include here).
+
+
 ```py
 class KVCacheCoordinator():
     def allocate_new_blocks(
@@ -372,3 +377,10 @@ class BlockPool:
 ```
 
 However, notice that the `KVCacheBlock` itself does not store any physical address as to the data actually sits.
+The overall workflow looks like this:
+
+When a request arrives, it's prompt tokens are chuncked and hashed (with opional MM/LoRA/salt/prompt-embed keys) via `generate_block_hash_extra_keys` and `hash_block_tokens`, so the blocks are stored inside each future `KVCacheBlock`. Then `KVCacheManager.get_computed_blocks` ask the coordinator to get the longest cache hit by `SingleTypeKVCacheManager.find_longest_cache_hit`, so only full cached blocks are reused. "Full cached blocks" is defined as 
+If it hits cache, the `BlockPool` runs `touch` to increment reference count for data sharing. If someone needs to mutate later blocks, it does COW by 
+1. Use `SingleTypeKVCacheManager.save_new_computed_blocks` to create a new entry for the request that gets all the previously cached blocks's shallow copy
+2. Use `SingleTypeKVCacheManager.allocate_new_blocks` and `BlockPool.get_new_blocks` to get new blocks
+3. `BlockPool` computes the block hash and does the hashmap-double-linked-list insertion.
