@@ -28,8 +28,58 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: 'Atkinson';
+	src: url('/fonts/atkinson-bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+@font-face {
+	font-family: 'MinionPro-Regular';
+	src: url('/fonts/MinionPro-Regular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	src: url('/fonts/OpenSans-Light.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	src: url('/fonts/OpenSans-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	src: url('/fonts/OpenSans-SemiBold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	src: url('/fonts/OpenSans-SemiBoldItalic.ttf') format('truetype');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+
 body {
-	font-family: 'Atkinson', sans-serif;
+	font-family: 'Open Sans', 'MinionPro-Regular';
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -38,7 +88,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.7;
 }
 
