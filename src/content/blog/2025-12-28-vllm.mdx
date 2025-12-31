@@ -11,15 +11,7 @@ import ImageWithCaption from '../../components/ImageWithCaption.astro';
 
 I've spent my entire Christmas holiday working on a PR for vLLM and learned so much that I think maybe writing a blog post about it.
 
-On Christmas Eve, I started reading the paper on **Paged Attention**. The idea of a memory management layer specially designed for attention system is pretty cool, although I think the system's performance (not latency/throughput wise, but the output quality) might degrade a bit because the attention is now done locally. I might be wrong, but to me it seems like blocked attention score is less optimal than global attention score. It shouldn't hurt a lot though, as long as the block size is not too small.
-
-
-<ImageWithCaption image="/images/2025-12-28-vllm/attention.png" caption="Attention" />
-
-<ImageWithCaption image="/images/2025-12-28-vllm/blocked-attention.png" caption="Blocked Attention" />
-
-
-The other day I started reading the source code for core scheduler/KV cache. The code is really clear, with abundant documentation. I impelemnted the feature mentioned as a onboarding task. Everything was pretty smooth so far.
+On Christmas Eve, I started reading the paper on **Paged Attention**. The idea of a memory management layer specially designed for attention system is pretty cool. The next day I started reading the source code for core scheduler/KV cache. The code is really clear, with abundant documentation. I impelemnted the feature mentioned as a onboarding task. Everything was pretty smooth so far.
 
 And then I tried to benchmark my change. I don't have a NVIDIA GPU so I went to [RunPod](https://console.runpod.io/) and rented one, by hours. Basically I sshed into the pod and created an ssh key to pull my code from GitHub. The first pitfall: **I should pull the code to `/workspace`, which corresponds to the persistent volume of the pod.** Why persistent? Because in case you need to edit the config of your pod, the pod needs to be restarted and the code is lost if it's not on persistent volume. I had to enlarge the disk volume a couple of times because I had to pull the model from huggingface later(which is pretty big).
 
