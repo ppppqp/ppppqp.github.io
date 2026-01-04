@@ -399,7 +399,7 @@ These tokens are already computed and stored in KV cache, so they don't need new
 
 
 When a request is added to the `EngineCore`, it's passed to the `Scheduler`. First it will be stored in the scheduler's waiting queue.
-When the request got picked up for scheduling, the scheduler will first call `KVCacheManager.get_computed_blocks` to get the prefix cache hit. Then it calls `KVCacheManager.allocate_slots` to allocate new blocks for the request
+When the request got picked up for scheduling, the scheduler will first call `KVCacheManager.get_computed_blocks` to get the prefix cache hit. Then it calls `KVCacheManager.allocate_slots` to allocate new blocks for the request.
 - `KVCacheManager.get_computed_blocks` calls `KVCacheCoordinator.find_longest_cache_hit`, uses `SingleTypeKVCacheManager.find_longest_cache_hit` to walk through the request's blocks and ask `BlockPool` for cached blocks. If it fails to find a block from block hash, it terminates because the longest prefix cache hit is found.
 The blocks found are returned as `new_computed_blocks` and `num_new_computed_tokens`, which will be recorded as the requests's initial `computed_blocks` and `cached_blocks`.
 - `KVCacheManager.allocate_slots` first calls `KVCacheCoordinator.get_num_blocks_to_allocate` to compute how many new blocks are needed for the request. It excludes those cached blocks and skipped blocks (for sliding window attention) from the calculation. 
