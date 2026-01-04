@@ -98,7 +98,7 @@ class EngineCore:
 The scheduler does the following things:
 1. Loop over the running requests
 2. Try to allocate new blocks for new tokens (to put in KV Cache) by `kv_cache_manager.allocate_slots`
-3. If can not allocate blocks, try to make space. If can't make space, exit.
+3. If can not allocate blocks, try to make space by preempting other running requests. If can't make space, exit.
 4. If allocated blocks successfully, the newly allocated block ids will be added to corresponding requests.
 
 ```python
@@ -207,9 +207,10 @@ class Scheduler(SchedulerInterface)
         return scheduler_output
 ```
 
-`KVCacheManager` does some optimization by removing blocks that will not be used, and calls `coordinator.allocate_new_blocks` to get new `KVCacheBlock`. It also exposes the scheduler-facing API `get_computed_blocks` that fetches prefix hit before prefill.
-
-
+There are several methods notable for `KVCacheManager`
+- `get_computed_blocks` that fetches prefix cache hit.
+- `allocate_slots`: the main method called by scheduler to allocate new blocks for a request.
+- `free`: free all blocks used by a finished request.
 
 ```python
 class KVCacheManager:
@@ -249,30 +250,6 @@ class KVCacheManager:
 
 ```
 
-`KVCacheBlock` is a data structure that stores block information (`block_id`, `ref_cnt` and hash). Note that it also stores the previous free block and next free block.
-
-```py
-@dataclass
-class KVCacheBlock:
-    """KV-cache block metadata."""
-
-    # Block ID, ranging from 0 to num_gpu_blocks - 1.
-    block_id: int
-    # Reference count.
-    ref_cnt: int = 0
-    # The hash key (block hash + group id) of the block, only available
-    # when the block is full and cached.
-    _block_hash: BlockHashWithGroupId | None = None
-
-    # Used to construct a doubly linked list for free blocks.
-    # These two attributes should only be manipulated by FreeKVCacheBlockQueue.
-    prev_free_block: "KVCacheBlock | None" = None
-    next_free_block: "KVCacheBlock | None" = None
-
-    # Whether the block is a null block that should never be cached.
-    is_null: bool = False
-```
-
 `KVCacheCorrdinator` basically just calls `SingleTypeKVCacheManager`, which delegates the block allocation request to `BlockPool`.
 `SingleTypeKVCacheManager` keeps per-request block lists for one attention spec. It decides how many new blocks a request needs (`get_num_blocks_to_allocate`), records cached prefix hits (`save_new_computed_blocks`), allocates growth (`allocate_new_blocks`), commits full blocks to the prefix cache (`cache_blocks`), frees finished requests (`free`), and trims sliding-window/cross-attn history by swapping blocks with the null_block (remove_skipped_blocks). It looks up the prefix hits by walking though request's blocks and asks the `BlockPool` for cached blocks (see `SingleTypeKVCacheManager.find_longest_cache_hit`, which is not include here).
 
@@ -308,10 +285,33 @@ class SingleTypeKVCacheManager():
     
 ```
 
-
-To maintain efficient (O(1)) push/pop/lookup, `BlockPool` maintains a double linked list of free `KVCacheBlock` and also a mapping between block hash to block. The block hash to block mapping is used for caching. When a new request matches an existing prefix, the cached blocks will be reused. After the request is finished, the blocks can be freed if it's `ref_cnt` is down to 0. `get_new_blocks` emit the actual free blocks that are not used in any prefix caching. The eviction algorithmn is LRU.
+`KVCacheBlock` is a data structure that stores block information (`block_id`, `ref_cnt` and hash)
+To maintain efficient (O(1)) push/pop/lookup, `BlockPool` maintains a double linked list of free `KVCacheBlock` and also a mapping between block hash to block.
+The block hash to block mapping is used for caching. When a new request matches an existing prefix, the cached blocks will be reused. 
+After the request is finished, the blocks can be freed if it's `ref_cnt` is down to 0. `get_new_blocks` emit the actual free blocks that are not used in any prefix caching. The eviction algorithmn is LRU.
 
 ```python
+
+@dataclass
+class KVCacheBlock:
+    """KV-cache block metadata."""
+
+    # Block ID, ranging from 0 to num_gpu_blocks - 1.
+    block_id: int
+    # Reference count.
+    ref_cnt: int = 0
+    # The hash key (block hash + group id) of the block, only available
+    # when the block is full and cached.
+    _block_hash: BlockHashWithGroupId | None = None
+
+    # Used to construct a doubly linked list for free blocks.
+    # These two attributes should only be manipulated by FreeKVCacheBlockQueue.
+    prev_free_block: "KVCacheBlock | None" = None
+    next_free_block: "KVCacheBlock | None" = None
+
+    # Whether the block is a null block that should never be cached.
+    is_null: bool = False
+
 class BlockPool:
     self.blocks: list[KVCacheBlock] = [
         KVCacheBlock(idx) for idx in range(num_gpu_blocks)
@@ -379,8 +379,31 @@ class BlockPool:
 However, notice that the `KVCacheBlock` itself does not store any physical address as to the data actually sits.
 The overall workflow looks like this:
 
-When a request arrives, it's prompt tokens are chuncked and hashed (with opional MM/LoRA/salt/prompt-embed keys) via `generate_block_hash_extra_keys` and `hash_block_tokens`, so the blocks are stored inside each future `KVCacheBlock`. Then `KVCacheManager.get_computed_blocks` ask the coordinator to get the longest cache hit by `SingleTypeKVCacheManager.find_longest_cache_hit`, so only full cached blocks are reused. "Full cached blocks" is defined as 
+When a request arrives, it's prompt tokens are chuncked and hashed (with opional MM/LoRA/salt/prompt-embed keys) via `generate_block_hash_extra_keys` and `hash_block_tokens`, so the blocks are stored inside each future `KVCacheBlock`. 
+Then `KVCacheManager.get_computed_blocks` ask the coordinator to get the longest cache hit by `SingleTypeKVCacheManager.find_longest_cache_hit`, so only full cached blocks are reused. 
+"Full cached blocks" is defined as  those blocks that have all tokens filled.
 If it hits cache, the `BlockPool` runs `touch` to increment reference count for data sharing. If someone needs to mutate later blocks, it does COW by 
 1. Use `SingleTypeKVCacheManager.save_new_computed_blocks` to create a new entry for the request that gets all the previously cached blocks's shallow copy
 2. Use `SingleTypeKVCacheManager.allocate_new_blocks` and `BlockPool.get_new_blocks` to get new blocks
 3. `BlockPool` computes the block hash and does the hashmap-double-linked-list insertion.
+
+
+# Lifecycle of a Request
+Terminology:
+- **`computed_blocks`** and **`num_computed_tokens`**: the blocks and number of tokens that are already computed for the request. This include both cached blocks (from prefix cache) and newly computed blocks (from previous scheduling steps).
+- **`cached_blocks`**: blocks that are cached for the request from prefix cache.
+- **`new_computed_blocks`** and **`num_new_computed_tokens`**: think of them as a "initialization" for `computed_blocks`. The blocks are computed from `SingleTypeKVCacheManager.find_longest_cache_hit` only once before the request starts running.
+At that moment, all `computed_blocks` are `cached_blocks`.
+These tokens are already computed and stored in KV cache, so they don't need new blocks to be allocated (they are shared!).
+- **`num_new_tokens`**: the number of tokens that are generated in the current scheduling step, which does not include previously cached or computed tokens. These tokens need new blocks to be allocated.
+
+
+When a request is added to the `EngineCore`, it's passed to the `Scheduler`. First it will be stored in the scheduler's waiting queue.
+When the request got picked up for scheduling, the scheduler will first call `KVCacheManager.get_computed_blocks` to get the prefix cache hit. Then it calls `KVCacheManager.allocate_slots` to allocate new blocks for the request
+- `KVCacheManager.get_computed_blocks` calls `KVCacheCoordinator.find_longest_cache_hit`, uses `SingleTypeKVCacheManager.find_longest_cache_hit` to walk through the request's blocks and ask `BlockPool` for cached blocks. If it fails to find a block from block hash, it terminates because the longest prefix cache hit is found.
+The blocks found are returned as `new_computed_blocks` and `num_new_computed_tokens`, which will be recorded as the requests's initial `computed_blocks` and `cached_blocks`.
+- `KVCacheManager.allocate_slots` first calls `KVCacheCoordinator.get_num_blocks_to_allocate` to compute how many new blocks are needed for the request. It excludes those cached blocks and skipped blocks (for sliding window attention) from the calculation. 
+Then it calls `KVCacheCoordinator.allocate_new_blocks`, which uses `SingleTypeKVCacheManager.allocate_new_blocks` to call `BlockPool.get_new_blocks` to get new blocks from the free list.
+
+
+From the scheduler's perspective, it always tries to finish all the running requests in each scheduling step. If token budges are not used up for all running requests, it also tries to schedule new requests from the waiting queue.
